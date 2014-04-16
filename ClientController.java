@@ -16,6 +16,12 @@ public class ClientController {
 	}
 
 	public void newRequest(String request) {
+		try {
+			String[] parts = request.split(",");
+			System.out.println(parts.length);
+		} catch (Exception e) {
+			System.out.println("Get it right");
+		}
 	}
 
 	public void exit() {
@@ -27,7 +33,7 @@ public class ClientController {
 		String [] cards = response.getCards();
 		String message = "Request: " + response.getRequest() + "\n\n";
 		for(String card : cards) {
-			message += card + "\n";
+			message += card.toString() + "\n";
 		}
 		//        gui.setResponse(message);
 		System.out.println(message);
