@@ -1,23 +1,21 @@
 package Client1;
 import java.io.*;
 
-import labd.Commodity;
-
 public class Response implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String request;
-    private Commodity[] commodities;
-    
-    public Response(String request, Commodity[] commodities) {
-        this.request = request;
-        this.commodities = commodities;
-    }
+	private static final long serialVersionUID = 1L;
+	private String request;
+	private String[] cards;
 
-    public String getRequest() {
-        return request;
-    }
+	public Response(String request, String[] cards) {
+		this.request = request;
+		this.cards = cards;
+	}
 
-    public Commodity[] getCommodities() {
-        return commodities;
-    }
+	public String getRequest() {
+		return request;
+	}
+
+	public String[] getCards() {
+		return cards;
+	}
 }
