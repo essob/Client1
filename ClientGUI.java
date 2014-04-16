@@ -1,11 +1,14 @@
 package Client1;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 /**
  * This class generates a Grafical User Interface to play the game
  */
-public class ClientGUI extends JPanel{
+public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel panel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
 	private JPanel playerPanel1 = new JPanel();
@@ -15,6 +18,8 @@ public class ClientGUI extends JPanel{
 	private JLabel pl1Card = new JLabel();
 	private JLabel plbCard = new JLabel();
 	private JLabel plbCard2 = new JLabel();
+	private JButton start 	= new JButton("Börja spelomgång");
+	private ClientController controller;
 	/**
 	 * Constructs the Gui
 	 */
@@ -34,6 +39,7 @@ public class ClientGUI extends JPanel{
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
+		gameFrame.add(start);
 		gameFrame.setVisible(true);
 	}
 	/**
@@ -114,6 +120,14 @@ public class ClientGUI extends JPanel{
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pb.png");
 		return iconBack;
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == start) {
+//			controller.newRequest();
+			
+		}
+	}
+	
 	/**
 	 * Main method to test Gui-class
 	 * @param args
@@ -121,4 +135,5 @@ public class ClientGUI extends JPanel{
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI();
 	}
+
 }
