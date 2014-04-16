@@ -4,9 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import labd.Request;
-import labd.Response;
-
 public class ClientConnection {
     private ClientController controller;
     private Socket socket;
