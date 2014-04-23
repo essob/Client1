@@ -1,14 +1,15 @@
 package Client1;
 
 import java.io.*;
+import sjuan.Response;
 
 public class ClientController {
-	//    private ClientGUI gui;
+	private ClientGUI gui;
 	private ClientConnection connection;
 
 	public ClientController(String serverIP, int serverPort) {
 		try {
-			//            gui = new ClientGUI();
+			gui = new ClientGUI();
 			connection = new ClientConnection(this, serverIP, serverPort);
 		} catch (IOException e) {
 			System.out.println(e);
