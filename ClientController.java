@@ -1,7 +1,8 @@
 package Client1;
 
 import java.io.*;
-import sjuan.Response;
+import sjuan.*;
+import sjuan.Card;
 
 public class ClientController {
 	private ClientGUI gui;
@@ -9,20 +10,16 @@ public class ClientController {
 
 	public ClientController(String serverIP, int serverPort) {
 		try {
-			gui = new ClientGUI();
+			gui = new ClientGUI(this);
 			connection = new ClientConnection(this, serverIP, serverPort);
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+		System.out.println("connection: " + connection);
 	}
 
-	public void newRequest(String request) {
-		try {
-			String[] parts = request.split(",");
-			System.out.println(parts.length);
-		} catch (Exception e) {
-			System.out.println("Get it right");
-		}
+	public void newRequest() {
+		connection.newRequest(new Request("ABC"));
 	}
 
 	public void exit() {
@@ -31,9 +28,9 @@ public class ClientController {
 	}
 
 	public void newResponse(Response response) {
-		String [] cards = response.getCards();
+		Card [] cards = response.getCards();
 		String message = "Request: " + response.getRequest() + "\n\n";
-		for(String card : cards) {
+		for(Card card : cards) {
 			message += card.toString() + "\n";
 		}
 		//        gui.setResponse(message);
