@@ -60,12 +60,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	
 	
 	
-	private JButton start 	= new JButton("Börja spelomgång");
+	private StartButton start 	= new StartButton("Börja spelomgång");
 	private ClientController controller;
 	/**
 	 * Constructs the Gui
 	 */
-	public ClientGUI() {
+	public ClientGUI(ClientController controller) {
+		this.controller = controller;
 		GamePanel();
 	}
 	/**
@@ -82,6 +83,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
 		gameFrame.add(start);
+		
+		start.addActionListener(this);
 		gameFrame.setVisible(true);
 	}
 	/**
@@ -252,7 +255,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
-//			controller.newRequest();
+			controller.newRequest();
 			
 		}
 	}
@@ -262,7 +265,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClientGUI gui = new ClientGUI();
+		ClientGUI gui = new ClientGUI(null);
 	}
 
 }
