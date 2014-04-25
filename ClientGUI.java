@@ -11,10 +11,12 @@ import javax.swing.*;
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel panel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
-	private JPanel playerPanel1 = new JPanel();
+	private JPanel bottenPanel = new JPanel();
+	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
+	private JPanel optionsPanel = new JPanel();
 	private JLabel pl1Card = new JLabel();
 	private JLabel plbCard = new JLabel();
 	private JLabel plbCard2 = new JLabel();
@@ -59,9 +61,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JLabel plb3Card12 = new JLabel();
 	private JLabel plb3Card13 = new JLabel();
 
-
-
-	private StartButton start = new StartButton("Börja spelomgång");
+	
+	
+	private JButton pass = new JButton("Pass");
+	private JButton end = new JButton("Avsluta spel");
+	private StartButton start 	= new StartButton("Börja spelomgång");
 	private ClientController controller;
 	/**
 	 * Constructs the Gui
@@ -79,12 +83,16 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
 		gameFrame.add(panel(), BorderLayout.CENTER);
-		gameFrame.add(player1Panel(), BorderLayout.SOUTH);
+		gameFrame.add(bottenPanel, BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
-		gameFrame.add(start);
 
+
+		bottenPanel.setBackground(Color.BLACK);
+		bottenPanel.add(playerPanel(), BorderLayout.WEST);
+		bottenPanel.add(optionsPanel(), BorderLayout.EAST);
+		
 		start.addActionListener(this);
 		gameFrame.setVisible(true);
 	}
@@ -102,13 +110,24 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This method returns a panel to represent the actual player panel
 	 * @return player1Panel return the actual player panel
 	 */
-	public JPanel player1Panel() {
-		playerPanel1.setPreferredSize(new Dimension(200, 100));
-		playerPanel1.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		playerPanel1.setBackground(Color.BLACK);
-		pl1Card.setIcon(readFiles("d1"));
-		playerPanel1.add(pl1Card);
-		return playerPanel1;
+
+	public JPanel playerPanel() {
+		playerPanel.setPreferredSize(new Dimension(830, 100));
+		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
+		playerPanel.setBackground(Color.BLACK);
+		pl1Card.setIcon(readFiles());
+		playerPanel.add(pl1Card);
+		return playerPanel;
+	}
+	
+	public JPanel optionsPanel() {
+		optionsPanel.setPreferredSize(new Dimension(150, 100));
+		optionsPanel.setBackground(Color.BLACK);
+		optionsPanel.add(start);
+		optionsPanel.add(end);
+		optionsPanel.add(pass);
+		return optionsPanel;
+
 	}
 	/**
 	 * This method returns a panel to represent the opponent1
@@ -257,6 +276,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest();
+		}
+		
+		if(e.getSource() == end) {
+
+		}
+		if(e.getSource() == pass){
+
 		}
 	}
 
