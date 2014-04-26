@@ -111,7 +111,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel.setPreferredSize(new Dimension(830, 100));
 		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		playerPanel.setBackground(Color.BLACK);
-		pl1Card.setIcon(readFiles());
+//		pl1Card.setIcon(readFiles());
 		playerPanel.add(pl1Card);
 		playerPanel.add(optionsPanel(), BorderLayout.EAST);
 		return playerPanel;
