@@ -19,7 +19,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
-	
+
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start 	= new StartButton("Börja spelomgång");
@@ -52,6 +52,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
 
 		start.addActionListener(this);
+		end.addActionListener(this);
 		gameFrame.setVisible(true);
 
 	}
@@ -134,7 +135,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 			}
 	}
-	
+
 	/**
 	 * This method returns a panel to represent the opponent2
 	 * @return opponent1Panel return a panel of opponent2
@@ -146,7 +147,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		return opponent2Panel;
 	}
-	
+
 	/**
 	 * this method sets amount of cards in opponent2s panel
 	 * @param nbr takes in the amount of cards in opponent2s hand
@@ -163,7 +164,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 				opponent2Panel.add(opponent2Cards);
 			}
 	}
-	
+
 	/**
 	 * This method returns a panel to represent the opponent3
 	 * @return opponent1Panel return a panel of opponent3
@@ -191,7 +192,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent3Cards.setIcon(readFiles("b1fh"));
 		opponent3Panel.add(opponent3Cards);
 	}
-	
+
 	/**
 	 * This metod reads a picture file and return it as a Icon Object
 	 * @return icon returns a Icon Object
@@ -199,7 +200,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public ImageIcon readFiles(String str) {
 		return new ImageIcon("src/sjuan/files/cards_png/" + str +".png");
 	}
-	
+
 	/**
 	 * this method updates the graphics of all panels
 	 */
@@ -210,17 +211,30 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent3Panel.updateUI();
 		panel.updateUI();
 	}
+	/**
+	 * this method makes start button disabled
+	 */
+	public void startButtonDimmed() {
+		start.setEnabled(false);
 
+	}
+	/**
+	 * this method sets start button enabled
+	 */
+	public void startButtonUnDimmed() {
+		start.setEnabled(true);
+	}
+	/**
+	 * this method gives buttons make some action when pressed
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest();
-
 		}
-
-		if(e.getSource() == end) {
-
+		else if(e.getSource() == end) {
+			System.exit(0);
 		}
-		if(e.getSource() == pass){
+		else if(e.getSource() == pass){
 
 		}
 	}

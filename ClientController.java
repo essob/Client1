@@ -69,6 +69,7 @@ public class ClientController {
 		gui.setNbrOfOpponent2Cards(opponent2);
 		gui.setNbrOfOpponent3Cards(opponent3);
 		gui.updateAllPanels();
+		gui.startButtonDimmed();
 	}
 
 	public void newResponse(Response response) {
