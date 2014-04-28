@@ -1,13 +1,10 @@
 package Client1;
 
-<<<<<<< HEAD
 import java.io.*; 
 import sjuan.*;
 import sjuan.Card;
 import java.util.ArrayList;
-=======
 import java.io.*;
->>>>>>> origin/master
 
 
 import sjuan.*;
@@ -55,15 +52,6 @@ public class ClientController {
 		System.exit(0);
 	}
 
-	public void newResponse(Response response) {
-		Card [] cards = response.getCards();
-		String message = "Request: " + response.getRequest() + "\n\n";
-		for(Card card : cards) {
-			message += card.toString() + "\n";
-		}
-		//        gui.setResponse(message);
-		System.out.println(message);
-
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
@@ -108,15 +96,11 @@ public class ClientController {
 		//		for(Card card : cards) {
 		//			message += card.toString() + "\n";
 		//		}
-<<<<<<< HEAD
-		System.out.println(opponent);
 
-=======
 		System.out.println(opponent1);
 	}
 	public int getOpponent1() {
 		return opponent1;
->>>>>>> origin/master
 	}
 
 	public int getOpponent2() {

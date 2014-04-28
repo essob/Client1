@@ -18,59 +18,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
-<<<<<<< HEAD
-	private JLabel pl1Card = new JLabel();
-	private JLabel plbCard = new JLabel();
-	private JLabel plbCard2 = new JLabel();
-	private JLabel plbCard3 = new JLabel();
-	private JLabel plbCard4 = new JLabel();
-	private JLabel plbCard5 = new JLabel();
-	private JLabel plbCard6 = new JLabel();
-	private JLabel plbCard7 = new JLabel();
-	private JLabel plbCard8 = new JLabel();
-	private JLabel plbCard9 = new JLabel();
-	private JLabel plbCard10 = new JLabel();
-	private JLabel plbCard11 = new JLabel();
-	private JLabel plbCard12 = new JLabel();
-	private JLabel plbCard13 = new JLabel();
-	private JButton b1 = new JButton();
-	private JLabel plb2Card = new JLabel();
-	private JLabel plb2Card2 = new JLabel();
-	private JLabel plb2Card3 = new JLabel();
-	private JLabel plb2Card4 = new JLabel();
-	private JLabel plb2Card5 = new JLabel();
-	private JLabel plb2Card6 = new JLabel();
-	private JLabel plb2Card7 = new JLabel();
-	private JLabel plb2Card8 = new JLabel();
-	private JLabel plb2Card9 = new JLabel();
-	private JLabel plb2Card10 = new JLabel();
-	private JLabel plb2Card11 = new JLabel();
-	private JLabel plb2Card12 = new JLabel();
-	private JLabel plb2Card13 = new JLabel();
-	private JLabel plb3Card = new JLabel();
-	private JLabel plb3Card2 = new JLabel();
-	private JLabel plb3Card3 = new JLabel();
-	private JLabel plb3Card4 = new JLabel();
-	private JLabel plb3Card5 = new JLabel();
-	private JLabel plb3Card6 = new JLabel();
-	private JLabel plb3Card7 = new JLabel();
-	private JLabel plb3Card8 = new JLabel();
-	private JLabel plb3Card9 = new JLabel();
-	private JLabel plb3Card10 = new JLabel();
-	private JLabel plb3Card11 = new JLabel();
-	private JLabel plb3Card12 = new JLabel();
-	private JLabel plb3Card13 = new JLabel();
-
-	
-	
-	
-=======
 	private JPanel optionsPanel = new JPanel();
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
->>>>>>> origin/master
-	private StartButton start 	= new StartButton("BÃ¶rja spelomgÃ¥ng");
+	private StartButton start 	= new StartButton("Börja spelomgång");
 	private ClientController controller;
 
 	/**
@@ -94,15 +46,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
-<<<<<<< HEAD
-		gameFrame.add(start);
-=======
 
 		PlayersPanel.setBackground(Color.BLACK);
 		PlayersPanel.add(playerPanel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
 
->>>>>>> origin/master
 		start.addActionListener(this);
 		end.addActionListener(this);
 		gameFrame.setVisible(true);
@@ -276,14 +224,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void startButtonUnDimmed() {
 		start.setEnabled(true);
 	}
-<<<<<<< HEAD
-	
 
-=======
 	/**
 	 * this method gives buttons make some action when pressed
 	 */
->>>>>>> origin/master
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest();
