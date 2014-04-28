@@ -1,9 +1,13 @@
 package Client1;
 
+<<<<<<< HEAD
 import java.io.*; 
 import sjuan.*;
 import sjuan.Card;
 import java.util.ArrayList;
+=======
+import java.io.*;
+>>>>>>> origin/master
 
 
 import sjuan.*;
@@ -17,7 +21,7 @@ public class ClientController {
 	private ClientGUI gui;
 	private ClientConnection connection;
 	private Card[] cards;
-	private int opponent, opponent2, opponent3;
+	private int opponent1, opponent2, opponent3;
 
 	/**
 	 * constructs a clientcontroller
@@ -27,8 +31,8 @@ public class ClientController {
 
 	public ClientController(String serverIP, int serverPort) {
 		try {
-			gui = new ClientGUI(this);
 			connection = new ClientConnection(this, serverIP, serverPort);
+			gui = new ClientGUI(this);
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -61,10 +65,17 @@ public class ClientController {
 		System.out.println(message);
 
 	/**
+	 * this method returns Players cards
+	 * @return cards returns a players cards
+	 */
+	public Card[] getPlayerCards() {
+		return cards;
+	}
+	/**
 	 * this method gets the players cards
 	 * @param response takes in the players cards
 	 */
-	public void getPlayerCards(Response response ) {
+	public void setPlayerCards(Response response ) {
 		this.cards = response.getCards();
 	}
 	/**
@@ -73,7 +84,7 @@ public class ClientController {
 	 */
 	public void getStartConditions(Response response) {
 		this.cards = response.getCards();
-		this.opponent = response.getOpponentCards1();
+		this.opponent1 = response.getOpponentCards1();
 		this.opponent2 = response.getOpponentCards2();
 		this.opponent3 = response.getOpponentCards3();
 
@@ -81,9 +92,12 @@ public class ClientController {
 		for(Card card : cards) {
 			playercards += card.toString() + ", ";
 		}
-
-		System.out.println(playercards + "\n" + opponent + " " +opponent2 + " " +opponent3);
-
+		gui.setPlayersCardsInGUI(cards);
+		gui.setNbrOfOpponent1Cards(opponent1);
+		gui.setNbrOfOpponent2Cards(opponent2);
+		gui.setNbrOfOpponent3Cards(opponent3);
+		gui.updateAllPanels();
+		gui.startButtonDimmed();
 	}
 
 	public void newResponse(Response response) {
@@ -94,10 +108,24 @@ public class ClientController {
 		//		for(Card card : cards) {
 		//			message += card.toString() + "\n";
 		//		}
+<<<<<<< HEAD
 		System.out.println(opponent);
 
+=======
+		System.out.println(opponent1);
+	}
+	public int getOpponent1() {
+		return opponent1;
+>>>>>>> origin/master
 	}
 
+	public int getOpponent2() {
+		return opponent2;
+	}
+
+	public int getOpponent3() {
+		return opponent3;
+	}
 	public static void main(String[] args) {
 		new ClientController("127.0.0.1", 7766);
 	}
