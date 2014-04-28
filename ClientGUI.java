@@ -22,7 +22,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
-	private StartButton start 	= new StartButton("Börja spelomgång");
+	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
 
 	/**
@@ -53,9 +53,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		start.addActionListener(this);
 		end.addActionListener(this);
+		pass.addActionListener(this);
 		gameFrame.setVisible(true);
 
 	}
+	
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
@@ -84,12 +86,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cards takes in playres cards
 	 */
 	public void setPlayersCardsInGUI(Card[] cards) {
-		JLabel playerCard;
+		Button playerCard;
 		if (cards!=null) {
-			for (int i = 0; i < cards.length; i++) {
-				playerCard = new JLabel();
+			for (int i = 0; i < cards.length; i++) {	
 				Card card = cards[i];
-				playerCard.setIcon(readFiles(card.toString()));
+				playerCard = new Button(card.toString());
+//				playerCard.setIcon(readFiles(card.toString()));
 				playerPanel.add(playerCard);
 
 			}
@@ -132,7 +134,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 				else
 					opponent1Cards.setIcon(readFiles("b1pb"));
 				opponent1Panel.add(opponent1Cards);
-
 			}
 	}
 
@@ -229,13 +230,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
-			controller.newRequest();
+			controller.newRequest("new");
 		}
 		else if(e.getSource() == end) {
 			System.exit(0);
 		}
 		else if(e.getSource() == pass){
-
+			controller.newRequest("pass");
 		}
 	}
 }

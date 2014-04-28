@@ -1,8 +1,10 @@
 package Client1;
 
 import java.io.*;
+
 import sjuan.Request;
 import sjuan.Response;
+
 import java.net.*;
 
 public class ClientConnection {
@@ -43,8 +45,7 @@ public class ClientConnection {
             try {
                 while (true) {
                     response = (Response)input.readObject();
-//                    controller.newResponse(response);
-                    controller.getStartConditions(response);
+                    controller.newResponse(response);
 
                  }
             } catch (Exception e1) {

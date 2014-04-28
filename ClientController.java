@@ -2,11 +2,13 @@ package Client1;
 
 import java.io.*;
 
+import javax.swing.JOptionPane;
+
 import sjuan.*;
 
 /**
  * this class handles control over a client
- * @author Tobbe
+ * @author Sjuan
  *
  */
 public class ClientController {
@@ -32,8 +34,8 @@ public class ClientController {
 	/**
 	 * this method creates a request to server
 	 */
-	public void newRequest() {
-		connection.newRequest(new Request("ABC"));
+	public void newRequest(String str) {
+		connection.newRequest(new Request(str));
 	}
 
 	/**
@@ -50,6 +52,7 @@ public class ClientController {
 	public void setPlayerCards(Response response ) {
 		this.cards = response.getCards();
 	}
+
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
@@ -60,10 +63,6 @@ public class ClientController {
 		this.opponent2 = response.getOpponentCards2();
 		this.opponent3 = response.getOpponentCards3();
 
-		String playercards = "";
-		for(Card card : cards) {
-			playercards += card.toString() + ", ";
-		}
 		gui.setPlayersCardsInGUI(cards);
 		gui.setNbrOfOpponent1Cards(opponent1);
 		gui.setNbrOfOpponent2Cards(opponent2);
@@ -71,29 +70,42 @@ public class ClientController {
 		gui.updateAllPanels();
 		gui.startButtonDimmed();
 	}
-
+	/**
+	 * this method handle the response from the server
+	 * @param response takes in a response from server
+	 */
 	public void newResponse(Response response) {
-		cards = response.getCards();
+		System.out.println(response.getRequest());
+		if (response.getRequest().equals("new")) {
+			getStartConditions(response);
 
-		//		String message = "";
-		//	String message = "Request: " + response.getRequest() + "\n\n";
-		//		for(Card card : cards) {
-		//			message += card.toString() + "\n";
-		//		}
-		System.out.println(opponent1);
+		}
+		else if (response.getRequest().equals("pass")){
+			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
+		}
 	}
+
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent1 returns this opponents cards
+	 */
 	public int getOpponent1() {
 		return opponent1;
 	}
 
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent2 returns this opponents cards
+	 */
 	public int getOpponent2() {
 		return opponent2;
 	}
 
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent3 returns this opponents cards
+	 */
 	public int getOpponent3() {
 		return opponent3;
-	}
-	public static void main(String[] args) {
-		new ClientController("127.0.0.1", 7766);
 	}
 }
