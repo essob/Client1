@@ -43,7 +43,9 @@ public class ClientConnection {
             try {
                 while (true) {
                     response = (Response)input.readObject();
-                    controller.newResponse(response);
+//                    controller.newResponse(response);
+                    controller.getStartConditions(response);
+
                  }
             } catch (Exception e1) {
                 System.out.println(e1);
