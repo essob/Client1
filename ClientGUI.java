@@ -5,63 +5,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import sjuan.Card;
 /**
  * This class generates a Grafical User Interface to play the game
  */
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel panel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
-	private JPanel playerPanel1 = new JPanel();
+	private JPanel PlayersPanel = new JPanel();
+	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
-	private JLabel pl1Card = new JLabel();
-	private JLabel plbCard = new JLabel();
-	private JLabel plbCard2 = new JLabel();
-	private JLabel plbCard3 = new JLabel();
-	private JLabel plbCard4 = new JLabel();
-	private JLabel plbCard5 = new JLabel();
-	private JLabel plbCard6 = new JLabel();
-	private JLabel plbCard7 = new JLabel();
-	private JLabel plbCard8 = new JLabel();
-	private JLabel plbCard9 = new JLabel();
-	private JLabel plbCard10 = new JLabel();
-	private JLabel plbCard11 = new JLabel();
-	private JLabel plbCard12 = new JLabel();
-	private JLabel plbCard13 = new JLabel();
-	
-	private JLabel plb2Card = new JLabel();
-	private JLabel plb2Card2 = new JLabel();
-	private JLabel plb2Card3 = new JLabel();
-	private JLabel plb2Card4 = new JLabel();
-	private JLabel plb2Card5 = new JLabel();
-	private JLabel plb2Card6 = new JLabel();
-	private JLabel plb2Card7 = new JLabel();
-	private JLabel plb2Card8 = new JLabel();
-	private JLabel plb2Card9 = new JLabel();
-	private JLabel plb2Card10 = new JLabel();
-	private JLabel plb2Card11 = new JLabel();
-	private JLabel plb2Card12 = new JLabel();
-	private JLabel plb2Card13 = new JLabel();
-	
-	private JLabel plb3Card = new JLabel();
-	private JLabel plb3Card2 = new JLabel();
-	private JLabel plb3Card3 = new JLabel();
-	private JLabel plb3Card4 = new JLabel();
-	private JLabel plb3Card5 = new JLabel();
-	private JLabel plb3Card6 = new JLabel();
-	private JLabel plb3Card7 = new JLabel();
-	private JLabel plb3Card8 = new JLabel();
-	private JLabel plb3Card9 = new JLabel();
-	private JLabel plb3Card10 = new JLabel();
-	private JLabel plb3Card11 = new JLabel();
-	private JLabel plb3Card12 = new JLabel();
-	private JLabel plb3Card13 = new JLabel();
-	
-	
-	
-	private StartButton start 	= new StartButton("Börja spelomgång");
+	private JPanel optionsPanel = new JPanel();
+
+	private JButton pass = new JButton("Pass");
+	private JButton end = new JButton("Avsluta spel");
+	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
+
 	/**
 	 * Constructs the Gui
 	 */
@@ -69,6 +32,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		this.controller = controller;
 		GamePanel();
 	}
+
 	/**
 	 * This Method creates the Gui Frame
 	 */
@@ -78,15 +42,22 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
 		gameFrame.add(panel(), BorderLayout.CENTER);
-		gameFrame.add(player1Panel(), BorderLayout.SOUTH);
+		gameFrame.add(PlayersPanel, BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
-		gameFrame.add(start);
-		
+
+		PlayersPanel.setBackground(Color.BLACK);
+		PlayersPanel.add(playerPanel(), BorderLayout.WEST);
+		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
+
 		start.addActionListener(this);
+		end.addActionListener(this);
+		pass.addActionListener(this);
 		gameFrame.setVisible(true);
+
 	}
+	
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
@@ -95,20 +66,48 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setPreferredSize(new Dimension(400, 100));
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
-		return panel;
+		return panel;	
 	}
+
 	/**
 	 * This method returns a panel to represent the actual player panel
 	 * @return player1Panel return the actual player panel
 	 */
-	public JPanel player1Panel() {
-		playerPanel1.setPreferredSize(new Dimension(200, 100));
-		playerPanel1.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		playerPanel1.setBackground(Color.BLACK);
-		pl1Card.setIcon(readFiles());
-		playerPanel1.add(pl1Card);
-		return playerPanel1;
+	public JPanel playerPanel() {
+		playerPanel.setPreferredSize(new Dimension(830, 100));
+		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
+		playerPanel.setBackground(Color.BLACK);
+
+		return playerPanel;
 	}
+
+	/**
+	 * this method sets player cards in graphics
+	 * @param cards takes in playres cards
+	 */
+	public void setPlayersCardsInGUI(Card[] cards) {
+		Button playerCard;
+		if (cards!=null) {
+			for (int i = 0; i < cards.length; i++) {	
+				Card card = cards[i];
+				playerCard = new Button(card.toString());
+//				playerCard.setIcon(readFiles(card.toString()));
+				playerPanel.add(playerCard);
+
+			}
+		}
+	}
+
+	public JPanel optionsPanel() {
+		optionsPanel.setPreferredSize(new Dimension(150, 100));
+		optionsPanel.setBackground(Color.BLACK);
+		optionsPanel.add(start);
+		optionsPanel.add(end);
+		optionsPanel.add(pass);
+
+		return optionsPanel;
+	}
+
 	/**
 	 * This method returns a panel to represent the opponent1
 	 * @return opponent1Panel return a panel of opponent1
@@ -117,35 +116,27 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent1Panel.setPreferredSize(new Dimension(100, 200));
 		opponent1Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		opponent1Panel.setBackground(Color.BLUE.darker());
-		plbCard.setIcon(readBack());
-		opponent1Panel.add(plbCard);
-		plbCard2.setIcon(readBack2());
-		opponent1Panel.add(plbCard2);
-		plbCard3.setIcon(readBack2());
-		opponent1Panel.add(plbCard3);
-		plbCard4.setIcon(readBack2());
-		opponent1Panel.add(plbCard4);
-		plbCard5.setIcon(readBack2());
-		opponent1Panel.add(plbCard5);
-		plbCard6.setIcon(readBack2());
-		opponent1Panel.add(plbCard6);
-		plbCard7.setIcon(readBack2());
-		opponent1Panel.add(plbCard7);
-		plbCard8.setIcon(readBack2());
-		opponent1Panel.add(plbCard8);
-		plbCard9.setIcon(readBack2());
-		opponent1Panel.add(plbCard9);
-		plbCard10.setIcon(readBack2());
-		opponent1Panel.add(plbCard10);
-		plbCard11.setIcon(readBack2());
-		opponent1Panel.add(plbCard11);
-		plbCard12.setIcon(readBack2());
-		opponent1Panel.add(plbCard12);
-		plbCard13.setIcon(readBack2());
-		opponent1Panel.add(plbCard13);
-		
+
 		return opponent1Panel;
 	}
+
+	/**
+	 * this method sets amount of cards in opponent1s panel
+	 * @param nbr takes in the amount of cards in opponent1s hand
+	 */
+	public void setNbrOfOpponent1Cards (int nbr) {
+		JLabel opponent1Cards;
+		if (nbr != 0)
+			for (int i = 0; i < nbr; i++) {
+				opponent1Cards = new JLabel();
+				if (i==0)
+					opponent1Cards.setIcon(readFiles("b1fh"));
+				else
+					opponent1Cards.setIcon(readFiles("b1pb"));
+				opponent1Panel.add(opponent1Cards);
+			}
+	}
+
 	/**
 	 * This method returns a panel to represent the opponent2
 	 * @return opponent1Panel return a panel of opponent2
@@ -154,34 +145,27 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent2Panel.setPreferredSize(new Dimension(200, 100));
 		opponent2Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		opponent2Panel.setBackground(Color.MAGENTA.darker().darker());
-		plb2Card.setIcon(readBack3());
-		opponent2Panel.add(plb2Card);
-		plb2Card2.setIcon(readBack4());
-		opponent2Panel.add(plb2Card2);
-		plb2Card3.setIcon(readBack4());
-		opponent2Panel.add(plb2Card3);
-		plb2Card4.setIcon(readBack4());
-		opponent2Panel.add(plb2Card4);
-		plb2Card5.setIcon(readBack4());
-		opponent2Panel.add(plb2Card5);
-		plb2Card6.setIcon(readBack4());
-		opponent2Panel.add(plb2Card6);
-		plb2Card7.setIcon(readBack4());
-		opponent2Panel.add(plb2Card7);
-		plb2Card8.setIcon(readBack4());
-		opponent2Panel.add(plb2Card8);
-		plb2Card9.setIcon(readBack4());
-		opponent2Panel.add(plb2Card9);
-		plb2Card10.setIcon(readBack4());
-		opponent2Panel.add(plb2Card10);
-		plb2Card11.setIcon(readBack4());
-		opponent2Panel.add(plb2Card11);
-		plb2Card12.setIcon(readBack4());
-		opponent2Panel.add(plb2Card12);
-		plb2Card13.setIcon(readBack4());
-		opponent2Panel.add(plb2Card13);
+
 		return opponent2Panel;
 	}
+
+	/**
+	 * this method sets amount of cards in opponent2s panel
+	 * @param nbr takes in the amount of cards in opponent2s hand
+	 */
+	public void setNbrOfOpponent2Cards (int nbr) {
+		JLabel opponent2Cards;
+		if (nbr != 0)
+			for (int i = 0; i < nbr; i++) {
+				opponent2Cards = new JLabel();
+				if (i==0)
+					opponent2Cards.setIcon(readFiles("b1fv"));
+				else
+					opponent2Cards.setIcon(readFiles("b1pr"));
+				opponent2Panel.add(opponent2Cards);
+			}
+	}
+
 	/**
 	 * This method returns a panel to represent the opponent3
 	 * @return opponent1Panel return a panel of opponent3
@@ -190,82 +174,69 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent3Panel.setPreferredSize(new Dimension(100, 200));
 		opponent3Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		opponent3Panel.setBackground(Color.ORANGE);
-		plb3Card2.setIcon(readBack5());
-		opponent3Panel.add(plb3Card2);
-		plb3Card3.setIcon(readBack5());
-		opponent3Panel.add(plb3Card3);
-		plb3Card4.setIcon(readBack5());
-		opponent3Panel.add(plb3Card4);
-		plb3Card5.setIcon(readBack5());
-		opponent3Panel.add(plb3Card5);
-		plb3Card6.setIcon(readBack5());
-		opponent3Panel.add(plb3Card6);
-		plb3Card7.setIcon(readBack5());
-		opponent3Panel.add(plb3Card7);
-		plb3Card8.setIcon(readBack5());
-		opponent3Panel.add(plb3Card8);
-		plb3Card9.setIcon(readBack5());
-		opponent3Panel.add(plb3Card9);
-		plb3Card10.setIcon(readBack5());
-		opponent3Panel.add(plb3Card10);
-		plb3Card11.setIcon(readBack5());
-		opponent3Panel.add(plb3Card11);
-		plb3Card12.setIcon(readBack5());
-		opponent3Panel.add(plb3Card12);
-		plb3Card13.setIcon(readBack5());
-		opponent3Panel.add(plb3Card13);
-		plb3Card.setIcon(readBack());
-		opponent3Panel.add(plb3Card);
+
 		return opponent3Panel;
 	}
+	/**
+	 * this method sets amount of cards in opponent3s panel
+	 * @param nbr takes in the amount of cards in opponent3s hand
+	 */
+	public void setNbrOfOpponent3Cards (int nbr) {
+		JLabel opponent3Cards;
+		if (nbr != 0)
+			for (int i = 0; i < nbr-1; i++) {
+				opponent3Cards = new JLabel();
+				opponent3Cards.setIcon(readFiles("b1pt"));
+				opponent3Panel.add(opponent3Cards);
+			}
+		opponent3Cards = new JLabel();
+		opponent3Cards.setIcon(readFiles("b1fh"));
+		opponent3Panel.add(opponent3Cards);
+	}
+
 	/**
 	 * This metod reads a picture file and return it as a Icon Object
 	 * @return icon returns a Icon Object
 	 */
-	public ImageIcon readFiles() {
-		ImageIcon icon = new ImageIcon("src/sjuan/files/cards_png/ck.png");
-		return icon;
-	}
-	
-	public ImageIcon readBack() {
-		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1fh.png");
-		return iconBack;
-	}
-	
-	public ImageIcon readBack2() {
-		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pb.png");
-		return iconBack;
+	public ImageIcon readFiles(String str) {
+		return new ImageIcon("src/sjuan/files/cards_png/" + str +".png");
 	}
 
-	public ImageIcon readBack3() {
-		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1fv.png");
-		return iconBack;
+	/**
+	 * this method updates the graphics of all panels
+	 */
+	public void updateAllPanels() {
+		playerPanel.updateUI();
+		opponent1Panel.updateUI();
+		opponent2Panel.updateUI();
+		opponent3Panel.updateUI();
+		panel.updateUI();
 	}
-	
-	public ImageIcon readBack4() {
-		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pr.png");
-		return iconBack;
+	/**
+	 * this method makes start button disabled
+	 */
+	public void startButtonDimmed() {
+		start.setEnabled(false);
+
 	}
-	
-	public ImageIcon readBack5() {
-		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pt.png");
-		return iconBack;
+	/**
+	 * this method sets start button enabled
+	 */
+	public void startButtonUnDimmed() {
+		start.setEnabled(true);
 	}
-	
-	
+	/**
+	 * this method gives buttons make some action when pressed
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
-			controller.newRequest();
-			
+			controller.newRequest("new");
+		}
+		else if(e.getSource() == end) {
+			System.exit(0);
+		}
+		else if(e.getSource() == pass){
+			controller.newRequest("pass");
 		}
 	}
-	
-	/**
-	 * Main method to test Gui-class
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		ClientGUI gui = new ClientGUI(null);
-	}
-
 }
