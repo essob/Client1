@@ -29,7 +29,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JLabel plbCard11 = new JLabel();
 	private JLabel plbCard12 = new JLabel();
 	private JLabel plbCard13 = new JLabel();
-	
+	private JButton b1 = new JButton();
 	private JLabel plb2Card = new JLabel();
 	private JLabel plb2Card2 = new JLabel();
 	private JLabel plb2Card3 = new JLabel();
@@ -43,7 +43,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JLabel plb2Card11 = new JLabel();
 	private JLabel plb2Card12 = new JLabel();
 	private JLabel plb2Card13 = new JLabel();
-	
 	private JLabel plb3Card = new JLabel();
 	private JLabel plb3Card2 = new JLabel();
 	private JLabel plb3Card3 = new JLabel();
@@ -57,6 +56,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JLabel plb3Card11 = new JLabel();
 	private JLabel plb3Card12 = new JLabel();
 	private JLabel plb3Card13 = new JLabel();
+
 	
 	
 	
@@ -83,7 +83,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
 		gameFrame.add(start);
-		
 		start.addActionListener(this);
 		gameFrame.setVisible(true);
 	}
@@ -105,7 +104,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel1.setPreferredSize(new Dimension(200, 100));
 		playerPanel1.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		playerPanel1.setBackground(Color.BLACK);
-		pl1Card.setIcon(readFiles());
+		pl1Card.setIcon(readFiles("d1"));
 		playerPanel1.add(pl1Card);
 		return playerPanel1;
 	}
@@ -143,7 +142,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent1Panel.add(plbCard12);
 		plbCard13.setIcon(readBack2());
 		opponent1Panel.add(plbCard13);
-		
+
 		return opponent1Panel;
 	}
 	/**
@@ -222,16 +221,16 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This metod reads a picture file and return it as a Icon Object
 	 * @return icon returns a Icon Object
 	 */
-	public ImageIcon readFiles() {
-		ImageIcon icon = new ImageIcon("src/sjuan/files/cards_png/ck.png");
+	public ImageIcon readFiles(String str) {
+		ImageIcon icon = new ImageIcon("src/sjuan/files/cards_png/" + str +".png");
 		return icon;
 	}
-	
+
 	public ImageIcon readBack() {
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1fh.png");
 		return iconBack;
 	}
-	
+
 	public ImageIcon readBack2() {
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pb.png");
 		return iconBack;
@@ -241,25 +240,24 @@ public class ClientGUI extends JPanel implements ActionListener{
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1fv.png");
 		return iconBack;
 	}
-	
+
 	public ImageIcon readBack4() {
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pr.png");
 		return iconBack;
 	}
-	
+
 	public ImageIcon readBack5() {
 		ImageIcon iconBack = new ImageIcon("src/sjuan/files/cards_png/b1pt.png");
 		return iconBack;
 	}
 	
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest();
-			
 		}
 	}
-	
+
 	/**
 	 * Main method to test Gui-class
 	 * @param args
