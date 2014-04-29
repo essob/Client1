@@ -1,7 +1,5 @@
 package Client1;
 
-import java.awt.Graphics;
-
 import javax.swing.*;
 
 public class PlayLabel extends JLabel{
@@ -25,75 +23,98 @@ public class PlayLabel extends JLabel{
 
 	private JLabel clubsBigger = new JLabel();
 	private JLabel clubsSmaller = new JLabel();
+	private ClientGUI gui;
+	
+
+	public PlayLabel(ClientGUI gui) {
+		this.gui = gui;
+	}
 
 
-
-	public void setHeart7() {
-	hearts7.setIcon(readFiles("h7s"));
-	add(hearts7);
+	public JLabel getHeart7() {
+	hearts7.setIcon(gui.readFiles("h7s"));
 	hearts7.setLocation(130, 150);
 	hearts7.setSize(96, 71);
+	return hearts7;
 	}
 	
-	spades7.setIcon(readFiles("s7s"));
-	add(spades7);
+	public JLabel getSpade7() {
+	spades7.setIcon(gui.readFiles("s7s"));
 	spades7.setLocation(280, 150);
 	spades7.setSize(96, 71);
+	return spades7;
+	}
 	
-	diamonds7.setIcon(readFiles("d7s"));
-	add(diamonds7);
+	public JLabel getDiamond7() {
+	diamonds7.setIcon(gui.readFiles("d7s"));
 	diamonds7.setLocation(430, 150);
 	diamonds7.setSize(96, 71);
+	return diamonds7;
+	}
 	
-	clubs7.setIcon(readFiles("c7s"));
-	panel.add(clubs7);
+	public JLabel getClub7() {
+	clubs7.setIcon(gui.readFiles("c7s"));
 	clubs7.setLocation(580, 150);
 	clubs7.setSize(96, 71);
+	return clubs7;
+	}
 	
-	heartsBigger.setIcon(readFiles("h8"));
-	panel.add(heartsBigger);
+	public JLabel getHeartB() {
+	heartsBigger.setIcon(gui.readFiles("h8"));
 	heartsBigger.setLocation(145, 235);
 	heartsBigger.setSize(71, 96);
-
-	heartsSmaller.setIcon(readFiles("h6"));
-	panel.add(heartsSmaller);
+	return heartsBigger;
+	}
+	
+	public JLabel getHeartS() {
+	heartsSmaller.setIcon(gui.readFiles("h6"));
 	heartsSmaller.setLocation(145, 40);
 	heartsSmaller.setSize(71, 96);
+	return heartsSmaller;
+	}
 	
-	spadesBigger.setIcon(readFiles("s8"));
-	panel.add(spadesBigger);
+	public JLabel getSpadeB() {
+	spadesBigger.setIcon(gui.readFiles("s8"));
 	spadesBigger.setLocation(295, 235);
 	spadesBigger.setSize(71, 96);
-
-	spadesSmaller.setIcon(readFiles("s6"));
-	panel.add(spadesSmaller);
+	return spadesBigger;
+	}
+	
+	public JLabel getSpadeS() {
+	spadesSmaller.setIcon(gui.readFiles("s6"));
 	spadesSmaller.setLocation(295, 40);
 	spadesSmaller.setSize(71, 96);
+	return spadesSmaller;
+	}
 	
-	diamondsBigger.setIcon(readFiles("d8"));
-	panel.add(diamondsBigger);
+	public JLabel getDiamondB() {
+	diamondsBigger.setIcon(gui.readFiles("d8"));
 	diamondsBigger.setLocation(445, 235);
 	diamondsBigger.setSize(71, 96);
-
-	diamondsSmaller.setIcon(readFiles("d6"));
-	panel.add(diamondsSmaller);
+	return diamondsBigger;
+	}
+	
+	public JLabel getDiamondS() {
+	diamondsSmaller.setIcon(gui.readFiles("d6"));
 	diamondsSmaller.setLocation(445, 40);
 	diamondsSmaller.setSize(71, 96);
+	return diamondsSmaller;
+	}
 	
-
-	clubsBigger.setIcon(readFiles("c8"));
-	panel.add(clubsBigger);
+	public JLabel getClubB() {
+	clubsBigger.setIcon(gui.readFiles("c8"));
 	clubsBigger.setLocation(595, 235);
 	clubsBigger.setSize(71, 96);
-
-	clubsSmaller.setIcon(readFiles("c6"));
-	panel.add(clubsSmaller);
+	return clubsBigger;
+	}
+	
+	public JLabel getClubS() {
+	clubsSmaller.setIcon(gui.readFiles("c6"));
 	clubsSmaller.setLocation(595, 40);
 	clubsSmaller.setSize(71, 96);
-	
+	return clubsSmaller;
+	}
 
 
 	
 	}
-
-}
