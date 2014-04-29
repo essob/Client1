@@ -2,11 +2,13 @@ package Client1;
 
 import java.io.*;
 
+import javax.swing.JOptionPane;
+
 import sjuan.*;
 
 /**
  * this class handles control over a client
- * @author Tobbe
+ * @author Sjuan
  *
  */
 public class ClientController {
@@ -14,7 +16,7 @@ public class ClientController {
 	private ClientGUI gui;
 	private ClientConnection connection;
 	private Card[] cards;
-	private int opponent1, opponent2, opponent3;
+	private int opponent1, opponent2, opponent3, clientID;
 
 	/**
 	 * constructs a clientcontroller
@@ -34,10 +36,6 @@ public class ClientController {
 	/**
 	 * this method creates a request to server
 	 */
-	public void newRequest() {
-		connection.newRequest(new Request("ABC"));
-	}
-
 	public void newRequest(String request) {
 		try {
 			connection.newRequest(new Request(request));
@@ -62,56 +60,75 @@ public class ClientController {
 	public void setPlayerCards(Response response ) {
 		this.cards = response.getCards();
 	}
+
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
 	public void getStartConditions(Response response) {
-		this.cards = response.getCards();
-		this.opponent1 = response.getOpponentCards1();
-		this.opponent2 = response.getOpponentCards2();
-		this.opponent3 = response.getOpponentCards3();
+		if (response.getRequest().equals("new")) {
+			this.cards = response.getCards();
+			this.opponent1 = response.getOpponentCards1();
+			this.opponent2 = response.getOpponentCards2();
+			this.opponent3 = response.getOpponentCards3();
+			this.clientID = response.getClientID();
 
-		gui.setPlayersCardsInGUI(cards);
-		gui.setNbrOfOpponent1Cards(opponent1);
-		gui.setNbrOfOpponent2Cards(opponent2);
-		gui.setNbrOfOpponent3Cards(opponent3);
-		gui.updateAllPanels();
-		gui.startButtonDimmed();
 
-	}
-
-	public void newResponse(Response response) {
-
-		Card [] cards = response.getCards();
-		String message = "Request: " + response.getRequest() + "\n\n";
-		for(Card card : cards) {
-			message += card.toString() + "\n";
+			gui.setPlayersCardsInGUI(cards);
+			gui.setNbrOfOpponent1Cards(opponent1);
+			gui.setNbrOfOpponent2Cards(opponent2);
+			gui.setNbrOfOpponent3Cards(opponent3);
+			gui.updateAllPanels();
+			gui.startButtonDimmed();
+			gui.setGameFrameTitle();
+			
 		}
-		//		gui.setResponse(message);
-		System.out.println(message);
-
-		cards = response.getCards();
-
-		//		String message = "";
-		//	String message = "Request: " + response.getRequest() + "\n\n";
-		//		for(Card card : cards) {
-		//			message += card.toString() + "\n";
-		//		}
-		System.out.println(opponent1);
 	}
+	
+	/**
+	 * this method handle the response from the server
+	 * @param response takes in a response from server
+	 */
+	public void newResponse(Response response) {
+		System.out.println(response.getRequest());
+		if (response.getRequest().equals("new")) {
+			getStartConditions(response);
+
+		}
+		else if (response.getRequest().equals("pass")){
+			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
+		}
+	}
+
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent1 returns this opponents cards
+	 */
 	public int getOpponent1() {
 		return opponent1;
 	}
 
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent2 returns this opponents cards
+	 */
 	public int getOpponent2() {
 		return opponent2;
 	}
 
+	/**
+	 * this method returns this opponents cards
+	 * @return opponent3 returns this opponents cards
+	 */
 	public int getOpponent3() {
 		return opponent3;
 	}
-	public static void main(String[] args) {
-		new ClientController("127.0.0.1", 7766);
+
+/**
+ * this method returns this clients ID
+ * @return clientID returns a ID of this Client
+ */
+	public int getClientID() {
+		return clientID;
 	}
 }

@@ -1,8 +1,10 @@
 package Client1;
 
 import java.io.*;
+
 import sjuan.Request;
 import sjuan.Response;
+
 import java.net.*;
 
 public class ClientConnection {
@@ -11,14 +13,16 @@ public class ClientConnection {
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 
-	public ClientConnection(ClientController controller, String serverIP, int serverPort) throws IOException {
-		this.controller = controller;
-		socket = new Socket(InetAddress.getByName(serverIP), serverPort);
-		output = new ObjectOutputStream(socket.getOutputStream());
-		input = new ObjectInputStream(socket.getInputStream());
-		Thread thread = new Thread(new ResponseHandler());
-		thread.start();
-	}
+
+    public ClientConnection(ClientController controller, String serverIP, int serverPort) throws IOException {
+        this.controller = controller;
+        socket = new Socket(InetAddress.getByName(serverIP), serverPort);
+        output = new ObjectOutputStream(socket.getOutputStream());
+        input = new ObjectInputStream(socket.getInputStream());
+        Thread thread = new Thread(new ResponseHandler());
+        thread.start();
+    }
+   
 
 	public void newRequest(Request request) {
 		try {

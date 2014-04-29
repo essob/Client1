@@ -23,7 +23,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
-	private StartButton start 	= new StartButton("Börja spelomgång");
+	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
 
 	/**
@@ -54,17 +54,30 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		start.addActionListener(this);
 		end.addActionListener(this);
+		pass.addActionListener(this);
 		gameFrame.setVisible(true);
 
 	}
+	
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
 	 */
 	public JPanel panel() {
-		panel.setPreferredSize(new Dimension(400, 100));
+//		panel.setPreferredSize(new Dimension(400, 100));
+		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
+		JLabel labbb = new JLabel();
+		
+		labbb.setIcon(readFiles("s7s"));
+		panel.add(labbb);
+		labbb.setLocation(200, 200);
+		labbb.setSize(96, 71);
+		labbb.setVisible(true);
+//		updateAllPanels();
+
+		
 		return panel;	
 	}
 
@@ -82,15 +95,15 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	/**
 	 * this method sets player cards in graphics
-	 * @param cards takes in playres cards
+	 * @param cards takes in players cards
 	 */
 	public void setPlayersCardsInGUI(Card[] cards) {
-		JLabel playerCard;
+		Button playerCard;
 		if (cards!=null) {
-			for (int i = 0; i < cards.length; i++) {
-				playerCard = new JLabel();
+			for (int i = 0; i < cards.length; i++) {	
 				Card card = cards[i];
-				playerCard.setIcon(readFiles(card.toString()));
+				playerCard = new Button(card.toString());
+//				playerCard.setIcon(readFiles(card.toString()));
 				playerPanel.add(playerCard);
 
 			}
@@ -133,7 +146,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 				else
 					opponent1Cards.setIcon(readFiles("b1pb"));
 				opponent1Panel.add(opponent1Cards);
-
 			}
 	}
 
@@ -228,15 +240,20 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 * this method gives buttons make some action when pressed
 	 */
+	
+	public void setGameFrameTitle() {
+		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
-			controller.newRequest();
+			controller.newRequest("new");
 		}
 		else if(e.getSource() == end) {
 			System.exit(0);
 		}
 		else if(e.getSource() == pass){
-
+			controller.newRequest("pass");
 		}
 	}
 }
