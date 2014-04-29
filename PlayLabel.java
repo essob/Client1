@@ -2,7 +2,8 @@ package Client1;
 
 import java.awt.Graphics;
 
-import javax.swing.JLabel;
+import javax.swing.*;
+
 
 public class PlayLabel extends JLabel{
 	private JLabel ruter7 = new JLabel();
@@ -26,6 +27,7 @@ public class PlayLabel extends JLabel{
 	super.paintComponent(g);
 	
 	}
+	
 
 
 }
