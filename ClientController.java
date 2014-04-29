@@ -26,6 +26,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			gui = new ClientGUI(this);
+
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -58,17 +59,19 @@ public class ClientController {
 	 * @param response
 	 */
 	public void getStartConditions(Response response) {
-		this.cards = response.getCards();
-		this.opponent1 = response.getOpponentCards1();
-		this.opponent2 = response.getOpponentCards2();
-		this.opponent3 = response.getOpponentCards3();
+		if (response.getRequest().equals("new")) {
+			this.cards = response.getCards();
+			this.opponent1 = response.getOpponentCards1();
+			this.opponent2 = response.getOpponentCards2();
+			this.opponent3 = response.getOpponentCards3();
 
-		gui.setPlayersCardsInGUI(cards);
-		gui.setNbrOfOpponent1Cards(opponent1);
-		gui.setNbrOfOpponent2Cards(opponent2);
-		gui.setNbrOfOpponent3Cards(opponent3);
-		gui.updateAllPanels();
-		gui.startButtonDimmed();
+			gui.setPlayersCardsInGUI(cards);
+			gui.setNbrOfOpponent1Cards(opponent1);
+			gui.setNbrOfOpponent2Cards(opponent2);
+			gui.setNbrOfOpponent3Cards(opponent3);
+			gui.updateAllPanels();
+			gui.startButtonDimmed();
+		}
 	}
 	/**
 	 * this method handle the response from the server

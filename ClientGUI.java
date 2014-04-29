@@ -83,7 +83,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	/**
 	 * this method sets player cards in graphics
-	 * @param cards takes in playres cards
+	 * @param cards takes in players cards
 	 */
 	public void setPlayersCardsInGUI(Card[] cards) {
 		Button playerCard;
