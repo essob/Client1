@@ -23,7 +23,8 @@ public class PlayLabel extends JLabel{
 	
 
 	protected void paintComponent(Graphics g) {
-	super.paintComponent(g);	
+	super.paintComponent(g);
+	
 	}
 
 
