@@ -63,9 +63,20 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel panel() {
-		panel.setPreferredSize(new Dimension(400, 100));
+//		panel.setPreferredSize(new Dimension(400, 100));
+		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
+		JLabel labbb = new JLabel();
+		
+		labbb.setIcon(readFiles("s7s"));
+		panel.add(labbb);
+		labbb.setLocation(200, 200);
+		labbb.setSize(96, 71);
+		labbb.setVisible(true);
+//		updateAllPanels();
+
+		
 		return panel;	
 	}
 

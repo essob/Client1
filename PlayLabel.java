@@ -26,8 +26,5 @@ public class PlayLabel extends JLabel{
 	super.paintComponent(g);
 	
 	}
-	
-	
-
 
 }
