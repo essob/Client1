@@ -15,7 +15,7 @@ public class ClientController {
 	private ClientGUI gui;
 	private ClientConnection connection;
 	private Card[] cards;
-	private int opponent1, opponent2, opponent3;
+	private int opponent1, opponent2, opponent3, clientID;
 
 	/**
 	 * constructs a clientcontroller
@@ -26,6 +26,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			gui = new ClientGUI(this);
+
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -58,17 +59,22 @@ public class ClientController {
 	 * @param response
 	 */
 	public void getStartConditions(Response response) {
-		this.cards = response.getCards();
-		this.opponent1 = response.getOpponentCards1();
-		this.opponent2 = response.getOpponentCards2();
-		this.opponent3 = response.getOpponentCards3();
+		if (response.getRequest().equals("new")) {
+			this.cards = response.getCards();
+			this.opponent1 = response.getOpponentCards1();
+			this.opponent2 = response.getOpponentCards2();
+			this.opponent3 = response.getOpponentCards3();
+			this.clientID = response.getClientID();
 
-		gui.setPlayersCardsInGUI(cards);
-		gui.setNbrOfOpponent1Cards(opponent1);
-		gui.setNbrOfOpponent2Cards(opponent2);
-		gui.setNbrOfOpponent3Cards(opponent3);
-		gui.updateAllPanels();
-		gui.startButtonDimmed();
+			gui.setPlayersCardsInGUI(cards);
+			gui.setNbrOfOpponent1Cards(opponent1);
+			gui.setNbrOfOpponent2Cards(opponent2);
+			gui.setNbrOfOpponent3Cards(opponent3);
+			gui.updateAllPanels();
+			gui.startButtonDimmed();
+			gui.setGameFrameTitle();
+			
+		}
 	}
 	/**
 	 * this method handle the response from the server
@@ -107,5 +113,13 @@ public class ClientController {
 	 */
 	public int getOpponent3() {
 		return opponent3;
+	}
+
+/**
+ * this method returns this clients ID
+ * @return clientID returns a ID of this Client
+ */
+	public int getClientID() {
+		return clientID;
 	}
 }
