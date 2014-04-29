@@ -83,7 +83,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	/**
 	 * this method sets player cards in graphics
-	 * @param cards takes in playres cards
+	 * @param cards takes in players cards
 	 */
 	public void setPlayersCardsInGUI(Card[] cards) {
 		Button playerCard;
@@ -228,6 +228,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 * this method gives buttons make some action when pressed
 	 */
+	
+	public void setGameFrameTitle() {
+		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest("new");
