@@ -6,6 +6,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class StartButton extends JButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ImageIcon icon;
 	
 	public StartButton(String str) {
@@ -21,5 +25,6 @@ public class StartButton extends JButton {
 		int y2 = (int)(Math.random()*100 + 30);
 		g.drawImage(icon.getImage(), x1, y1, null);
 		g.drawImage(icon.getImage(), x2, y2, null);
+		
 	}
 }
