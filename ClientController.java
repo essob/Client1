@@ -12,7 +12,6 @@ import sjuan.*;
  *
  */
 public class ClientController {
-	//	private ClientGUI gui;
 	private ClientGUI gui;
 	private ClientConnection connection;
 	private Card[] cards;
