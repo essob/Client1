@@ -1,3 +1,4 @@
+
 package Client1;
 
 import java.awt.*;
@@ -24,6 +25,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
+	private PlayLabel pLabel = new PlayLabel(this);
 
 	/**
 	 * Constructs the Gui
@@ -42,13 +44,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
 		gameFrame.add(panel(), BorderLayout.CENTER);
-		gameFrame.add(PlayersPanel, BorderLayout.SOUTH);
+		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
-		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
+		gameFrame.add(PlayersPanel, BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
 
-		PlayersPanel.setBackground(Color.BLACK);
-		PlayersPanel.add(playerPanel(), BorderLayout.WEST);
+		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
+		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
 
 		start.addActionListener(this);
@@ -67,14 +69,25 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
-		JLabel labbb = new JLabel();
 		
-		labbb.setIcon(readFiles("s7s"));
-		panel.add(labbb);
-		labbb.setLocation(200, 200);
-		labbb.setSize(96, 71);
-		labbb.setVisible(true);
-//		updateAllPanels();
+		
+		panel.add(pLabel.getHeart7());
+		panel.add(pLabel.getSpade7());
+		panel.add(pLabel.getDiamond7());
+		panel.add(pLabel.getClub7());
+		
+		panel.add(pLabel.getHeartB());
+		panel.add(pLabel.getHeartS());
+		
+		panel.add(pLabel.getSpadeB());
+		panel.add(pLabel.getSpadeS());
+		
+		panel.add(pLabel.getDiamondB());
+		panel.add(pLabel.getDiamondS());
+		
+		panel.add(pLabel.getClubB());
+		panel.add(pLabel.getClubS());
+
 
 		
 		return panel;	
@@ -111,7 +124,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	public JPanel optionsPanel() {
 		optionsPanel.setPreferredSize(new Dimension(150, 100));
-		optionsPanel.setBackground(Color.BLACK);
+		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
@@ -153,7 +166,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return opponent1Panel return a panel of opponent2
 	 */
 	public JPanel opponent2Panel() {
-		opponent2Panel.setPreferredSize(new Dimension(200, 100));
+		opponent2Panel.setPreferredSize(new Dimension(830, 100));
 		opponent2Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		opponent2Panel.setBackground(Color.MAGENTA.darker().darker());
 
@@ -256,3 +269,4 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 	}
 }
+
