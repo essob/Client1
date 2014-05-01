@@ -8,10 +8,11 @@ import sjuan.Response;
 import java.net.*;
 
 public class ClientConnection {
-    private ClientController controller;
-    private Socket socket;
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
+	private ClientController controller;
+	private Socket socket;
+	private ObjectOutputStream output;
+	private ObjectInputStream input;
+
 
     public ClientConnection(ClientController controller, String serverIP, int serverPort) throws IOException {
         this.controller = controller;
@@ -21,36 +22,37 @@ public class ClientConnection {
         Thread thread = new Thread(new ResponseHandler());
         thread.start();
     }
-    
-    public void newRequest(Request request) {
-        try {
-            output.writeObject(request);
-            output.flush();
-        }catch(IOException e) {
-            System.out.println(e);
-        }
-    }
-    
-    public void exit() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-    
-    private class ResponseHandler implements Runnable {
-        public void run() {
-            Response response;
-            try {
-                while (true) {
-                    response = (Response)input.readObject();
-                    controller.newResponse(response);
+   
 
-                 }
-            } catch (Exception e1) {
-                System.out.println(e1);
-            }
-        }
-    }
+	public void newRequest(Request request) {
+		try {
+			output.writeObject(request);
+			output.flush();
+		}catch(IOException e) {
+			System.out.println(e);
+		}
+	}
+
+	public void exit() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+	}
+
+	private class ResponseHandler implements Runnable {
+		public void run() {
+			Response response;
+			try {
+				while (true) {
+					response = (Response)input.readObject();
+					controller.newResponse(response);
+				}
+			} catch (Exception e1) {
+				System.out.println(e1);
+			}
+		}
+	}
 }
+
