@@ -26,6 +26,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
+	private PlayersPanel play = new PlayersPanel(this);
 
 	/**
 	 * Constructs the Gui
@@ -70,7 +71,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
 		
-		
 		panel.add(pLabel.getHeart7());
 		panel.add(pLabel.getSpade7());
 		panel.add(pLabel.getDiamond7());
@@ -88,8 +88,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.add(pLabel.getClubB());
 		panel.add(pLabel.getClubS());
 
-
-		
 		return panel;	
 	}
 
@@ -98,28 +96,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return player1Panel return the actual player panel
 	 */
 	public JPanel playerPanel() {
-		playerPanel.setPreferredSize(new Dimension(830, 100));
-		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		playerPanel.setBackground(Color.BLACK);
+		playerPanel = play.getPanel();
 
 		return playerPanel;
 	}
-
+	
 	/**
-	 * this method sets player cards in graphics
-	 * @param cards takes in players cards
+	 * this method sets the players cards in gui
+	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(Card[] cards) {
-		Button playerCard;
-		if (cards!=null) {
-			for (int i = 0; i < cards.length; i++) {	
-				Card card = cards[i];
-				playerCard = new Button(card.toString());
-//				playerCard.setIcon(readFiles(card.toString()));
-				playerPanel.add(playerCard);
-
-			}
-		}
+		play.setPlayersCardsInGUI(cards);
 	}
 
 	public JPanel optionsPanel() {
@@ -255,6 +242,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	
 	public void setGameFrameTitle() {
 		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
+	}
+	
+	/**
+	 *	this method makes cards clickable 
+	 */
+	public void addCardAction(){
+		play.addCardListener();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
