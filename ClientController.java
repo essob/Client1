@@ -73,6 +73,7 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
+			gui.addCardAction();
 			
 		}
 	}
