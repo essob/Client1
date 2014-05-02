@@ -68,48 +68,20 @@ public class PlayersPanel extends JPanel implements MouseListener{
 			for (int i = 0; i < cards.length; i++) {
 				Card card = cards[i];
 				list[i].setIcon(gui.readFiles(card.toString()));
+				list[i].setName(card.toString());
 				panel.add(list[i]);
 			}
 		}
 	}
-	//Vet inte än vilket som är bäst, föredrar for loopen om den kan komma till användning
 	public void addCardListener() {
 		if (list!=null)
-			for (int i = 0; i < list.length; i++)
+			for (int i = 0; i < list.length; i++) {
 				list[i].addMouseListener(this);
-		//		playCard1.addMouseListener(this);
-		//		playCard2.addMouseListener(this);
-		//		playCard3.addMouseListener(this);
-		//		playCard4.addMouseListener(this);
-		//		playCard5.addMouseListener(this);
-		//		playCard6.addMouseListener(this);
-		//		playCard7.addMouseListener(this);
-		//		playCard8.addMouseListener(this);
-		//		playCard9.addMouseListener(this);
-		//		playCard10.addMouseListener(this);
-		//		playCard11.addMouseListener(this);
-		//		playCard12.addMouseListener(this);
-		//		playCard13.addMouseListener(this);
-		//		playCard14.addMouseListener(this);
-		//		playCard15.addMouseListener(this);
-		//		playCard16.addMouseListener(this);
-		//		playCard17.addMouseListener(this);
-		//		playCard18.addMouseListener(this);
-		//		playCard19.addMouseListener(this);
-		//		playCard20.addMouseListener(this);
-
-
+			}
 	}
 	// metod som just nu inte används
-	public JLabel label () {
-		JLabel labbb = new JLabel();
-
-		labbb.setIcon(gui.readFiles("s7"));
-
-		labbb.setLocation(200, 200);
-		labbb.setSize(71, 96);
-
-		return labbb;
+	public String labelName () {
+		return "playCard";
 	}
 	public JPanel getPanel() {
 		return panel;
@@ -122,7 +94,7 @@ public class PlayersPanel extends JPanel implements MouseListener{
 	@Override
 	//här ska skrivas anrop till gui som i sin tur ska anropa controllern om vad som ska hända
 	public void mousePressed(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, e.getComponent());
+		JOptionPane.showMessageDialog(null, e.getComponent().getName());
 
 	}
 	@Override
