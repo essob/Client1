@@ -1,6 +1,7 @@
 package Client1;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -14,7 +15,7 @@ import sjuan.*;
 public class ClientController {
 	private ClientGUI gui;
 	private ClientConnection connection;
-	private Card[] cards;
+	private ArrayList <Card> cards;
 	private int opponent1, opponent2, opponent3, clientID;
 
 	/**
@@ -49,7 +50,7 @@ public class ClientController {
 	 * this method returns Players cards
 	 * @return cards returns a players cards
 	 */
-	public Card[] getPlayerCards() {
+	public ArrayList<Card> getPlayerCards() {
 		return cards;
 	}
 	/**

@@ -4,6 +4,7 @@ package Client1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -97,7 +98,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 */
 	public JPanel playerPanel() {
 		playerPanel = play.getPanel();
-
 		return playerPanel;
 	}
 	
@@ -105,7 +105,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
 	 */
-	public void setPlayersCardsInGUI(Card[] cards) {
+	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		play.setPlayersCardsInGUI(cards);
 	}
 
