@@ -80,10 +80,11 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			
+			gui.addCardAction();
+
 		}
 	}
-	
+
 	/**
 	 * this method handle the response from the server
 	 * @param response takes in a response from server
@@ -123,10 +124,10 @@ public class ClientController {
 		return opponent3;
 	}
 
-/**
- * this method returns this clients ID
- * @return clientID returns a ID of this Client
- */
+	/**
+	 * this method returns this clients ID
+	 * @return clientID returns a ID of this Client
+	 */
 	public int getClientID() {
 		return clientID;
 	}
