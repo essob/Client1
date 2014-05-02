@@ -1,6 +1,7 @@
 package Client1;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -14,7 +15,7 @@ import sjuan.*;
 public class ClientController {
 	private ClientGUI gui;
 	private ClientConnection connection;
-	private Card[] cards;
+	private ArrayList <Card> cards;
 	private int opponent1, opponent2, opponent3, clientID;
 
 	/**
@@ -35,15 +36,21 @@ public class ClientController {
 	/**
 	 * this method creates a request to server
 	 */
-	public void newRequest(String str) {
-		connection.newRequest(new Request(str));
+	public void newRequest(String request) {
+		try {
+			connection.newRequest(new Request(request));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+		}
 	}
+
 
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
 	 */
-	public Card[] getPlayerCards() {
+	public ArrayList<Card> getPlayerCards() {
 		return cards;
 	}
 	/**
@@ -66,6 +73,7 @@ public class ClientController {
 			this.opponent3 = response.getOpponentCards3();
 			this.clientID = response.getClientID();
 
+
 			gui.setPlayersCardsInGUI(cards);
 			gui.setNbrOfOpponent1Cards(opponent1);
 			gui.setNbrOfOpponent2Cards(opponent2);
@@ -73,9 +81,11 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			
+			gui.addCardAction();
+
 		}
 	}
+
 	/**
 	 * this method handle the response from the server
 	 * @param response takes in a response from server
@@ -115,10 +125,10 @@ public class ClientController {
 		return opponent3;
 	}
 
-/**
- * this method returns this clients ID
- * @return clientID returns a ID of this Client
- */
+	/**
+	 * this method returns this clients ID
+	 * @return clientID returns a ID of this Client
+	 */
 	public int getClientID() {
 		return clientID;
 	}

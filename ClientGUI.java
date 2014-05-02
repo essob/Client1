@@ -1,8 +1,10 @@
+
 package Client1;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -24,6 +26,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
 	private ClientController controller;
+	private PlayLabel pLabel = new PlayLabel(this);
+	private PlayersPanel play = new PlayersPanel(this);
 
 	/**
 	 * Constructs the Gui
@@ -42,13 +46,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
 		gameFrame.add(panel(), BorderLayout.CENTER);
-		gameFrame.add(PlayersPanel, BorderLayout.SOUTH);
+		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
-		gameFrame.add(opponent2Panel(), BorderLayout.NORTH);
+		gameFrame.add(PlayersPanel, BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
 
-		PlayersPanel.setBackground(Color.BLACK);
-		PlayersPanel.add(playerPanel(), BorderLayout.WEST);
+		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
+		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
 
 		start.addActionListener(this);
@@ -63,9 +67,28 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel panel() {
-		panel.setPreferredSize(new Dimension(400, 100));
+//		panel.setPreferredSize(new Dimension(400, 100));
+		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
+		
+		panel.add(pLabel.getHeart7());
+		panel.add(pLabel.getSpade7());
+		panel.add(pLabel.getDiamond7());
+		panel.add(pLabel.getClub7());
+		
+		panel.add(pLabel.getHeartB());
+		panel.add(pLabel.getHeartS());
+		
+		panel.add(pLabel.getSpadeB());
+		panel.add(pLabel.getSpadeS());
+		
+		panel.add(pLabel.getDiamondB());
+		panel.add(pLabel.getDiamondS());
+		
+		panel.add(pLabel.getClubB());
+		panel.add(pLabel.getClubS());
+
 		return panel;	
 	}
 
@@ -74,33 +97,21 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return player1Panel return the actual player panel
 	 */
 	public JPanel playerPanel() {
-		playerPanel.setPreferredSize(new Dimension(830, 100));
-		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		playerPanel.setBackground(Color.BLACK);
-
+		playerPanel = play.getPanel();
 		return playerPanel;
 	}
-
+	
 	/**
-	 * this method sets player cards in graphics
-	 * @param cards takes in players cards
+	 * this method sets the players cards in gui
+	 * @param cards takes in the players cards
 	 */
-	public void setPlayersCardsInGUI(Card[] cards) {
-		Button playerCard;
-		if (cards!=null) {
-			for (int i = 0; i < cards.length; i++) {	
-				Card card = cards[i];
-				playerCard = new Button(card.toString());
-//				playerCard.setIcon(readFiles(card.toString()));
-				playerPanel.add(playerCard);
-
-			}
-		}
+	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
+		play.setPlayersCardsInGUI(cards);
 	}
 
 	public JPanel optionsPanel() {
 		optionsPanel.setPreferredSize(new Dimension(150, 100));
-		optionsPanel.setBackground(Color.BLACK);
+		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
@@ -142,7 +153,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return opponent1Panel return a panel of opponent2
 	 */
 	public JPanel opponent2Panel() {
-		opponent2Panel.setPreferredSize(new Dimension(200, 100));
+		opponent2Panel.setPreferredSize(new Dimension(830, 100));
 		opponent2Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		opponent2Panel.setBackground(Color.MAGENTA.darker().darker());
 
@@ -233,6 +244,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
 	}
 	
+	/**
+	 *	this method makes cards clickable 
+	 */
+	public void addCardAction(){
+		play.addCardListener();
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest("new");
@@ -245,3 +263,4 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 	}
 }
+
