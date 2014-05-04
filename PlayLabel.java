@@ -2,6 +2,8 @@ package Client1;
 
 import javax.swing.*;
 
+import sjuan.Card;
+
 public class PlayLabel extends JLabel{
 	/**
 	 * 
@@ -80,8 +82,8 @@ public class PlayLabel extends JLabel{
 		return spadesBigger;
 	}
 
-	public JLabel getSpadeS() {
-		spadesSmaller.setIcon(gui.readFiles("s6"));
+	public JLabel getSpadeS(Card card) {
+		spadesSmaller.setIcon(gui.readFiles(card.toString()));
 		spadesSmaller.setLocation(295, 40);
 		spadesSmaller.setSize(71, 96);
 		return spadesSmaller;

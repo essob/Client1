@@ -19,7 +19,7 @@ public class ClientController {
 	private int opponent1, opponent2, opponent3, clientID;
 
 	/**
-	 * constructs a clientcontroller
+	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber
 	 * @param serverPort takes in Server Port Number
 	 */
@@ -45,6 +45,19 @@ public class ClientController {
 		}
 	}
 
+	/**
+	 * this method creates a request to server
+	 * @param request takes in a request as a string
+	 * @param card takes in a card as a string
+	 */
+	public void newRequest(String request, Card card) {
+		try {
+			connection.newRequest(new Request(request, card));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+		}
+	}
 
 	/**
 	 * this method returns Players cards
@@ -73,7 +86,6 @@ public class ClientController {
 			this.opponent3 = response.getOpponentCards3();
 			this.clientID = response.getClientID();
 
-
 			gui.setPlayersCardsInGUI(cards);
 			gui.setNbrOfOpponent1Cards(opponent1);
 			gui.setNbrOfOpponent2Cards(opponent2);
@@ -96,9 +108,17 @@ public class ClientController {
 			getStartConditions(response);
 
 		}
-		else if (response.getRequest().equals("pass")){
+		else if (response.getRequest().equals("pass")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 		}
+
+		else if (response.getRequest().equals("playCard")) {
+			setCardAtGameBoard(response.getCard());
+		}
+		else if (response.getRequest().equals("dontPlayCard")) {
+			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
+		}
+
 	}
 
 	/**
@@ -131,5 +151,28 @@ public class ClientController {
 	 */
 	public int getClientID() {
 		return clientID;
+	}
+
+	/**
+	 * this method tells gui to place a card at game board
+	 * @param card takes in a card to place at game board
+	 */
+	public void setCardAtGameBoard(Card card) {
+		gui.setCardAtGameBoard(card);
+	}
+
+	/**
+	 * this method use a string of the cards name to return it as a card
+	 * @param cardName takes in a string of a cards name
+	 * @return card returns a card
+	 */
+	public Card getCard (String cardName) {
+		int i = 0;
+		while (cards.iterator().hasNext()) {
+			if (cards.get(i).toString().equals(cardName))
+				return cards.get(i);
+			i++;
+		}
+		return cards.get(i);
 	}
 }
