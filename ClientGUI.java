@@ -94,7 +94,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 	
 	public void setCardAtGameBoard(Card card) {
-		panel.add(pLabel.getSpadeS(card));
+		panel.add(pLabel.findOutWhere(card));
 	}
 
 	/**
