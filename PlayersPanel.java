@@ -66,9 +66,10 @@ public class PlayersPanel extends JPanel implements MouseListener{
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
+		
 		int x = 20;
 		int y = 0;
-		if (cards!=null) {
+//		if (cards!=null) {
 			for (int i = 0; i < cards.size(); i++) {
 				Card card = cards.get(i);
 				list[i].setIcon(gui.readFiles(card.toString()));
@@ -89,7 +90,7 @@ public class PlayersPanel extends JPanel implements MouseListener{
 					x+=45;
 			}
 		}
-	}
+//	}
 
 	/**
 	 * this method add listener for all (card)labels in the list
