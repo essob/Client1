@@ -61,35 +61,22 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setVisible(true);
 
 	}
-	
+
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
 	 */
 	public JPanel panel() {
-//		panel.setPreferredSize(new Dimension(400, 100));
+		//		panel.setPreferredSize(new Dimension(400, 100));
 		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
-		
-		panel.add(pLabel.getHeart7());
-		panel.add(pLabel.getSpade7());
-		panel.add(pLabel.getDiamond7());
-		panel.add(pLabel.getClub7());
-		
-		panel.add(pLabel.getHeartB());
-		panel.add(pLabel.getHeartS());
-		
-		panel.add(pLabel.getSpadeB());
-		panel.add(pLabel.getSpadeS());
-		
-		panel.add(pLabel.getDiamondB());
-		panel.add(pLabel.getDiamondS());
-		
-		panel.add(pLabel.getClubB());
-		panel.add(pLabel.getClubS());
 
 		return panel;	
+	}
+
+	public void setCardAtGameBoard(Card card) {
+		panel.add(pLabel.findOutWhere(card));
 	}
 
 	/**
@@ -100,7 +87,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel = play.getPanel();
 		return playerPanel;
 	}
-	
+
 	/**
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
@@ -239,18 +226,18 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 * this method gives buttons make some action when pressed
 	 */
-	
+
 	public void setGameFrameTitle() {
 		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
 	}
-	
+
 	/**
 	 *	this method makes cards clickable 
 	 */
 	public void addCardAction(){
 		play.addCardListener();
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
 			controller.newRequest("new");
@@ -261,6 +248,16 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource() == pass){
 			controller.newRequest("pass");
 		}
+	}
+
+	/**
+	 * this method play a card from a hand to the gameboard
+	 * @param cardName takes in a string of a cards name
+	 */
+	public void playCard(String cardName) {
+		Card card = controller.getCard(cardName);
+		controller.newRequest("playCard", card);
+		updateAllPanels();
 	}
 }
 

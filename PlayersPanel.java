@@ -60,12 +60,9 @@ public class PlayersPanel extends JPanel implements MouseListener{
 		panel.setBackground(Color.BLACK);
 
 	}
-	public void setPlayersCardsLocation(){
-
-	}
 
 	/**
-	 * this method sets the players cards in gui
+	 * this method sets the players cards in gui and place them 
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
@@ -119,7 +116,8 @@ public class PlayersPanel extends JPanel implements MouseListener{
 	@Override
 	//här ska skrivas anrop till gui som i sin tur ska anropa controllern om vad som ska hända
 	public void mousePressed(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, e.getComponent().getName());
+		gui.playCard(e.getComponent().getName());
+		//		JOptionPane.showMessageDialog(null, e.getComponent().getName());
 
 	}
 	@Override
