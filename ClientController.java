@@ -116,6 +116,8 @@ public class ClientController {
 
 		else if (response.getRequest().equals("playCard")) {
 			setCardAtGameBoard(response.getCard());
+			gui.setPlayersCardsInGUI(response.getCards());
+			gui.updateAllPanels();
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
