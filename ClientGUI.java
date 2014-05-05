@@ -72,29 +72,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
 
-		//		panel.add(pLabel.getHeart7());
-		//		panel.add(pLabel.getSpade7());
-		//		panel.add(pLabel.getDiamond7());
-		//		panel.add(pLabel.getClub7());
-		//		
-		//		panel.add(pLabel.getHeartB());
-		//		panel.add(pLabel.getHeartS());
-		//		
-		//		panel.add(pLabel.getSpadeB());
-		//		panel.add(pLabel.getSpadeS());
-		//		
-		//		panel.add(pLabel.getDiamondB());
-		//		panel.add(pLabel.getDiamondS());
-		//		
-		//		panel.add(pLabel.getClubB());
-		//		panel.add(pLabel.getClubS());
-
-
 		return panel;	
 	}
-	
+
 	public void setCardAtGameBoard(Card card) {
-		panel.add(pLabel.getSpadeS(card));
+		panel.add(pLabel.findOutWhere(card));
 	}
 
 	/**
@@ -267,7 +249,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 			controller.newRequest("pass");
 		}
 	}
-	
+
 	/**
 	 * this method play a card from a hand to the gameboard
 	 * @param cardName takes in a string of a cards name
