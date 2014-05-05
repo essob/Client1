@@ -1,11 +1,10 @@
 package Client1;
 
 import java.io.*; 
-import sjuan.*;
-import sjuan.Card;
 import java.util.ArrayList;
 import java.io.*;
 
+import javax.swing.JTable;
 
 import sjuan.*;
 
@@ -16,9 +15,11 @@ import sjuan.*;
  */
 public class ClientController {
 	private ClientGUI gui;
+	private JTable table;
 	private ClientConnection connection;
 	private Card[] cards;
 	private int opponent1, opponent2, opponent3;
+	private Object tabell;
 
 	/**
 	 * constructs a clientcontroller
@@ -70,6 +71,7 @@ public class ClientController {
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
+	
 	public void getStartConditions(Response response) {
 		this.cards = response.getCards();
 		this.opponent1 = response.getOpponentCards1();
@@ -110,6 +112,8 @@ public class ClientController {
 	public int getOpponent3() {
 		return opponent3;
 	}
+	
+
 	public static void main(String[] args) {
 		new ClientController("127.0.0.1", 7766);
 	}
