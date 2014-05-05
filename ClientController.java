@@ -103,14 +103,16 @@ public class ClientController {
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		System.out.println(response.getRequest());
+		//		System.out.println(response.getRequest());
 		if (response.getRequest().equals("new")) {
 			getStartConditions(response);
 
 		}
 		else if (response.getRequest().equals("pass")) {
-			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
+			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
+		else if (response.getRequest().equals("passainte"))
+			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
 			setCardAtGameBoard(response.getCard());
@@ -118,7 +120,6 @@ public class ClientController {
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
-
 	}
 
 	/**
@@ -173,6 +174,6 @@ public class ClientController {
 				return cards.get(i);
 			i++;
 		}
-		return cards.get(i);
+		return null;
 	}
 }
