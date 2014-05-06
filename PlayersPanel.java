@@ -66,31 +66,34 @@ public class PlayersPanel extends JPanel implements MouseListener{
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
-		
+		clearList();
 		int x = 20;
 		int y = 0;
-//		if (cards!=null) {
-			for (int i = 0; i < cards.size(); i++) {
-				Card card = cards.get(i);
-				list[i].setIcon(gui.readFiles(card.toString()));
-				list[i].setName(card.toString());
-				list[i].setBounds(x, y,71, 96);
-				panel.add(list[i]);
-				if (cards.size() <=13)
-					x+=72;
-				else if (cards.size() > 13 )
-					x+=65;
-				else if (cards.size() > 16)
-					x+=60;
-				else if (cards.size() > 19)
-					x+=55;
-				else if (cards.size() > 22)
-					x+=50;
-				else
-					x+=45;
-			}
+		for (int i = 0; i < cards.size(); i++) {
+			Card card = cards.get(i);
+			list[i].setIcon(gui.readFiles(card.toString()));
+			list[i].setName(card.toString());
+			list[i].setBounds(x, y,71, 96);
+			panel.add(list[i]);
+			if (cards.size() <=13)
+				x+=72;
+			else if (cards.size() > 13 )
+				x+=65;
+			else if (cards.size() > 16)
+				x+=60;
+			else if (cards.size() > 19)
+				x+=55;
+			else if (cards.size() > 22)
+				x+=50;
+			else
+				x+=45;
 		}
-//	}
+	}
+	public void clearList() {
+		for (int i = 0; i < list.length; i++) {
+			list[i].setIcon(null);
+		}
+	}
 
 	/**
 	 * this method add listener for all (card)labels in the list
