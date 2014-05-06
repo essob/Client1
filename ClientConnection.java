@@ -28,6 +28,7 @@ public class ClientConnection {
 		try {
 			output.writeObject(request);
 			output.flush();
+			output.reset();
 		}catch(IOException e) {
 			System.out.println(e);
 		}

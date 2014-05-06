@@ -106,6 +106,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		play.setPlayersCardsInGUI(cards);
+		updateAllPanels();
 	}
 
 	public JPanel optionsPanel() {
