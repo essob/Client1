@@ -52,7 +52,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request, Card card) {
 		try {
-			connection.newRequest(new Request(request, card));
+			connection.newRequest(new Request(request, card, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
