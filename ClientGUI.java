@@ -1,13 +1,11 @@
-
+ 
 package Client1;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.*;
-
 import sjuan.Card;
 /**
  * This class generates a Grafical User Interface to play the game
@@ -25,10 +23,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
+	private JButton databas = new JButton("Databas");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
-
+	
+	
 	/**
 	 * Constructs the Gui
 	 */
@@ -58,6 +58,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		start.addActionListener(this);
 		end.addActionListener(this);
 		pass.addActionListener(this);
+		databas.addActionListener(this);
 		gameFrame.setVisible(true);
 
 	}
@@ -98,11 +99,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public JPanel optionsPanel() {
-		optionsPanel.setPreferredSize(new Dimension(150, 100));
+		optionsPanel.setPreferredSize(new Dimension(150, 125));
 		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
+		optionsPanel.add(databas);
 
 		return optionsPanel;
 	}
@@ -248,6 +250,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		else if(e.getSource() == pass){
 			controller.newRequest("pass");
+		}
+		
+		else if(e.getSource()==databas){
+			controller.newRequest("end");
 		}
 	}
 
