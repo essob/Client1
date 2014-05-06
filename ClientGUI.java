@@ -1,3 +1,4 @@
+ 
 package Client1;
 
 import java.awt.*;
@@ -9,6 +10,7 @@ import javax.swing.*;
 
 import com.mysql.jdbc.ResultSetMetaData;
 
+import java.util.ArrayList;
 import sjuan.Card;
 
 
@@ -29,9 +31,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
-	private StartButton start 	= new StartButton("B�rja spelomg�ng");
-	private JButton database = new JButton( "Databas" ); 	
+	private StartButton start = new StartButton("Börja spelomgång");
+	private JButton databas = new JButton("Databas");
 	private ClientController controller;
+	private PlayLabel pLabel = new PlayLabel(this);
+	private PlayersPanel play = new PlayersPanel(this);
 	
 	
 	/**
@@ -63,7 +67,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		start.addActionListener(this);
 		end.addActionListener(this);
-		database.addActionListener(this);
+		pass.addActionListener(this);
+		databas.addActionListener(this);
 		gameFrame.setVisible(true);
 		
 
@@ -74,10 +79,16 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel panel() {
-		panel.setPreferredSize(new Dimension(400, 100));
+		//		panel.setPreferredSize(new Dimension(400, 100));
+		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
+
 		return panel;	
+	}
+
+	public void setCardAtGameBoard(Card card) {
+		panel.add(pLabel.findOutWhere(card));
 	}
 
 	/**
@@ -85,38 +96,25 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return player1Panel return the actual player panel
 	 */
 	public JPanel playerPanel() {
-		playerPanel.setPreferredSize(new Dimension(200, 100));
-		playerPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		playerPanel.setBackground(Color.BLACK);
-
+		playerPanel = play.getPanel();
 		return playerPanel;
 	}
 
 	/**
-	 * this method sets player cards in graphics
-	 * @param cards takes in playres cards
+	 * this method sets the players cards in gui
+	 * @param cards takes in the players cards
 	 */
-	public void setPlayersCardsInGUI(Card[] cards) {
-		JLabel playerCard;
-		if (cards!=null) {
-			for (int i = 0; i < cards.length; i++) {
-				playerCard = new JLabel();
-				Card card = cards[i];
-				playerCard.setIcon(readFiles(card.toString()));
-				playerPanel.add(playerCard);
-
-			}
-		}
+	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
+		play.setPlayersCardsInGUI(cards);
 	}
 
 	public JPanel optionsPanel() {
-		optionsPanel.setPreferredSize(new Dimension(150, 130));
+		optionsPanel.setPreferredSize(new Dimension(150, 125));
 		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
-		optionsPanel.add(database);
-
+		optionsPanel.add(databas);
 		return optionsPanel;
 	}
 
@@ -140,7 +138,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 				else
 					opponent1Cards.setIcon(readFiles("b1pb"));
 				opponent1Panel.add(opponent1Cards);
-
 			}
 	}
 
@@ -242,42 +239,41 @@ public class ClientGUI extends JPanel implements ActionListener{
 		start.setEnabled(true);
 	}
 
+	public void setGameFrameTitle() {
+		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
+	}
+
 	/**
-	 * this method gives buttons make some action when pressed
+	 *	this method makes cards clickable 
 	 */
-	
-	public void tabell(){
-		JFrame frame = new JFrame();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public void addCardAction(){
+		play.addCardListener();
+	}
 
-	    Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3" },
-	        { "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
-	    Object columnNames[] = { "Column One", "Column Two", "Column Three" };
-	    JTable table = new JTable(rowData, columnNames);
 
-	    JScrollPane scrollPane = new JScrollPane(table);
-	    frame.add(scrollPane, BorderLayout.CENTER);
-	    frame.setSize(300, 150);
-	    frame.setVisible(true);
-		}
-	
-	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
-			controller.newRequest();
+			controller.newRequest("new");
 		}
 		else if(e.getSource() == end) {
 			System.exit(0);
 		}
 		else if(e.getSource() == pass){
-
+			controller.newRequest("pass");
 		}
-		
-		else if(e.getSource()==database){
-			System.out.println("resultat");
+		else if(e.getSource()==databas){
+			controller.newRequest("end");
 		}
-		
-		}
-
 	}
+
+	/**
+	 * this method play a card from a hand to the gameboard
+	 * @param cardName takes in a string of a cards name
+	 */
+	public void playCard(String cardName) {
+		Card card = controller.getCard(cardName);
+		controller.newRequest("playCard", card);
+		updateAllPanels();
+	}
+}
 
