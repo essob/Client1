@@ -133,6 +133,7 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
+			cards = response.getCards();
 			setCardAtGameBoard(response.getCard());
 			gui.setPlayersCardsInGUI(response.getCards());
 			gui.updateAllPanels();
