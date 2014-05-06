@@ -52,7 +52,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request, Card card) {
 		try {
-			connection.newRequest(new Request(request, card));
+			connection.newRequest(new Request(request, card, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -116,6 +116,8 @@ public class ClientController {
 
 		else if (response.getRequest().equals("playCard")) {
 			setCardAtGameBoard(response.getCard());
+			gui.setPlayersCardsInGUI(response.getCards());
+			gui.updateAllPanels();
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
