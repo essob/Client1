@@ -109,7 +109,7 @@ public class PlayersPanel extends JPanel implements MouseListener{
 	 * this method returns this panel
 	 * @return panel returns this panel
 	 */
-	public JPanel getPanel() {
+	public JPanel getPanel() { 
 		return this.panel;
 	}
 

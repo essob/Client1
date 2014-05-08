@@ -2,6 +2,8 @@
 package Client1;
 
 import java.awt.*;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -26,12 +28,15 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
+	private JFrame LoginFrame = new JFrame();
+
 	
 
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
+	private JButton login = new JButton("Inloggning"); 
 	private JButton databas = new JButton("Databas");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
@@ -69,6 +74,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		end.addActionListener(this);
 		pass.addActionListener(this);
 		databas.addActionListener(this);
+		login.addActionListener(this); 
 		gameFrame.setVisible(true);
 		
 
@@ -87,6 +93,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return panel;	
 	}
 
+	
 	public void setCardAtGameBoard(Card card) {
 		panel.add(pLabel.findOutWhere(card));
 	}
@@ -99,7 +106,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel = play.getPanel();
 		return playerPanel;
 	}
-
+		
 	/**
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
@@ -110,12 +117,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public JPanel optionsPanel() {
-		optionsPanel.setPreferredSize(new Dimension(150, 125));
+		optionsPanel.setPreferredSize(new Dimension(150, 160));
 		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
 		optionsPanel.add(databas);
+		optionsPanel.add(login);
 		return optionsPanel;
 	}
 
@@ -264,6 +272,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		else if(e.getSource()==databas){
 			controller.newRequest("end");
+		}
+		
+		else if(e.getSource() == login) {
+			LoginFrame = new LoginFrame();
 		}
 	}
 
