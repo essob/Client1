@@ -1,4 +1,4 @@
- 
+
 package Client1;
 
 import java.awt.*;
@@ -26,8 +26,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
-	
-
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
@@ -36,8 +34,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
-	
-	
+
+
 	/**
 	 * Constructs the Gui
 	 */
@@ -63,17 +61,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
 		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
-		
+
 
 		start.addActionListener(this);
 		end.addActionListener(this);
 		pass.addActionListener(this);
 		databas.addActionListener(this);
 		gameFrame.setVisible(true);
-		
+
 
 	}
-	
+
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
@@ -83,7 +81,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
-
+		
 		return panel;	
 	}
 
@@ -105,8 +103,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
+		play.removeAll();
 		play.setPlayersCardsInGUI(cards);
-		updateAllPanels();
+//		updateAllPanels();
 	}
 
 	public JPanel optionsPanel() {
@@ -130,6 +129,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param nbr takes in the amount of cards in opponent1s hand
 	 */
 	public void setNbrOfOpponent1Cards (int nbr) {
+		opponent1Panel.removeAll();
 		JLabel opponent1Cards;
 		if (nbr != 0)
 			for (int i = 0; i < nbr; i++) {
@@ -159,6 +159,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param nbr takes in the amount of cards in opponent2s hand
 	 */
 	public void setNbrOfOpponent2Cards (int nbr) {
+		opponent2Panel.removeAll();
 		JLabel opponent2Cards;
 		if (nbr != 0)
 			for (int i = 0; i < nbr; i++) {
@@ -187,6 +188,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param nbr takes in the amount of cards in opponent3s hand
 	 */
 	public void setNbrOfOpponent3Cards (int nbr) {
+		opponent3Panel.removeAll();
 		JLabel opponent3Cards;
 		if (nbr != 0)
 			for (int i = 0; i < nbr-1; i++) {
@@ -215,16 +217,24 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return opponent1Panel;
 	}
 
-	
+
 	/**
 	 * this method updates the graphics of all panels
 	 */
 	public void updateAllPanels() {
-		playerPanel.updateUI();
-		opponent1Panel.updateUI();
-		opponent2Panel.updateUI();
-		opponent3Panel.updateUI();
-		panel.updateUI();
+		playerPanel.invalidate();
+		playerPanel.revalidate();
+		playerPanel.repaint();
+//		opponent1Panel.revalidate();
+//		opponent1Panel.revalidate();
+//		opponent1Panel.repaint();
+//		opponent2Panel.revalidate();
+//		opponent2Panel.repaint();
+//		opponent3Panel.revalidate();
+//		opponent3Panel.repaint();
+//		panel.revalidate();
+//		panel.repaint();
+
 	}
 	/**
 	 * this method makes start button disabled
@@ -247,9 +257,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 *	this method makes cards clickable 
 	 */
-	public void addCardAction(){
-		play.addCardListener();
-	}
+//	public void addCardAction(ArrayList <Card> cards){
+//		play.addCardListener( cards);
+//	}
 
 
 	public void actionPerformed(ActionEvent e) {
@@ -272,9 +282,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cardName takes in a string of a cards name
 	 */
 	public void playCard(String cardName) {
-		Card card = controller.getCard(cardName);
-		controller.newRequest("playCard", card);
-		updateAllPanels();
+//		controller.getCard(cardName);
+		controller.newRequest("playCard", cardName);
+//		updateAllPanels();
+	}
+	public void guiClear() {
+		opponent1Panel.removeAll();		
+		opponent2Panel.removeAll();
+		opponent3Panel.removeAll();
+		playerPanel.removeAll();
+
 	}
 }
+
 

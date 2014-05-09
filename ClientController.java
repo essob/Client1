@@ -21,7 +21,7 @@ public class ClientController {
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
-	private ArrayList <Card> cards;
+	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID;
 
 
@@ -56,20 +56,14 @@ public class ClientController {
 		}
 	}
 
-
-	public void exit() {
-		connection.exit();
-		System.exit(0);
-	}
-
 	/**
 	 * this method creates a request to server
 	 * @param request takes in a request as a string
 	 * @param card takes in a card as a string
 	 */
-	public void newRequest(String request, Card card) {
+	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, card, clientID));
+			connection.newRequest(new Request(request, cardName, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -88,32 +82,56 @@ public class ClientController {
 	 * @param response takes in the players cards
 	 */
 	public void setPlayerCards(Response response ) {
-		this.cards = response.getCards();
+		this.cards = response.getPlayer1().getPlayerCards();
 	}
 
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
-	
+
 	public void getStartConditions(Response response) {
 		if (response.getRequest().equals("new")) {
-			this.cards = response.getCards();
-			this.opponent1 = response.getOpponentCards1();
-			this.opponent2 = response.getOpponentCards2();
-			this.opponent3 = response.getOpponentCards3();
-			this.clientID = response.getClientID();
+			this.cards = response.getPlayer1().getPlayerCards();
+			this.opponent1 = response.getPlayer2().getPlayerCardSize();
+			this.opponent2 = response.getPlayer3().getPlayerCardSize();
+			this.opponent3 = response.getPlayer4().getPlayerCardSize();
+			this.clientID = response.getPlayer1().getClientID();
 
-			gui.setPlayersCardsInGUI(cards);
+			gui.setPlayersCardsInGUI(this.cards);
 			gui.setNbrOfOpponent1Cards(opponent1);
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction();
+//			gui.addCardAction(this.cards);
 
 		}
+	}
+	public void playCardCondition(Response response) {
+		gui.guiClear();
+		this.cards.clear();
+//		this.opponent1=0;
+//		this.opponent2=0;
+//		this.opponent3=0;
+
+		this.cards = response.getPlayer1().getPlayerCards();
+		this.opponent1 = response.getPlayer2().getPlayerCardSize();
+		this.opponent2 = response.getPlayer3().getPlayerCardSize();
+		this.opponent3 = response.getPlayer4().getPlayerCardSize();
+		this.clientID = response.getPlayer1().getClientID();
+		this.gameBoardCards = response.getGameBoardCards();
+
+		
+		gui.setNbrOfOpponent1Cards(opponent1);
+		gui.setNbrOfOpponent2Cards(opponent2);
+		gui.setNbrOfOpponent3Cards(opponent3);
+		setCardAtGameBoard(getCard(response.getCardName()));
+		gui.setPlayersCardsInGUI(this.cards);
+		gui.updateAllPanels();
+//		gui.addCardAction(this.cards);
+
 	}
 
 	/**
@@ -121,28 +139,25 @@ public class ClientController {
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		//		System.out.println(response.getRequest());
 		if (response.getRequest().equals("new")) {
 			getStartConditions(response);
 
 		}
+
 		else if (response.getRequest().equals("pass")) {
 			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
+
 		else if (response.getRequest().equals("passainte"))
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
-			cards.clear();
-			this.cards = response.getCards();
-			setCardAtGameBoard(response.getCard());
-			gui.setPlayersCardsInGUI(cards);
-			gui.updateAllPanels();
+			playCardCondition(response);
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
-		
+
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
 		}
@@ -195,9 +210,9 @@ public class ClientController {
 	 */
 	public Card getCard (String cardName) {
 		int i = 0;
-		while (cards.iterator().hasNext()) {
-			if (cards.get(i).toString().equals(cardName))
-				return cards.get(i);
+		while (gameBoardCards.iterator().hasNext()) {
+			if (gameBoardCards.get(i).toString().equals(cardName))
+				return gameBoardCards.get(i);
 			i++;
 		}
 		return null;
