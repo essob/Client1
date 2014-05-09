@@ -1,9 +1,13 @@
 package Client1;
 
+import java.io.*; 
+import java.util.ArrayList;
 import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+
+import javax.swing.JTable;
 
 import sjuan.*;
 
@@ -14,15 +18,19 @@ import sjuan.*;
  */
 public class ClientController {
 	private ClientGUI gui;
+	private JTable table;
 	private ClientConnection connection;
+	private Object tabell;
 	private ArrayList <Card> cards;
 	private int opponent1, opponent2, opponent3, clientID;
+
 
 	/**
 	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber
 	 * @param serverPort takes in Server Port Number
 	 */
+
 	public ClientController(String serverIP, int serverPort) {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
@@ -33,6 +41,9 @@ public class ClientController {
 		}
 		System.out.println("connection: " + connection);
 	}
+
+
+
 	/**
 	 * this method creates a request to server
 	 */
@@ -43,6 +54,12 @@ public class ClientController {
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
 		}
+	}
+
+
+	public void exit() {
+		connection.exit();
+		System.exit(0);
 	}
 
 	/**
@@ -59,7 +76,7 @@ public class ClientController {
 		}
 	}
 
-	/**
+	/*
 	 * this method returns Players cards
 	 * @return cards returns a players cards
 	 */
@@ -78,6 +95,7 @@ public class ClientController {
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
+	
 	public void getStartConditions(Response response) {
 		if (response.getRequest().equals("new")) {
 			this.cards = response.getCards();
@@ -93,7 +111,7 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction();
+			gui.addCardAction(cards);
 
 		}
 	}
@@ -115,13 +133,20 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
+			cards.clear();
+			this.cards = response.getCards();
 			setCardAtGameBoard(response.getCard());
-			gui.setPlayersCardsInGUI(response.getCards());
+			gui.setPlayersCardsInGUI(cards);
+			gui.addCardAction(cards);
 			gui.updateAllPanels();
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
+		
+//		else if(response.getRequest().equals("end")){
+//			JOptionPane.showMessageDialog(null, response.getSql());
+//		}
 	}
 
 	/**

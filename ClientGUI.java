@@ -1,14 +1,19 @@
-
+ 
 package Client1;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.sql.ResultSet;
 
 import javax.swing.*;
 
+import com.mysql.jdbc.ResultSetMetaData;
+
+import java.util.ArrayList;
 import sjuan.Card;
+
+
 /**
  * This class generates a Grafical User Interface to play the game
  */
@@ -21,14 +26,18 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
+	
+
 
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
+	private JButton databas = new JButton("Databas");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
-
+	
+	
 	/**
 	 * Constructs the Gui
 	 */
@@ -41,7 +50,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This Method creates the Gui Frame
 	 */
 	public void GamePanel(){
-		gameFrame.setBounds(40, 200, 1000, 600);
+		gameFrame.setBounds(40, 200, 1100, 600);
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
@@ -54,14 +63,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
 		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
+		
 
 		start.addActionListener(this);
 		end.addActionListener(this);
 		pass.addActionListener(this);
+		databas.addActionListener(this);
 		gameFrame.setVisible(true);
+		
 
 	}
-
+	
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
@@ -98,12 +110,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public JPanel optionsPanel() {
-		optionsPanel.setPreferredSize(new Dimension(150, 100));
+		optionsPanel.setPreferredSize(new Dimension(150, 125));
 		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		optionsPanel.add(start);
 		optionsPanel.add(end);
 		optionsPanel.add(pass);
-
+		optionsPanel.add(databas);
 		return optionsPanel;
 	}
 
@@ -111,13 +123,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This method returns a panel to represent the opponent1
 	 * @return opponent1Panel return a panel of opponent1
 	 */
-	public JPanel opponent1Panel() {
-		opponent1Panel.setPreferredSize(new Dimension(100, 200));
-		opponent1Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		opponent1Panel.setBackground(Color.BLUE.darker());
 
-		return opponent1Panel;
-	}
 
 	/**
 	 * this method sets amount of cards in opponent1s panel
@@ -201,6 +207,15 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return new ImageIcon("src/sjuan/files/cards_png/" + str +".png");
 	}
 
+	public JPanel opponent1Panel() {
+		opponent1Panel.setPreferredSize(new Dimension(100, 200));
+		opponent1Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
+		opponent1Panel.setBackground(Color.BLUE.darker());
+
+		return opponent1Panel;
+	}
+
+	
 	/**
 	 * this method updates the graphics of all panels
 	 */
@@ -224,9 +239,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void startButtonUnDimmed() {
 		start.setEnabled(true);
 	}
-	/**
-	 * this method gives buttons make some action when pressed
-	 */
 
 	public void setGameFrameTitle() {
 		gameFrame.setTitle("Sjuan Client: " + controller.getClientID());
@@ -235,9 +247,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 *	this method makes cards clickable 
 	 */
-	public void addCardAction(){
-		play.addCardListener();
+	public void addCardAction(ArrayList<Card> cards){
+		play.addCardListener(cards);
 	}
+
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
@@ -248,6 +261,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		else if(e.getSource() == pass){
 			controller.newRequest("pass");
+		}
+		else if(e.getSource()==databas){
+			controller.newRequest("end");
 		}
 	}
 
