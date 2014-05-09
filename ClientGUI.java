@@ -247,8 +247,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 *	this method makes cards clickable 
 	 */
-	public void addCardAction(){
-		play.addCardListener();
+	public void addCardAction(ArrayList<Card> cards){
+		play.addCardListener(cards);
 	}
 
 

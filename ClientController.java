@@ -111,7 +111,7 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction();
+			gui.addCardAction(cards);
 
 		}
 	}
@@ -137,6 +137,7 @@ public class ClientController {
 			this.cards = response.getCards();
 			setCardAtGameBoard(response.getCard());
 			gui.setPlayersCardsInGUI(cards);
+			gui.addCardAction(cards);
 			gui.updateAllPanels();
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
