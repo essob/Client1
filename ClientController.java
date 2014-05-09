@@ -144,9 +144,9 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
 		
-		else if(response.getRequest().equals("end")){
-			JOptionPane.showMessageDialog(null, response.getSql());
-		}
+//		else if(response.getRequest().equals("end")){
+//			JOptionPane.showMessageDialog(null, response.getSql());
+//		}
 	}
 
 	/**
