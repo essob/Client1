@@ -124,6 +124,19 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			}
 	}
 	/**
+	 * this method add listener for all (card)labels in the list
+	 */
+	public void addCardListener(ArrayList <Card> cards) {
+		if (list!=null) {
+			for (int j = list.length-1; j>=0; j--) {
+				list[j].removeMouseListener(this);
+			}
+			for (int i = 0; i < cards.size(); i++) {
+				list[i].addMouseListener(this);
+			}
+		}
+	}
+	/**
 	 * this method returns this panel
 	 * @return panel returns this panel
 	 */

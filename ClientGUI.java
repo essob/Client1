@@ -81,7 +81,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		panel.setLayout(null);
 		panel.setFont(new Font("Arial", Font.BOLD, 24));
 		panel.setBackground(Color.GREEN.darker().darker());
-		
+
 		return panel;	
 	}
 
@@ -105,7 +105,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		play.removeAll();
 		play.setPlayersCardsInGUI(cards);
-//		updateAllPanels();
+		//		updateAllPanels();
 	}
 
 	public JPanel optionsPanel() {
@@ -225,15 +225,15 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel.invalidate();
 		playerPanel.revalidate();
 		playerPanel.repaint();
-//		opponent1Panel.revalidate();
-//		opponent1Panel.revalidate();
-//		opponent1Panel.repaint();
-//		opponent2Panel.revalidate();
-//		opponent2Panel.repaint();
-//		opponent3Panel.revalidate();
-//		opponent3Panel.repaint();
-//		panel.revalidate();
-//		panel.repaint();
+		//		opponent1Panel.revalidate();
+		//		opponent1Panel.revalidate();
+		//		opponent1Panel.repaint();
+		//		opponent2Panel.revalidate();
+		//		opponent2Panel.repaint();
+		//		opponent3Panel.revalidate();
+		//		opponent3Panel.repaint();
+		//		panel.revalidate();
+		//		panel.repaint();
 
 	}
 	/**
@@ -257,10 +257,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 *	this method makes cards clickable 
 	 */
-//	public void addCardAction(ArrayList <Card> cards){
-//		play.addCardListener( cards);
-//	}
 
+	public void addCardAction(ArrayList<Card> cards){
+		play.addCardListener(cards);
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == start) {
@@ -282,9 +282,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cardName takes in a string of a cards name
 	 */
 	public void playCard(String cardName) {
-//		controller.getCard(cardName);
-		controller.newRequest("playCard", cardName);
-//		updateAllPanels();
+		//		controller.getCard(cardName);
+		//		controller.newRequest("playCard", cardName);
+		//		updateAllPanels();
 	}
 	public void guiClear() {
 		opponent1Panel.removeAll();		
