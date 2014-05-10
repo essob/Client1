@@ -2,9 +2,6 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
-import java.io.*;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 import javax.swing.JTable;
@@ -42,8 +39,6 @@ public class ClientController {
 		System.out.println("connection: " + connection);
 	}
 
-
-
 	/**
 	 * this method creates a request to server
 	 */
@@ -76,7 +71,7 @@ public class ClientController {
 		}
 	}
 
-	/*
+	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
 	 */
@@ -95,7 +90,7 @@ public class ClientController {
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
-	
+
 	public void getStartConditions(Response response) {
 		if (response.getRequest().equals("new")) {
 			this.cards = response.getCards();
@@ -115,13 +110,21 @@ public class ClientController {
 
 		}
 	}
+	public void getPlayCardAction(Response response) {
+		cards.clear();
+		this.cards = response.getCards();
+		setCardAtGameBoard(response.getCard());
+		gui.setPlayersCardsInGUI(cards);
+		gui.addCardAction(cards);
+		gui.updateAllPanels();
+
+	}
 
 	/**
 	 * this method handle the response from the server
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		//		System.out.println(response.getRequest());
 		if (response.getRequest().equals("new")) {
 			getStartConditions(response);
 
@@ -133,17 +136,12 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
-			cards.clear();
-			this.cards = response.getCards();
-			setCardAtGameBoard(response.getCard());
-			gui.setPlayersCardsInGUI(cards);
-			gui.addCardAction(cards);
-			gui.updateAllPanels();
+			getPlayCardAction(response);
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
-		
+
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
 		}
