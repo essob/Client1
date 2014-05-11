@@ -30,9 +30,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel optionsPanel = new JPanel();
 	private JFrame LoginFrame = new JFrame();
 
-	
-
-
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
