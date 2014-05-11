@@ -20,12 +20,12 @@ import sjuan.Card;
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel gameBoardPanel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
-	private JPanel PlayersPanel = new JPanel();
+	private JPanel optionsPanel = new JPanel();
 	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
-	private JPanel optionsPanel = new JPanel();
+	private JPanel buttonsPanel = new JPanel();
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
@@ -54,12 +54,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
-		gameFrame.add(PlayersPanel, BorderLayout.NORTH);
+		gameFrame.add(optionsPanel, BorderLayout.NORTH);
 		gameFrame.add(opponent3Panel(), BorderLayout.EAST);
 
-		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
-		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
-		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
+		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
+		optionsPanel.add(opponent2Panel(), BorderLayout.WEST);
+		optionsPanel.add(buttonsPanel(), BorderLayout.EAST);
 
 
 		start.addActionListener(this);
@@ -107,14 +107,14 @@ public class ClientGUI extends JPanel implements ActionListener{
 		updateAllPanels();
 	}
 
-	public JPanel optionsPanel() {
-		optionsPanel.setPreferredSize(new Dimension(150, 125));
-		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
-		optionsPanel.add(start);
-		optionsPanel.add(end);
-		optionsPanel.add(pass);
-		optionsPanel.add(databas);
-		return optionsPanel;
+	public JPanel buttonsPanel() {
+		buttonsPanel.setPreferredSize(new Dimension(150, 125));
+		buttonsPanel.setBackground(Color.MAGENTA.darker().darker());
+		buttonsPanel.add(start);
+		buttonsPanel.add(end);
+		buttonsPanel.add(pass);
+		buttonsPanel.add(databas);
+		return buttonsPanel;
 	}
 
 	/**
@@ -274,14 +274,23 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 */
 	public void playCard(String cardName) {
 		controller.newRequest("playCard", cardName);
-		
-	}
-	public void guiClear() {
-		opponent1Panel.removeAll();		
-		opponent2Panel.removeAll();
-		opponent3Panel.removeAll();
-		playerPanel.removeAll();
 
+	}
+	public void dimAll() {
+		start.setEnabled(false);
+		end.setEnabled(false);
+		pass.setEnabled(false);
+		databas.setEnabled(false);
+		play.removeCardListener();
+		play.dimAllCards();
+
+	}
+	public void unDimAll() {
+		start.setEnabled(true);
+		end.setEnabled(true);
+		pass.setEnabled(true);
+		databas.setEnabled(true);
+		play.unDimAllCards();
 	}
 }
 
