@@ -18,7 +18,7 @@ public class ClientController {
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
-	private ArrayList <Card> cards;
+	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID;
 
 
@@ -35,6 +35,7 @@ public class ClientController {
 
 		} catch (IOException e) {
 			System.out.println(e);
+			e.getStackTrace();
 		}
 		System.out.println("connection: " + connection);
 	}
@@ -48,13 +49,8 @@ public class ClientController {
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
 		}
-	}
-
-
-	public void exit() {
-		connection.exit();
-		System.exit(0);
 	}
 
 	/**
@@ -62,12 +58,13 @@ public class ClientController {
 	 * @param request takes in a request as a string
 	 * @param card takes in a card as a string
 	 */
-	public void newRequest(String request, Card card) {
+	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, card, clientID));
+			connection.newRequest(new Request(request, cardName, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
 		}
 	}
 
@@ -110,10 +107,12 @@ public class ClientController {
 
 		}
 	}
+	
 	public void getPlayCardAction(Response response) {
 		cards.clear();
 		this.cards = response.getCards();
-		setCardAtGameBoard(response.getCard());
+		gameBoardCards = response.getGameBoardCards();
+		setCardAtGameBoard(getCard(response.getCardName()));
 		gui.setPlayersCardsInGUI(cards);
 		gui.addCardAction(cards);
 		gui.updateAllPanels();
@@ -194,9 +193,9 @@ public class ClientController {
 	 */
 	public Card getCard (String cardName) {
 		int i = 0;
-		while (cards.iterator().hasNext()) {
-			if (cards.get(i).toString().equals(cardName))
-				return cards.get(i);
+		while (gameBoardCards.iterator().hasNext()) {
+			if (gameBoardCards.get(i).toString().equals(cardName))
+				return gameBoardCards.get(i);
 			i++;
 		}
 		return null;

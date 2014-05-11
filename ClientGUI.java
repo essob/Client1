@@ -18,7 +18,7 @@ import sjuan.Card;
  * This class generates a Grafical User Interface to play the game
  */
 public class ClientGUI extends JPanel implements ActionListener{
-	private JPanel panel = new JPanel();
+	private JPanel gameBoardPanel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
 	private JPanel PlayersPanel = new JPanel();
 	private JPanel playerPanel = new JPanel();
@@ -26,7 +26,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
-
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
@@ -52,7 +51,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
-		gameFrame.add(panel(), BorderLayout.CENTER);
+		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(PlayersPanel, BorderLayout.NORTH);
@@ -76,17 +75,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This method returns a panel
 	 * @return panel returns a panel
 	 */
-	public JPanel panel() {
+	public JPanel gameBoardPanel() {
 		//		panel.setPreferredSize(new Dimension(400, 100));
-		panel.setLayout(null);
-		panel.setFont(new Font("Arial", Font.BOLD, 24));
-		panel.setBackground(Color.GREEN.darker().darker());
+		gameBoardPanel.setLayout(null);
+		gameBoardPanel.setFont(new Font("Arial", Font.BOLD, 24));
+		gameBoardPanel.setBackground(Color.GREEN.darker().darker());
 
-		return panel;	
+		return gameBoardPanel;	
 	}
 
 	public void setCardAtGameBoard(Card card) {
-		panel.add(pLabel.findOutWhere(card));
+		gameBoardPanel.add(pLabel.findOutWhere(card));
 	}
 
 	/**
@@ -103,9 +102,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
-		play.removeAll();
+		//		play.removeAll();
 		play.setPlayersCardsInGUI(cards);
-		//		updateAllPanels();
+		updateAllPanels();
 	}
 
 	public JPanel optionsPanel() {
@@ -122,7 +121,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * This method returns a panel to represent the opponent1
 	 * @return opponent1Panel return a panel of opponent1
 	 */
+	public JPanel opponent1Panel() {
+		opponent1Panel.setPreferredSize(new Dimension(100, 200));
+		opponent1Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
+		opponent1Panel.setBackground(Color.BLUE.darker());
 
+		return opponent1Panel;
+	}
 
 	/**
 	 * this method sets amount of cards in opponent1s panel
@@ -209,31 +214,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return new ImageIcon("src/sjuan/files/cards_png/" + str +".png");
 	}
 
-	public JPanel opponent1Panel() {
-		opponent1Panel.setPreferredSize(new Dimension(100, 200));
-		opponent1Panel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
-		opponent1Panel.setBackground(Color.BLUE.darker());
-
-		return opponent1Panel;
-	}
-
-
 	/**
 	 * this method updates the graphics of all panels
 	 */
 	public void updateAllPanels() {
-		playerPanel.invalidate();
-		playerPanel.revalidate();
-		playerPanel.repaint();
-		//		opponent1Panel.revalidate();
-		//		opponent1Panel.revalidate();
-		//		opponent1Panel.repaint();
-		//		opponent2Panel.revalidate();
-		//		opponent2Panel.repaint();
-		//		opponent3Panel.revalidate();
-		//		opponent3Panel.repaint();
-		//		panel.revalidate();
-		//		panel.repaint();
+		playerPanel.updateUI();
+		opponent1Panel.updateUI();
+		opponent2Panel.updateUI();
+		opponent3Panel.updateUI();
+		gameBoardPanel.updateUI();
+
+
 
 	}
 	/**
@@ -282,9 +273,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cardName takes in a string of a cards name
 	 */
 	public void playCard(String cardName) {
-		//		controller.getCard(cardName);
-		//		controller.newRequest("playCard", cardName);
-		//		updateAllPanels();
+		controller.newRequest("playCard", cardName);
+		
 	}
 	public void guiClear() {
 		opponent1Panel.removeAll();		

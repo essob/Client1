@@ -65,17 +65,14 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		clearList();
-		//		createList(cards);
 		int x = 20;
 		int y = 0;
 		for (int i = 0; i < cards.size(); i++) {
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
-			list[i].setBounds(x, y,71, 96);
+			list[i].setBounds(x, y, 71, 96);
 			panel.add(list[i]);
-			setCardsEnabled(cards);
-			//			list[i].setVisible(false);
 			if (cards.size() <=13)
 				x+=72;
 			else if (cards.size() > 13 )
@@ -89,8 +86,6 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			else
 				x+=45;
 		}
-		//		addCardListener(cards);
-
 	}
 
 	public void clearList() {
@@ -98,31 +93,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			list[i].setIcon(null);
 		}
 	}
-	//
-	//	/**
-	//	 * this method add listener for all (card)labels in the list
-	//	 */
-	//	public void addCardListener(ArrayList <Card>cards) {
-	//		if (cards!=null)
-	//			for (int i = 0; i < cards.size(); i++) {
-	//				list[i].addMouseListener(this);
-	//			}
-	//	}
-	public void setCardsEnabled(ArrayList <Card>cards) {
-		if (cards!=null)
-			for (int i = 0; i < cards.size(); i++) {
-				if (cards.size()<=list.length) {
-					list[i].setEnabled(true);
-					list[i].setVisible(true);
-					list[i].addMouseListener(this);
-				}
-				else {
-					list[i].setEnabled(false);
-					list[i].setVisible(false);
 
-				}
-			}
-	}
 	/**
 	 * this method add listener for all (card)labels in the list
 	 */
@@ -151,8 +122,6 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	//här ska skrivas anrop till gui som i sin tur ska anropa controllern om vad som ska hända
 	public void mousePressed(MouseEvent e) {
 		gui.playCard(e.getComponent().getName());
-
-		//		JOptionPane.showMessageDialog(null, e.getComponent().getName());
 
 	}
 	@Override
