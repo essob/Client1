@@ -1,4 +1,4 @@
- 
+
 package Client1;
 
 import java.awt.*;
@@ -26,7 +26,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
-	
+
 
 
 	private JButton pass = new JButton("Pass");
@@ -36,8 +36,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
-	
-	
+
+
 	/**
 	 * Constructs the Gui
 	 */
@@ -63,17 +63,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 		PlayersPanel.setBackground(Color.MAGENTA.darker().darker());
 		PlayersPanel.add(opponent2Panel(), BorderLayout.WEST);
 		PlayersPanel.add(optionsPanel(), BorderLayout.EAST);
-		
+
 
 		start.addActionListener(this);
 		end.addActionListener(this);
 		pass.addActionListener(this);
 		databas.addActionListener(this);
 		gameFrame.setVisible(true);
-		
+
 
 	}
-	
+
 	/**
 	 * This method returns a panel
 	 * @return panel returns a panel
@@ -130,8 +130,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param nbr takes in the amount of cards in opponent1s hand
 	 */
 	public void setNbrOfOpponent1Cards (int nbr) {
-		JLabel opponent1Cards;
-		if (nbr != 0)
+		JLabel opponent1Cards = null;
+		if (nbr != 0) {
 			for (int i = 0; i < nbr; i++) {
 				opponent1Cards = new JLabel();
 				if (i==0)
@@ -140,8 +140,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 					opponent1Cards.setIcon(readFiles("b1pb"));
 				opponent1Panel.add(opponent1Cards);
 			}
+		}
 	}
-
 	/**
 	 * This method returns a panel to represent the opponent2
 	 * @return opponent1Panel return a panel of opponent2
@@ -215,7 +215,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return opponent1Panel;
 	}
 
-	
+
 	/**
 	 * this method updates the graphics of all panels
 	 */
