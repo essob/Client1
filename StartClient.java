@@ -6,6 +6,6 @@ package Client1;
  */
 public class StartClient {
 	public static void main(String[] args) {
-		new ClientController("10.2.0.93", 7766);
+		new ClientController("127.0.0.1", 7766);
 	}
 }
