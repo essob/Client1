@@ -107,6 +107,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return playerPanel;
 	}
 		
+	
 	/**
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
