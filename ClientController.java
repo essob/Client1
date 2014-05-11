@@ -101,13 +101,13 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
 			gui.updateAllPanels();
+			playersTurn();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction(cards);
 
 		}
 	}
-	
+
 	public void getPlayCardAction(Response response) {
 		cards.clear();
 		this.cards = response.getCards();
@@ -198,5 +198,13 @@ public class ClientController {
 			i++;
 		}
 		return null;
+	}
+	public void playersTurn() {
+		for (Card card : cards) {
+			if (card.toString().equals("h7")) {
+				gui.addCardAction(cards);
+				break;
+			}
+		}
 	}
 }
