@@ -2,9 +2,6 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
-import java.io.*;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 import javax.swing.JTable;
@@ -21,7 +18,7 @@ public class ClientController {
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
-	private ArrayList <Card> cards;
+	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID;
 
 
@@ -38,11 +35,10 @@ public class ClientController {
 
 		} catch (IOException e) {
 			System.out.println(e);
+			e.getStackTrace();
 		}
 		System.out.println("connection: " + connection);
 	}
-
-
 
 	/**
 	 * this method creates a request to server
@@ -53,13 +49,8 @@ public class ClientController {
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
 		}
-	}
-
-
-	public void exit() {
-		connection.exit();
-		System.exit(0);
 	}
 
 	/**
@@ -67,16 +58,17 @@ public class ClientController {
 	 * @param request takes in a request as a string
 	 * @param card takes in a card as a string
 	 */
-	public void newRequest(String request, Card card) {
+	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, card, clientID));
+			connection.newRequest(new Request(request, cardName, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
 		}
 	}
 
-	/*
+	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
 	 */
@@ -95,7 +87,7 @@ public class ClientController {
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
-	
+
 	public void getStartConditions(Response response) {
 		if (response.getRequest().equals("new")) {
 			this.cards = response.getCards();
@@ -109,11 +101,22 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
 			gui.updateAllPanels();
+			playersTurn();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction();
 
 		}
+	}
+
+	public void getPlayCardAction(Response response) {
+		cards.clear();
+		this.cards = response.getCards();
+		gameBoardCards = response.getGameBoardCards();
+		setCardAtGameBoard(getCard(response.getCardName()));
+		gui.setPlayersCardsInGUI(cards);
+		gui.addCardAction(cards);
+		gui.updateAllPanels();
+
 	}
 
 	/**
@@ -121,7 +124,6 @@ public class ClientController {
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		//		System.out.println(response.getRequest());
 		if (response.getRequest().equals("new")) {
 			getStartConditions(response);
 
@@ -133,16 +135,19 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
+<<<<<<< HEAD
 			cards.clear();
 			this.cards = response.getCards();
 			setCardAtGameBoard(response.getCard());
 			gui.setPlayersCardsInGUI(cards);
 			gui.updateAllPanels();
+=======
+			getPlayCardAction(response);
+>>>>>>> origin/master
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
-		
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
 		}
@@ -195,11 +200,19 @@ public class ClientController {
 	 */
 	public Card getCard (String cardName) {
 		int i = 0;
-		while (cards.iterator().hasNext()) {
-			if (cards.get(i).toString().equals(cardName))
-				return cards.get(i);
+		while (gameBoardCards.iterator().hasNext()) {
+			if (gameBoardCards.get(i).toString().equals(cardName))
+				return gameBoardCards.get(i);
 			i++;
 		}
 		return null;
+	}
+	public void playersTurn() {
+		for (Card card : cards) {
+			if (card.toString().equals("h7")) {
+				gui.addCardAction(cards);
+				break;
+			}
+		}
 	}
 }
