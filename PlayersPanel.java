@@ -71,11 +71,8 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
-<<<<<<< HEAD
 			list[i].setBounds(x, y,71, 96);
-=======
 			list[i].setBounds(x, y, 71, 96);
->>>>>>> origin/master
 			panel.add(list[i]);
 			if (cards.size() <=13)
 				x+=72;
@@ -91,10 +88,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 				x+=45;
 		}
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 	public void clearList() {
 		for (int i = 0; i < list.length; i++) {
 			list[i].setIcon(null);

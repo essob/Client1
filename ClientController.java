@@ -135,15 +135,13 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
-<<<<<<< HEAD
 			cards.clear();
 			this.cards = response.getCards();
 			setCardAtGameBoard(response.getCard());
 			gui.setPlayersCardsInGUI(cards);
 			gui.updateAllPanels();
-=======
 			getPlayCardAction(response);
->>>>>>> origin/master
+
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");

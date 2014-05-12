@@ -22,18 +22,15 @@ import sjuan.Card;
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel gameBoardPanel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
-	private JPanel optionsPanel = new JPanel();
+	//private JPanel optionsPanel = new JPanel();
 	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
-<<<<<<< HEAD
 	private JPanel optionsPanel = new JPanel();
 	private JFrame LoginFrame = new JFrame();
-
-=======
 	private JPanel buttonsPanel = new JPanel();
->>>>>>> origin/master
+
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
@@ -119,7 +116,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		updateAllPanels();
 	}
 
-<<<<<<< HEAD
+
 	public JPanel optionsPanel() {
 		optionsPanel.setPreferredSize(new Dimension(150, 160));
 		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
@@ -129,16 +126,17 @@ public class ClientGUI extends JPanel implements ActionListener{
 		optionsPanel.add(databas);
 		optionsPanel.add(login);
 		return optionsPanel;
-=======
+	}
 	public JPanel buttonsPanel() {
-		buttonsPanel.setPreferredSize(new Dimension(150, 125));
+		buttonsPanel.setPreferredSize(new Dimension(150, 160)); //måste 160 annars syns inte sista knappen
 		buttonsPanel.setBackground(Color.MAGENTA.darker().darker());
 		buttonsPanel.add(start);
 		buttonsPanel.add(end);
 		buttonsPanel.add(pass);
 		buttonsPanel.add(databas);
+		buttonsPanel.add(login);
 		return buttonsPanel;
->>>>>>> origin/master
+
 	}
 
 	/**
