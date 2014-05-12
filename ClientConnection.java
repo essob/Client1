@@ -29,6 +29,7 @@ public class ClientConnection {
 			output.reset();
 			output.writeObject(request);
 			output.flush();
+			output.reset();
 
 		}catch(IOException e) {
 			e.getStackTrace();

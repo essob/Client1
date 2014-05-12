@@ -2,6 +2,8 @@
 package Client1;
 
 import java.awt.*;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -20,15 +22,19 @@ import sjuan.Card;
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel gameBoardPanel = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
-	private JPanel optionsPanel = new JPanel();
+	//private JPanel optionsPanel = new JPanel();
 	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
+	private JPanel optionsPanel = new JPanel();
+	private JFrame LoginFrame = new JFrame();
 	private JPanel buttonsPanel = new JPanel();
+
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
+	private JButton login = new JButton("Inloggning"); 
 	private JButton databas = new JButton("Databas");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
@@ -66,6 +72,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		end.addActionListener(this);
 		pass.addActionListener(this);
 		databas.addActionListener(this);
+		login.addActionListener(this); 
 		gameFrame.setVisible(true);
 
 
@@ -84,6 +91,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return gameBoardPanel;	
 	}
 
+	
 	public void setCardAtGameBoard(Card card) {
 		gameBoardPanel.add(pLabel.findOutWhere(card));
 	}
@@ -96,7 +104,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		playerPanel = play.getPanel();
 		return playerPanel;
 	}
-
+		
+	
 	/**
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
@@ -107,14 +116,27 @@ public class ClientGUI extends JPanel implements ActionListener{
 		updateAllPanels();
 	}
 
+
+	public JPanel optionsPanel() {
+		optionsPanel.setPreferredSize(new Dimension(150, 160));
+		optionsPanel.setBackground(Color.MAGENTA.darker().darker());
+		optionsPanel.add(start);
+		optionsPanel.add(end);
+		optionsPanel.add(pass);
+		optionsPanel.add(databas);
+		optionsPanel.add(login);
+		return optionsPanel;
+	}
 	public JPanel buttonsPanel() {
-		buttonsPanel.setPreferredSize(new Dimension(150, 125));
+		buttonsPanel.setPreferredSize(new Dimension(150, 160)); //måste 160 annars syns inte sista knappen
 		buttonsPanel.setBackground(Color.MAGENTA.darker().darker());
 		buttonsPanel.add(start);
 		buttonsPanel.add(end);
 		buttonsPanel.add(pass);
 		buttonsPanel.add(databas);
+		buttonsPanel.add(login);
 		return buttonsPanel;
+
 	}
 
 	/**
@@ -264,6 +286,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		else if(e.getSource()==databas){
 			controller.newRequest("end");
+		}
+		
+		else if(e.getSource() == login) {
+			LoginFrame = new LoginFrame();
 		}
 	}
 
