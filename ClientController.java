@@ -101,7 +101,8 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
 			gui.updateAllPanels();
-			playersTurn();
+			gui.addCardAction(cards);
+//			playersTurn();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
 
