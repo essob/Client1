@@ -93,9 +93,9 @@ public class LoginFrame extends JFrame implements ActionListener{
 				// dock endast jobba mot ett ResultSet (en fr�ga) i taget.
 
 
-				String AnvändarNamn=t1.getText().toString();
-				String Lösenord=t2.getText().toString();
-				ResultSet res = statement.executeQuery("SELECT AnvändarNamn FROM statistics where AnvändarNamn='" + AnvändarNamn + "' and Lösenord='" + Lösenord + "'");
+				String userName =t1.getText().toString();
+				String password=t2.getText().toString();
+				ResultSet res = statement.executeQuery("SELECT AnvändarNamn FROM statistics where AnvändarNamn='" + userName  + "' and Lösenord='" + password + "'");
 				if (res.next()) {
 					JOptionPane.showMessageDialog(this,"Du är inloggad:)");    
 				} else{
