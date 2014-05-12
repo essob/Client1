@@ -20,6 +20,7 @@ public class ClientController {
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID;
+	private Player player;
 
 
 	/**
@@ -100,10 +101,12 @@ public class ClientController {
 			gui.setNbrOfOpponent1Cards(opponent1);
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
-			gui.updateAllPanels();
-			playersTurn();
+			//			playersTurn(clientID);
+			gui.addCardAction(cards);
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
+			gui.updateAllPanels();
+
 
 		}
 	}
@@ -126,8 +129,11 @@ public class ClientController {
 	public void newResponse(Response response) {
 		if (response.getRequest().equals("new")) {
 			getStartConditions(response);
-
 		}
+		else if (response.getRequest().equals("clientsMissing")) {
+			JOptionPane.showMessageDialog(null, "Fler klienter bör ansluta sig");
+		}
+
 		else if (response.getRequest().equals("pass")) {
 			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
@@ -199,12 +205,36 @@ public class ClientController {
 		}
 		return null;
 	}
-	public void playersTurn() {
-		for (Card card : cards) {
-			if (card.toString().equals("h7")) {
-				gui.addCardAction(cards);
-				break;
-			}
+	public void playersTurn(int clientID) {
+		//		for (Card card : cards) {
+		if (clientID==1) {
+			gui.addCardAction(player.getPlayerCards());
+		}
+		else if (clientID==2) {
+			gui.addCardAction(player.getPlayerCards());
+
+		}
+		else if (clientID==3) {
+			gui.addCardAction(player.getPlayerCards());
+
+		}
+		else if (clientID==4) {
+			gui.addCardAction(player.getPlayerCards());
+			//			}
+		}
+	}
+	public void notPlayersTurn (int clientID) {
+		if (clientID!=1) {
+			gui.dimAll();
+		}
+		else if (clientID!=2) {
+			gui.dimAll();
+		}
+		else if (clientID!=3) {
+			gui.dimAll();
+		}
+		else if (clientID!=4) {
+			gui.dimAll();
 		}
 	}
 }
