@@ -101,13 +101,13 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(opponent2);
 			gui.setNbrOfOpponent3Cards(opponent3);
 			gui.updateAllPanels();
+			playersTurn();
 			gui.startButtonDimmed();
 			gui.setGameFrameTitle();
-			gui.addCardAction(cards);
 
 		}
 	}
-	
+
 	public void getPlayCardAction(Response response) {
 		cards.clear();
 		this.cards = response.getCards();
@@ -135,7 +135,13 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
+			cards.clear();
+			this.cards = response.getCards();
+			setCardAtGameBoard(response.getCard());
+			gui.setPlayersCardsInGUI(cards);
+			gui.updateAllPanels();
 			getPlayCardAction(response);
+
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -198,5 +204,13 @@ public class ClientController {
 			i++;
 		}
 		return null;
+	}
+	public void playersTurn() {
+		for (Card card : cards) {
+			if (card.toString().equals("h7")) {
+				gui.addCardAction(cards);
+				break;
+			}
+		}
 	}
 }

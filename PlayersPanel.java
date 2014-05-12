@@ -71,6 +71,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
+			list[i].setBounds(x, y,71, 96);
 			list[i].setBounds(x, y, 71, 96);
 			panel.add(list[i]);
 			if (cards.size() <=13)
@@ -99,19 +100,41 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	 */
 	public void addCardListener(ArrayList <Card> cards) {
 		if (list!=null) {
-			for (int j = list.length-1; j>=0; j--) {
-				list[j].removeMouseListener(this);
-			}
+			removeCardListener();
 			for (int i = 0; i < cards.size(); i++) {
 				list[i].addMouseListener(this);
 			}
 		}
 	}
+	
+	public void removeCardListener() {
+		if (list!=null) {
+			for (int i = list.length-1; i>=0; i--) {
+				list[i].removeMouseListener(this);
+			}
+		}
+	}
+
+	public void dimAllCards() {
+		if (list!=null) {
+			for (JLabel label : list) {
+				label.setEnabled(false);
+			}
+		}
+	}
+	public void unDimAllCards() {
+		if (list!=null) {
+			for (JLabel label : list) {
+				label.setEnabled(true);
+			}
+		}
+	}
+
 	/**
 	 * this method returns this panel
 	 * @return panel returns this panel
 	 */
-	public JPanel getPanel() {
+	public JPanel getPanel() { 
 		return this.panel;
 	}
 
