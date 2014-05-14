@@ -2,8 +2,8 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import sjuan.*;
@@ -20,8 +20,6 @@ public class ClientController {
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID;
-	private Player player;
-
 
 	/**
 	 * constructs a client controller
@@ -32,7 +30,8 @@ public class ClientController {
 	public ClientController(String serverIP, int serverPort) {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
-			gui = new ClientGUI(this);
+			newRequest("clientID");
+			gui = new ClientGUI(this, clientID);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -46,7 +45,18 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request));
+			connection.newRequest(new Request(request, clientID));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
+
+	public void newRequest(String request, int clientID) {
+		try {
+			connection.newRequest(new Request(request, clientID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -84,34 +94,37 @@ public class ClientController {
 		this.cards = response.getCards();
 	}
 
+	public void setStartConditions(Response response) {
+		this.cards = response.getCards();
+		this.opponent1 = response.getOpponentCards1();
+		this.opponent2 = response.getOpponentCards2();
+		this.opponent3 = response.getOpponentCards3();
+		this.clientID = response.getClientID();
+
+		gui.setPlayersCardsInGUI(cards);
+		gui.setNbrOfOpponent1Cards(opponent1);
+		gui.setNbrOfOpponent2Cards(opponent2);
+		gui.setNbrOfOpponent3Cards(opponent3);
+
+		gui.updateAllPanels();
+		gui.addCardAction(cards);
+		//		playersTurn();
+		gui.startButtonDimmed();
+		gui.updateAllPanels();
+
+	}
+
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
 
 	public void getStartConditions(Response response) {
-		if (response.getRequest().equals("new")) {
-			this.cards = response.getCards();
-			this.opponent1 = response.getOpponentCards1();
-			this.opponent2 = response.getOpponentCards2();
-			this.opponent3 = response.getOpponentCards3();
-			this.clientID = response.getClientID();
-
-			gui.setPlayersCardsInGUI(cards);
-			gui.setNbrOfOpponent1Cards(opponent1);
-			gui.setNbrOfOpponent2Cards(opponent2);
-			gui.setNbrOfOpponent3Cards(opponent3);
-
-			gui.updateAllPanels();
-			gui.addCardAction(cards);
-//			playersTurn();
-			gui.startButtonDimmed();
-			gui.setGameFrameTitle();
-			gui.updateAllPanels();
-
-
+		if (response.getClientID()==clientID) {
+			setStartConditions(response);
 		}
 	}
+
 
 	public void getPlayCardAction(Response response) {
 		cards.clear();
@@ -129,9 +142,19 @@ public class ClientController {
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		if (response.getRequest().equals("new")) {
+		if (response.getRequest().equals("newGame")) {
 			getStartConditions(response);
+			gui.unDimAll();
+
 		}
+		else if (response.getRequest().equals("ready")) {
+			gui.dimAll();
+			newRequest("newGame");
+		}
+		else if (response.getRequest().equals("clientID")) {
+			setClientID(response.getClientID());
+		}
+
 		else if (response.getRequest().equals("clientsMissing")) {
 			JOptionPane.showMessageDialog(null, "Fler klienter bör ansluta sig");
 		}
@@ -139,6 +162,7 @@ public class ClientController {
 		else if (response.getRequest().equals("pass")) {
 			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
+
 		else if (response.getRequest().equals("passainte"))
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
@@ -157,6 +181,10 @@ public class ClientController {
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
 		}
+	}
+
+	private void setClientID(int clientID) {
+		this.clientID = clientID;		
 	}
 
 	/**
@@ -213,24 +241,7 @@ public class ClientController {
 		}
 		return null;
 	}
-	public void playersTurn(int clientID) {
-		//		for (Card card : cards) {
-		if (clientID==1) {
-			gui.addCardAction(player.getPlayerCards());
-		}
-		else if (clientID==2) {
-			gui.addCardAction(player.getPlayerCards());
 
-		}
-		else if (clientID==3) {
-			gui.addCardAction(player.getPlayerCards());
-
-		}
-		else if (clientID==4) {
-			gui.addCardAction(player.getPlayerCards());
-			//			}
-		}
-	}
 	public void notPlayersTurn (int clientID) {
 		if (clientID!=1) {
 			gui.dimAll();
@@ -246,3 +257,4 @@ public class ClientController {
 		}
 	}
 }
+
