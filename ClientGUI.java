@@ -28,7 +28,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel opponent2Panel = new JPanel();
 	private JPanel opponent3Panel = new JPanel();
 	private JPanel optionsPanel = new JPanel();
-	private JFrame LoginFrame = new JFrame();
+	private LoginFrame LoginFrame;
 	private JPanel buttonsPanel = new JPanel();
 
 	private JButton pass = new JButton("Pass");
@@ -39,6 +39,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
+	
 
 
 	/**
@@ -289,7 +290,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		}
 		
 		else if(e.getSource() == login) {
-			LoginFrame = new LoginFrame();
+			LoginFrame = new LoginFrame(this);
 		}
 	}
 
@@ -317,5 +318,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pass.setEnabled(true);
 		databas.setEnabled(true);
 		play.unDimAllCards();
+	}
+	
+	public void logInDb(){
+		controller.newRequest("Login", LoginFrame.getUserName(), LoginFrame.getPassWord());
 	}
 }
