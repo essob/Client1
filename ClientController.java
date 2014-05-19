@@ -19,7 +19,7 @@ public class ClientController {
 	private ClientConnection connection;
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID;
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0;
 
 	/**
 	 * constructs a client controller
@@ -45,7 +45,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request, clientID));
+			connection.newRequest(new Request(request, clientID, gameID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -56,7 +56,7 @@ public class ClientController {
 
 	public void newRequest(String request, int clientID) {
 		try {
-			connection.newRequest(new Request(request, clientID));
+			connection.newRequest(new Request(request, clientID, gameID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -71,7 +71,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, cardName, clientID));
+			connection.newRequest(new Request(request, cardName, clientID, gameID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -100,16 +100,15 @@ public class ClientController {
 		this.opponent2 = response.getOpponentCards2();
 		this.opponent3 = response.getOpponentCards3();
 		this.clientID = response.getClientID();
-
+		this.gameID = response.getGameID();
 		gui.setPlayersCardsInGUI(cards);
 		gui.setNbrOfOpponent1Cards(opponent1);
 		gui.setNbrOfOpponent2Cards(opponent2);
 		gui.setNbrOfOpponent3Cards(opponent3);
-
-		gui.updateAllPanels();
 		gui.addCardAction(cards);
-		//		playersTurn();
 		gui.startButtonDimmed();
+		if (response.isHasHeart7()==false)
+			gui.dimAll();
 		gui.updateAllPanels();
 
 	}
@@ -130,11 +129,12 @@ public class ClientController {
 		cards.clear();
 		this.cards = response.getCards();
 		gameBoardCards = response.getGameBoardCards();
-		setCardAtGameBoard(getCard(response.getCardName()));
+		setCardsAtGameBoard(gameBoardCards);
 		gui.setPlayersCardsInGUI(cards);
 		gui.addCardAction(cards);
 		gui.updateAllPanels();
-
+		gui.dimAll();
+		newRequest("nextPlayer");
 	}
 
 	/**
@@ -143,14 +143,15 @@ public class ClientController {
 	 */
 	public void newResponse(Response response) {
 		if (response.getRequest().equals("newGame")) {
-			getStartConditions(response);
-			gui.unDimAll();
+			if (response.getCards()!=null)
+				getStartConditions(response);
 
 		}
-		else if (response.getRequest().equals("ready")) {
-			gui.dimAll();
-			newRequest("newGame");
-		}
+		//		else if (response.getRequest().equals("ready")) {
+		//			gui.dimAll();
+		//			this.gameID = response.getGameID();
+		//			newRequest("newGame");
+		//		}
 		else if (response.getRequest().equals("clientID")) {
 			setClientID(response.getClientID());
 		}
@@ -167,11 +168,6 @@ public class ClientController {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
-			cards.clear();
-			this.cards = response.getCards();
-			setCardAtGameBoard(response.getCard());
-			gui.setPlayersCardsInGUI(cards);
-			gui.updateAllPanels();
 			getPlayCardAction(response);
 
 		}
@@ -180,6 +176,27 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
+		}
+		else if (response.getRequest().equals("wakePlayer")) {
+			gui.unDimAll();
+			newRequest("getGameConditions");
+//			this.gameBoardCards = response.getGameBoardCards();
+//			setCardsAtGameBoard(this.gameBoardCards);
+//			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+//			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+//			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+//			gui.addCardAction(this.cards);
+//			gui.updateAllPanels();
+
+		}
+		else if ( response.getRequest().equals("updateGUI")){
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.addCardAction(this.cards);
+			gui.updateAllPanels();
+
 		}
 	}
 
@@ -225,6 +242,12 @@ public class ClientController {
 	 */
 	public void setCardAtGameBoard(Card card) {
 		gui.setCardAtGameBoard(card);
+	}
+
+	public void setCardsAtGameBoard(ArrayList<Card> gameBoardCards){
+		for (Card card : gameBoardCards) {
+			gui.setCardAtGameBoard(card);
+		}
 	}
 
 	/**

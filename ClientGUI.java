@@ -71,11 +71,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		optionsPanel.add(rightOptionsPanel(), BorderLayout.EAST);
 
-
-
-
-
-
 		start.addActionListener(this);
 		end.addActionListener(this);
 		pass.addActionListener(this);
@@ -92,7 +87,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel gameBoardPanel() {
-		//		panel.setPreferredSize(new Dimension(400, 100));
 		gameBoardPanel.setLayout(null);
 		gameBoardPanel.setFont(new Font("Arial", Font.BOLD, 24));
 		gameBoardPanel.setBackground(Color.GREEN.darker().darker());
@@ -120,7 +114,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
-		//		play.removeAll();
 		play.setPlayersCardsInGUI(cards);
 		updateAllPanels();
 	}
@@ -160,6 +153,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param nbr takes in the amount of cards in opponent1s hand
 	 */
 	public void setNbrOfOpponent1Cards (int nbr) {
+		opponent1Panel.removeAll();
 		JLabel opponent1Cards = null;
 		if (nbr != 0) {
 			for (int i = 0; i < nbr; i++) {
