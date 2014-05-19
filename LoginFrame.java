@@ -28,7 +28,6 @@ public class LoginFrame extends JFrame implements ActionListener{
 
 	public LoginFrame(){
 		frame.setSize(350, 200);
-
 		frame.setLocation(500, 200);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,6 +81,8 @@ public class LoginFrame extends JFrame implements ActionListener{
 		}
 		else if(ae.getSource()==b3)
 		{
+			
+			
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	//Hämtar database-drivern
 				connection = DriverManager.getConnection ("jdbc:mysql://195.178.232.7:4040/ab4607", "ab4607", "prinsessan");	// Koppla upp mot database-servern
@@ -93,9 +94,9 @@ public class LoginFrame extends JFrame implements ActionListener{
 				// dock endast jobba mot ett ResultSet (en fr�ga) i taget.
 
 
-				String AnvändarNamn=t1.getText().toString();
-				String Lösenord=t2.getText().toString();
-				ResultSet res = statement.executeQuery("SELECT AnvändarNamn FROM statistics where AnvändarNamn='" + AnvändarNamn + "' and Lösenord='" + Lösenord + "'");
+				String userName =t1.getText().toString();
+				String password=t2.getText().toString();
+				ResultSet res = statement.executeQuery("SELECT AnvändarNamn FROM statistics where AnvändarNamn='" + userName  + "' and Lösenord='" + password + "'");
 				if (res.next()) {
 					JOptionPane.showMessageDialog(this,"Du är inloggad:)");    
 				} else{
