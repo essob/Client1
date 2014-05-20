@@ -161,6 +161,7 @@ public class ClientController {
 		}
 
 		else if (response.getRequest().equals("pass")) {
+//			newRequest("recieveCards");
 			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
 
@@ -236,6 +237,10 @@ public class ClientController {
 		gui.setCardAtGameBoard(card);
 	}
 
+	/**
+	 * this method sets cards at gameBoard
+	 * @param gameBoardCards takes in a ArrayList<Card>
+	 */
 	public void setCardsAtGameBoard(ArrayList<Card> gameBoardCards){
 		for (Card card : gameBoardCards) {
 			gui.setCardAtGameBoard(card);
@@ -257,6 +262,10 @@ public class ClientController {
 		return null;
 	}
 
+	/**
+	 * this method dims all if it is'nt a players turn
+	 * @param clientID takes in a Integer of a clientID
+	 */
 	public void notPlayersTurn (int clientID) {
 		if (clientID!=1) {
 			gui.dimAll();
