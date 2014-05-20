@@ -31,7 +31,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel rightOptionsPanel = new JPanel();
 	private JFrame LoginFrame = new JFrame();
 	private JPanel buttonsPanel = new JPanel();
-	private JButton ready = new JButton("Redo");
+	private JButton ready = new JButton("???");
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
@@ -119,7 +119,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public JPanel leftOptionsPanel() {
-		leftOptionsPanel.setPreferredSize(new Dimension(150, 150));
+		leftOptionsPanel.setPreferredSize(new Dimension(150, 100));
 		leftOptionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		leftOptionsPanel.add(pass);
 		leftOptionsPanel.add(databas);
@@ -128,7 +128,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public JPanel rightOptionsPanel() {
-		rightOptionsPanel.setPreferredSize(new Dimension(150, 150));
+		rightOptionsPanel.setPreferredSize(new Dimension(150, 100));
 		rightOptionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		rightOptionsPanel.add(start);
 		rightOptionsPanel.add(ready);
