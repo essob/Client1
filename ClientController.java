@@ -180,14 +180,6 @@ public class ClientController {
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			newRequest("getGameConditions");
-//			this.gameBoardCards = response.getGameBoardCards();
-//			setCardsAtGameBoard(this.gameBoardCards);
-//			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
-//			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
-//			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
-//			gui.addCardAction(this.cards);
-//			gui.updateAllPanels();
-
 		}
 		else if ( response.getRequest().equals("updateGUI")){
 			setCardsAtGameBoard(response.getGameBoardCards());
