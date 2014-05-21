@@ -26,7 +26,6 @@ public class ClientConnection {
 
 	public void newRequest(Request request) {
 		try {
-			output.reset();
 			output.writeObject(request);
 			output.flush();
 			output.reset();

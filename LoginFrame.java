@@ -39,6 +39,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 		logInFrame.setSize(350, 200);
 		logInFrame.setLocation(500, 200);
 		logInFrame.setLayout(null);
+		logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		user.setSize(user.getPreferredSize());
 		user.setLocation(10, 10);
@@ -105,6 +106,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 
 
 	public String getPassWord() {

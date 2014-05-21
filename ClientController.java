@@ -2,8 +2,8 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import sjuan.*;
@@ -19,8 +19,7 @@ public class ClientController {
 	private ClientConnection connection;
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID;
-
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0;
 
 	/**
 	 * constructs a client controller
@@ -31,7 +30,8 @@ public class ClientController {
 	public ClientController(String serverIP, int serverPort) {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
-			gui = new ClientGUI(this);
+			newRequest("clientID");
+			gui = new ClientGUI(this, clientID);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -45,7 +45,18 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request));
+			connection.newRequest(new Request(request, clientID, gameID));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
+
+	public void newRequest(String request, int clientID) {
+		try {
+			connection.newRequest(new Request(request, clientID, gameID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -60,7 +71,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, cardName, clientID));
+			connection.newRequest(new Request(request, cardName, clientID, gameID));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -94,40 +105,47 @@ public class ClientController {
 		this.cards = response.getCards();
 	}
 
+	public void setStartConditions(Response response) {
+		this.cards = response.getCards();
+		this.opponent1 = response.getOpponentCards1();
+		this.opponent2 = response.getOpponentCards2();
+		this.opponent3 = response.getOpponentCards3();
+		this.clientID = response.getClientID();
+		this.gameID = response.getGameID();
+		gui.setPlayersCardsInGUI(cards);
+		gui.setNbrOfOpponent1Cards(opponent1);
+		gui.setNbrOfOpponent2Cards(opponent2);
+		gui.setNbrOfOpponent3Cards(opponent3);
+		gui.addCardAction(cards);
+		gui.startButtonDimmed();
+		if (response.isHasHeart7()==false)
+			gui.dimAll();
+		gui.updateAllPanels();
+
+	}
+
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
 
 	public void getStartConditions(Response response) {
-		if (response.getRequest().equals("new")) {
-			this.cards = response.getCards();
-			this.opponent1 = response.getOpponentCards1();
-			this.opponent2 = response.getOpponentCards2();
-			this.opponent3 = response.getOpponentCards3();
-			this.clientID = response.getClientID();
-
-			gui.setPlayersCardsInGUI(cards);
-			gui.setNbrOfOpponent1Cards(opponent1);
-			gui.setNbrOfOpponent2Cards(opponent2);
-			gui.setNbrOfOpponent3Cards(opponent3);
-			gui.updateAllPanels();
-			playersTurn();
-			gui.startButtonDimmed();
-			gui.setGameFrameTitle();
-
+		if (response.getClientID()==clientID) {
+			setStartConditions(response);
 		}
 	}
+
 
 	public void getPlayCardAction(Response response) {
 		cards.clear();
 		this.cards = response.getCards();
 		gameBoardCards = response.getGameBoardCards();
-		setCardAtGameBoard(getCard(response.getCardName()));
+		setCardsAtGameBoard(gameBoardCards);
 		gui.setPlayersCardsInGUI(cards);
 		gui.addCardAction(cards);
 		gui.updateAllPanels();
-
+		gui.dimAll();
+		newRequest("nextPlayer");
 	}
 
 	/**
@@ -135,22 +153,33 @@ public class ClientController {
 	 * @param response takes in a response from server
 	 */
 	public void newResponse(Response response) {
-		if (response.getRequest().equals("new")) {
-			getStartConditions(response);
+		if (response.getRequest().equals("newGame")) {
+			if (response.getCards()!=null)
+				getStartConditions(response);
 
 		}
+		//		else if (response.getRequest().equals("ready")) {
+		//			gui.dimAll();
+		//			this.gameID = response.getGameID();
+		//			newRequest("newGame");
+		//		}
+		else if (response.getRequest().equals("clientID")) {
+			setClientID(response.getClientID());
+		}
+
+		else if (response.getRequest().equals("clientsMissing")) {
+			JOptionPane.showMessageDialog(null, "Fler klienter bör ansluta sig");
+		}
+
 		else if (response.getRequest().equals("pass")) {
+//			newRequest("recieveCards");
 			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
+
 		else if (response.getRequest().equals("passainte"))
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 
 		else if (response.getRequest().equals("playCard")) {
-			cards.clear();
-			this.cards = response.getCards();
-			setCardAtGameBoard(response.getCard());
-			gui.setPlayersCardsInGUI(cards);
-			gui.updateAllPanels();
 			getPlayCardAction(response);
 
 		}
@@ -169,6 +198,23 @@ public class ClientController {
 			}
 
 		}
+		else if (response.getRequest().equals("wakePlayer")) {
+			gui.unDimAll();
+			newRequest("getGameConditions");
+		}
+		else if ( response.getRequest().equals("updateGUI")){
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.addCardAction(this.cards);
+			gui.updateAllPanels();
+
+		}
+	}
+
+	private void setClientID(int clientID) {
+		this.clientID = clientID;		
 	}
 
 	/**
@@ -212,6 +258,16 @@ public class ClientController {
 	}
 
 	/**
+	 * this method sets cards at gameBoard
+	 * @param gameBoardCards takes in a ArrayList<Card>
+	 */
+	public void setCardsAtGameBoard(ArrayList<Card> gameBoardCards){
+		for (Card card : gameBoardCards) {
+			gui.setCardAtGameBoard(card);
+		}
+	}
+
+	/**
 	 * this method use a string of the cards name to return it as a card
 	 * @param cardName takes in a string of a cards name
 	 * @return card returns a card
@@ -225,12 +281,23 @@ public class ClientController {
 		}
 		return null;
 	}
-	public void playersTurn() {
-		for (Card card : cards) {
-			if (card.toString().equals("h7")) {
-				gui.addCardAction(cards);
-				break;
-			}
+
+	/**
+	 * this method dims all if it is'nt a players turn
+	 * @param clientID takes in a Integer of a clientID
+	 */
+	public void notPlayersTurn (int clientID) {
+		if (clientID!=1) {
+			gui.dimAll();
+		}
+		else if (clientID!=2) {
+			gui.dimAll();
+		}
+		else if (clientID!=3) {
+			gui.dimAll();
+		}
+		else if (clientID!=4) {
+			gui.dimAll();
 		}
 	}
 
@@ -238,3 +305,4 @@ public class ClientController {
 
 	}
 }
+
