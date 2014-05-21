@@ -79,6 +79,17 @@ public class ClientController {
 		}
 	}
 
+	public void newRequest(String request, String userName, String passWord) {
+		try {
+			connection.newRequest(new Request(request, userName, passWord));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
+
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
@@ -177,6 +188,15 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
+		}
+		else if(response.getRequest().equals("Login")){
+			if(response.getLogOk()== true){
+				JOptionPane.showMessageDialog(null, "Du är inloggad");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
+			}
+
 		}
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
@@ -279,6 +299,10 @@ public class ClientController {
 		else if (clientID!=4) {
 			gui.dimAll();
 		}
+	}
+
+	public void sendLogIn(){
+
 	}
 }
 
