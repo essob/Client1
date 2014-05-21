@@ -33,7 +33,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-			gui = new ClientGUI(this, clientID);
+			new LoginFrame(this);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -215,7 +215,8 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
-				JOptionPane.showMessageDialog(null, "du är inloggad");
+				gui = new ClientGUI(this, clientID);
+				//JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
