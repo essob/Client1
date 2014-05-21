@@ -191,7 +191,7 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
-				JOptionPane.showMessageDialog(null, "Du är inloggad");
+				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
