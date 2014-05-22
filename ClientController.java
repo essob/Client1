@@ -54,15 +54,15 @@ public class ClientController {
 		}
 	}
 
-//	public void newRequest(String request, int clientID) {
-//		try {
-//			connection.newRequest(new Request(request, clientID, gameID));
-//
-//		} catch (Exception e) {
-//			System.out.println("Request: " + request+" är felfelfel");
-//			e.getStackTrace();
-//		}
-//	}
+	//	public void newRequest(String request, int clientID) {
+	//		try {
+	//			connection.newRequest(new Request(request, clientID, gameID));
+	//
+	//		} catch (Exception e) {
+	//			System.out.println("Request: " + request+" är felfelfel");
+	//			e.getStackTrace();
+	//		}
+	//	}
 
 	/**
 	 * this method creates a request to server
@@ -89,6 +89,17 @@ public class ClientController {
 			e.getStackTrace();
 		}
 	}
+
+	public void newRequest(String request, String userName, String passWord) {
+		try {
+			connection.newRequest(new Request(request, userName, passWord));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
 
 	/**
 	 * this method returns Players cards
@@ -201,6 +212,15 @@ public class ClientController {
 		else if(response.getRequest().equals("end")){
 			JOptionPane.showMessageDialog(null, response.getSql());
 		}
+		else if(response.getRequest().equals("Login")){
+			if(response.getLogOk()== true){
+				JOptionPane.showMessageDialog(null, "du är inloggad");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
+			}
+
+		}
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			request = "playCard";
@@ -303,6 +323,7 @@ public class ClientController {
 			gui.dimAll();
 		}
 	}
+
 	public void giveOrPlay (String cardName) {
 		if (request.equals("playCard")) {
 			newRequest("playCard", cardName);
@@ -314,5 +335,9 @@ public class ClientController {
 		else {
 			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
 		}
+
+	}
+	public void sendLogIn(){
+
 	}
 }

@@ -84,7 +84,7 @@ public class NewUser extends JFrame implements ActionListener{
 			statement.setString(1, id);
 			statement.setString(2, AnvändarNamn);
 			statement.setString(3, LösenOrd);
-			statement.executeUpdate();
+			statement.executeUpdate(); //Efter anropet innehåller statement värdet på antalet berörda rader i databasen.
 		} catch(ClassNotFoundException e1) {
 			System.out.println("Databas-driver hittades ej: "+e1);
 		}
