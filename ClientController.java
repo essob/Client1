@@ -22,6 +22,7 @@ public class ClientController {
 	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
 
+
 	/**
 	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber

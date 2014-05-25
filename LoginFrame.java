@@ -3,19 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.awt.*;
-
 import javax.swing.*;
-
 import java.awt.event.*;
-import java.sql.*;
-
 import javax.swing.JPasswordField.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class LoginFrame extends JFrame implements ActionListener{
