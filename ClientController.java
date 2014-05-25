@@ -23,6 +23,7 @@ public class ClientController {
 	private String request;
 
 
+
 	/**
 	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber
@@ -216,7 +217,7 @@ public class ClientController {
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
 				gui = new ClientGUI(this, clientID);
-				//JOptionPane.showMessageDialog(null, "du är inloggad");
+				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
