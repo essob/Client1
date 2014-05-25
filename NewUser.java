@@ -67,7 +67,7 @@ public class NewUser extends JFrame implements ActionListener{
 
 
 
-	public static void connect(String id, String AnvändarNamn, String LösenOrd) throws SQLException {
+	public static String connect(String id, String AnvändarNamn, String LösenOrd) throws SQLException {
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver"); // H�mta database-driver, kastar ClassNotFoundException
@@ -83,6 +83,7 @@ public class NewUser extends JFrame implements ActionListener{
 		} catch(ClassNotFoundException e1) {
 			System.out.println("Databas-driver hittades ej: "+e1);
 		}
+		return AnvändarNamn;
 	}
 
 	/**

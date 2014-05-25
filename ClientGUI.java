@@ -299,7 +299,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cardName takes in a string of a cards name
 	 */
 	public void playCard(String cardName) {
-		controller.newRequest("playCard", cardName);
+		controller.giveOrPlay(cardName);
 
 	}
 	public void dimAll() {
