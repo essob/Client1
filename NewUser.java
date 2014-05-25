@@ -4,9 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.awt.event.*;
+
 import javax.swing.JPasswordField.*;
+
+import sjuan.DataBase;
+
 import com.mysql.jdbc.PreparedStatement;
 
 public class NewUser extends JFrame implements ActionListener{	
@@ -21,6 +27,9 @@ public class NewUser extends JFrame implements ActionListener{
 	private JLabel user = new JLabel("Ange Användarnamn");
 	private JLabel password = new JLabel("Ange Lösenord");
 	private JButton b3 = new JButton("Registrera dig");
+	private String AnvändarNamn, Lösenord, id;
+
+
 
 
 	public NewUser(){
@@ -64,46 +73,11 @@ public class NewUser extends JFrame implements ActionListener{
 		frame.setVisible(true);
 	}
 
-
-
-
-	public static String connect(String id, String AnvändarNamn, String LösenOrd) throws SQLException {
-		try {
-
-			Class.forName("com.mysql.jdbc.Driver"); // H�mta database-driver, kastar ClassNotFoundException
-			connection = DriverManager.getConnection("jdbc:mysql://195.178.232.7:4040/ab4607","ab4607","prinsessan"); // Koppla upp mot database-servern, kastar SQLException 
-			statement1 = connection.prepareStatement("INSERT INTO statistics(id, AnvändarNamn, LösenOrd) VALUES(?,?,?)"); // Erh�lla en Statement-implementering f�r att exekvera SQL-satser, kastar  // SQLException 
-			// H�r �r anslutningen skapad och du kan jobba mot databasen.  
-			// Du anv�nder referensvaraibeln statement n�r du anv�nder databasen. Du kan  
-			// dock endast jobba mot ett ResultSet (en fr�ga) i taget.
-			statement1.setString(1, id);
-			statement1.setString(2, AnvändarNamn);
-			statement1.setString(3, LösenOrd);
-			statement1.executeUpdate(); //Efter anropet innehåller statement värdet på antalet berörda rader i databasen.
-		} catch(ClassNotFoundException e1) {
-			System.out.println("Databas-driver hittades ej: "+e1);
-		}
-		return AnvändarNamn;
-	}
-
-	/**
-	 * Avsluta databas-kopplingen, b�da anropen kastar SQLException
-	 * @throws SQLException
-	 */
-
-	public static void disconnect() throws SQLException {
-		statement1.close();
-		connection.close();
-	}
-
-
-	@Override
 	public void actionPerformed(ActionEvent ae) {
-		// TODO Auto-generated method stub
 		if(ae.getSource()==b3){
 			try {
-				connect(t1.getText().toString(), t2.getText().toString(), t3.getText().toString());
-				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + t2.getText() + ":)");
+				DataBase.connect(t1.getText().toString(), t2.getText().toString(), t3.getText().toString());
+				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + t2.getText().toString() + ":)");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
