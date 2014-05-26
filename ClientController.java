@@ -100,7 +100,6 @@ public class ClientController {
 		}
 	}
 
-
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
@@ -133,7 +132,6 @@ public class ClientController {
 		if (response.isHasHeart7()==false)
 			gui.dimAll();
 		gui.updateAllPanels();
-
 	}
 
 	/**
@@ -155,7 +153,6 @@ public class ClientController {
 		gui.addCardAction(cards);
 		gui.updateAllPanels();
 		gui.dimAll();
-		newRequest("nextPlayer");
 	}
 
 	/**
@@ -194,10 +191,11 @@ public class ClientController {
 			gui.addCardAction(cards);
 			if (passCounter==3) {
 				newRequest("recieveCards");
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
 				gui.dimAll();
 			}
 			else {
-
 			}
 		}
 		else if (response.getRequest().equals("passainte")) {
@@ -205,6 +203,7 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			getPlayCardAction(response);
+			newRequest("nextPlayer");
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -223,8 +222,9 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
+			newRequest("getAllGameConditions");
+			gui.updateAllPanels();
 			request = "playCard";
-			newRequest("getGameConditions");
 		}
 		else if ( response.getRequest().equals("updateGUI")){
 			setCardsAtGameBoard(response.getGameBoardCards());
@@ -232,6 +232,15 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.addCardAction(this.cards);
+			gui.updateAllPanels();
+		}
+		else if ( response.getRequest().equals("updateGUI2")){
+			gui.setPlayersCardsInGUI(response.getCards());
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.addCardAction(response.getCards());
 			gui.updateAllPanels();
 		}
 	}
@@ -330,6 +339,8 @@ public class ClientController {
 		}
 		else if (request.equals("giveACard")) {
 			newRequest("giveACardToAPlayer", cardName, passCounter);
+			newRequest("getAllGameConditions");
+			gui.updateAllPanels();
 			gui.dimAll();
 		}
 		else {
