@@ -22,6 +22,8 @@ public class ClientController {
 	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
 
+
+
 	/**
 	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber
@@ -32,7 +34,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-			gui = new ClientGUI(this, clientID);
+			new LoginFrame(this);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -213,6 +215,7 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
+				gui = new ClientGUI(this, clientID);
 				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{

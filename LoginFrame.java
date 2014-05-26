@@ -3,19 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.awt.*;
-
 import javax.swing.*;
-
 import java.awt.event.*;
-import java.sql.*;
-
 import javax.swing.JPasswordField.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class LoginFrame extends JFrame implements ActionListener{
@@ -30,12 +24,12 @@ public class LoginFrame extends JFrame implements ActionListener{
 	private JButton logInButton = new JButton("Logga in");
 	private JButton b4 = new JButton("Avsluta");
 	private JButton newUserButton = new JButton("Skapa ny användare");
-	private ClientGUI gui;
+	private ClientController controller;
 	private String userName, passWord;
 
 
-	public LoginFrame(ClientGUI gui){
-		this.gui = gui;
+	public LoginFrame(ClientController controller){
+		this.controller = controller;
 		logInFrame.setSize(350, 200);
 		logInFrame.setLocation(500, 200);
 		logInFrame.setLayout(null);
@@ -93,10 +87,15 @@ public class LoginFrame extends JFrame implements ActionListener{
 		{
 			setUserName(t1.getText().toString());
 			setPassWord(t2.getText().toString());
-			gui.logInDb();
+			logInDb();
 		}
+		
+		
 	}
 
+	public void logInDb(){
+		controller.newRequest("Login", getUserName(), getPassWord());
+	}
 
 	public String getUserName() {
 		return userName;
