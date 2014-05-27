@@ -29,8 +29,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JButton btnPass = new JButton("Pass");
 	private JButton btnEnd = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
-	private JButton btnLogin = new JButton("Inloggning"); 
 	private JButton btnDatabas = new JButton("Statistik");
+	private JButton aboutUs = new JButton("About us"); 
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
@@ -73,8 +73,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		btnEnd.addActionListener(this);
 		btnPass.addActionListener(this);
 		btnDatabas.addActionListener(this);
-		btnLogin.addActionListener(this);
+		aboutUs.addActionListener(this);
 		pnlReady.addActionListener(this);
+
 		gameFrame.setVisible(true);
 
 
@@ -121,8 +122,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlLeftOptions.setBackground(Color.MAGENTA.darker().darker());
 		pnlLeftOptions.add(btnPass);
 		pnlLeftOptions.add(btnDatabas);
-		pnlLeftOptions.add(btnLogin);
+		pnlLeftOptions.add(aboutUs);
 		return pnlLeftOptions;
+
 	}
 
 	public JPanel rightOptionsPanel() {
@@ -304,7 +306,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		btnPass.setEnabled(false);
 		btnDatabas.setEnabled(false);
 		pnlReady.setEnabled(false);
-		btnLogin.setEnabled(false);
+		aboutUs.setEnabled(false);
 		play.removeCardListener();
 		play.dimAllCards();
 
