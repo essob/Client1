@@ -15,6 +15,7 @@ import sjuan.*;
  */
 public class ClientController {
 	private ClientGUI gui;
+	private LoginFrame login;
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
@@ -44,6 +45,19 @@ public class ClientController {
 	 * this method creates a request to server
 	 */
 	public void newRequest(String request) {
+		try {
+			connection.newRequest(new Request(request, clientID, gameID));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+	
+	/**
+	 * this method creates a request to server
+	 */
+	public void newRequest(String request, boolean type1, boolean type2, boolean type3, boolean type4) {
 		try {
 			connection.newRequest(new Request(request, clientID, gameID));
 

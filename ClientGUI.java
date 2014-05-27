@@ -2,16 +2,11 @@
 package Client1;
 
 import java.awt.*;
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-
 import javax.swing.*;
-
 import com.mysql.jdbc.ResultSetMetaData;
-
 import java.util.ArrayList;
 import sjuan.Card;
 
@@ -21,6 +16,7 @@ import sjuan.Card;
  */
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel gameBoardPanel = new JPanel();
+	private JPanel choice = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
 	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
@@ -40,6 +36,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
 	private PlayersPanel play = new PlayersPanel(this);
+	private ChoicePanel Choice = new ChoicePanel();
+
 	
 
 
@@ -60,7 +58,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
-		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
+		
+		gameFrame.add(Choice.choiceButton());
+//		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(optionsPanel, BorderLayout.NORTH);
