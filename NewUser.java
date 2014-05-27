@@ -24,40 +24,40 @@ public class NewUser extends JFrame implements ActionListener{
 
 
 	public NewUser(){
-		frame.setSize(500, 300 );
+		frame.setSize(400, 150 );
 		frame.setLocation(500, 200);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		email.setSize(email.getPreferredSize());
-		email.setLocation(10, 10);
-		frame.add(email);
+//		email.setSize(email.getPreferredSize());
+//		email.setLocation(10, 10);
+//		frame.add(email);
 
-		t1.setColumns(15);
-		t1.setSize(t1.getPreferredSize());
-		t1.setLocation(150, 10);
-		frame.add(t1);
+//		t1.setColumns(15);
+//		t1.setSize(t1.getPreferredSize());
+//		t1.setLocation(150, 10);
+//		frame.add(t1);
 
 		user.setSize(user.getPreferredSize());
-		user.setLocation(10, 40);
+		user.setLocation(10, 10);
 		frame.add(user);
 
 		t2.setColumns(15);
-		t2.setSize(t1.getPreferredSize());
-		t2.setLocation(150, 40);
+		t2.setSize(t2.getPreferredSize());
+		t2.setLocation(150, 10);
 		frame.add(t2);
 
 		password.setSize(password.getPreferredSize());
-		password.setLocation(10, 70);
+		password.setLocation(10, 40);
 		frame.add(password);
 
 		t3.setColumns(15);
-		t3.setSize(t2.getPreferredSize());
-		t3.setLocation(150, 70);
+		t3.setSize(t3.getPreferredSize());
+		t3.setLocation(150, 40);
 		frame.add(t3);
 
 		b3.setSize(b3.getPreferredSize());
-		b3.setLocation(150, 100);
+		b3.setLocation(150, 70);
 		frame.add(b3);
 		b3.addActionListener(this);
 

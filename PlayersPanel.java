@@ -20,7 +20,6 @@ import sjuan.Card;
 public class PlayersPanel extends JLabel implements MouseListener{
 	private ClientGUI gui;
 	private JPanel panel = new JPanel();
-	//	private ArrayList <JLabel> list = new ArrayList<JLabel>();
 
 	private JLabel playCard1 = new JLabel();
 	private JLabel playCard2 = new JLabel();
@@ -41,11 +40,25 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	private JLabel playCard17 = new JLabel(); 
 	private JLabel playCard18 = new JLabel(); 
 	private JLabel playCard19 = new JLabel(); 
-	private JLabel playCard20 = new JLabel(); 
+	private JLabel playCard20 = new JLabel();
+	private JLabel playCard21 = new JLabel(); 
+	private JLabel playCard22= new JLabel();
+	private JLabel playCard23= new JLabel();
+	private JLabel playCard24 = new JLabel();
+	private JLabel playCard25 = new JLabel();
+	private JLabel playCard26 = new JLabel(); 
+	private JLabel playCard27 = new JLabel(); 
+	private JLabel playCard28 = new JLabel(); 
+	private JLabel playCard29 = new JLabel(); 
+	private JLabel playCard30 = new JLabel(); 
+	private JLabel playCard31 = new JLabel(); 
+	private JLabel playCard32 = new JLabel(); 
 
-	private JLabel [] list = {playCard1, playCard2, playCard3 , playCard4, playCard5 , playCard6,
+	private JLabel [] list = { playCard1, playCard2, playCard3 , playCard4, playCard5 , playCard6,
 			playCard7 , playCard8, playCard9 , playCard10, playCard11 , playCard12, playCard13, 
-			playCard14, playCard15 , playCard16, playCard17 , playCard18, playCard19 , playCard20 };
+			playCard14, playCard15 , playCard16, playCard17 , playCard18, playCard19 , playCard20,
+			playCard21, playCard22 , playCard23, playCard24 , playCard25, playCard26 , playCard27,
+			playCard28, playCard29 , playCard30, playCard31 , playCard32 };
 	/**
 	 * constructs a players panel to show what cards a player have and 
 	 * to be able to play them by clickng on them

@@ -21,6 +21,7 @@ public class ClientController {
 	private ArrayList <Card> cards, gameBoardCards, giveAwayCardList;
 	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
+	private LoginFrame loginFrame;
 
 
 
@@ -34,7 +35,8 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-			new LoginFrame(this);
+//			loginFrame  = new LoginFrame(this);		
+			gui = new ClientGUI(this, clientID);
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -189,8 +191,9 @@ public class ClientController {
 		else if (response.getRequest().equals("giveACard")) {
 			request = "giveACard";
 			passCounter = response.getPassCounter();
-			gui.unDimAll();
 			gui.addCardAction(cards);
+			newRequest("getGameConditions");
+			gui.unDimAll();
 			if (passCounter==3) {
 				newRequest("recieveCards");
 				newRequest("getAllGameConditions");
@@ -215,7 +218,8 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
-				gui = new ClientGUI(this, clientID);
+				loginFrame.close();
+ 				gui = new ClientGUI(this, clientID);
 				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
@@ -225,7 +229,7 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
-			newRequest("getAllGameConditions");
+			newRequest("getGameConditions");
 			gui.updateAllPanels();
 			request = "playCard";
 		}
@@ -245,6 +249,7 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.addCardAction(response.getCards());
 			gui.updateAllPanels();
+			gui.dimAll();
 		}
 	}
 
