@@ -17,13 +17,13 @@ public class LoginFrame extends JFrame implements ActionListener{
 	public static Connection connection;
 	public static Statement statement;
 	private JFrame logInFrame = new JFrame("Logga in");
-	private JTextField t1 = new JTextField();
-	private JPasswordField t2 = new JPasswordField('*');
-	private JLabel user = new JLabel("Ange Användarnamn");
-	private JLabel password = new JLabel("Ange Lösenord");
-	private JButton logInButton = new JButton("Logga in");
-	private JButton b4 = new JButton("Avsluta");
-	private JButton newUserButton = new JButton("Skapa ny användare");
+	private JTextField tfuserName = new JTextField();
+	private JPasswordField tfPassword = new JPasswordField('*');
+	private JLabel lbluser = new JLabel("Ange Användarnamn");
+	private JLabel lblpassword = new JLabel("Ange Lösenord");
+	private JButton btnLogIn = new JButton("Logga in");
+	private JButton btnClose = new JButton("Avsluta");
+	private JButton btnNewUser = new JButton("Skapa ny användare");
 	private ClientController controller;
 	private String userName, passWord;
 
@@ -35,58 +35,58 @@ public class LoginFrame extends JFrame implements ActionListener{
 		logInFrame.setLayout(null);
 		logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		user.setSize(user.getPreferredSize());
-		user.setLocation(10, 10);
-		logInFrame.add(user);
+		lbluser.setSize(lbluser.getPreferredSize());
+		lbluser.setLocation(10, 10);
+		logInFrame.add(lbluser);
 
-		t1.setColumns(15);
-		t1.setSize(t1.getPreferredSize());
-		t1.setLocation(150, 10);
-		logInFrame.add(t1);
+		tfuserName.setColumns(15);
+		tfuserName.setSize(tfuserName.getPreferredSize());
+		tfuserName.setLocation(150, 10);
+		logInFrame.add(tfuserName);
 
-		password.setSize(password.getPreferredSize());
-		password.setLocation(10, 40);
-		logInFrame.add(password);
+		lblpassword.setSize(lblpassword.getPreferredSize());
+		lblpassword.setLocation(10, 40);
+		logInFrame.add(lblpassword);
 
-		t2.setColumns(15);
-		t2.setSize(t2.getPreferredSize());
-		t2.setLocation(150, 40);
-		logInFrame.add(t2);
+		tfPassword.setColumns(15);
+		tfPassword.setSize(tfPassword.getPreferredSize());
+		tfPassword.setLocation(150, 40);
+		logInFrame.add(tfPassword);
 
-		logInButton.setSize(logInButton.getPreferredSize());
-		logInButton.setLocation(150, 70);
-		logInFrame.add(logInButton);
-		logInButton.addActionListener(this);
+		btnLogIn.setSize(btnLogIn.getPreferredSize());
+		btnLogIn.setLocation(150, 70);
+		logInFrame.add(btnLogIn);
+		btnLogIn.addActionListener(this);
 
-		b4.setSize(b4.getPreferredSize());
-		b4.setLocation(150, 100);
-		logInFrame.add(b4);
-		b4.addActionListener(this);
+		btnClose.setSize(btnClose.getPreferredSize());
+		btnClose.setLocation(150, 100);
+		logInFrame.add(btnClose);
+		btnClose.addActionListener(this);
 
-		newUserButton.setSize(newUserButton.getPreferredSize());
-		newUserButton.setLocation(150, 130);
-		logInFrame.add(newUserButton);
-		newUserButton.addActionListener(this);
-		newUserButton.setVisible(true);
+		btnNewUser.setSize(btnNewUser.getPreferredSize());
+		btnNewUser.setLocation(150, 130);
+		logInFrame.add(btnNewUser);
+		btnNewUser.addActionListener(this);
+		btnNewUser.setVisible(true);
 		logInFrame.setVisible(true);
 	}
 
 
 	public void actionPerformed(ActionEvent ae)
 	{
-		if(ae.getSource()==newUserButton)
+		if(ae.getSource()==btnNewUser)
 		{
 			new NewUser();
 		}
 
-		else if(ae.getSource()==b4)
+		else if(ae.getSource()==btnClose)
 		{
 			System.exit(0);
 		}
-		else if(ae.getSource()==logInButton)
+		else if(ae.getSource()==btnLogIn)
 		{
-			setUserName(t1.getText().toString());
-			setPassWord(t2.getText().toString());
+			setUserName(tfuserName.getText().toString());
+			setPassWord(tfPassword.getText().toString());
 			logInDb();
 		}
 		

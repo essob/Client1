@@ -26,7 +26,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private LoginFrame LoginFrame;
 	private JPanel leftOptionsPanel = new JPanel();
 	private JPanel rightOptionsPanel = new JPanel();
-	private JPanel buttonsPanel = new JPanel();
 	private JButton ready = new JButton("???");
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
