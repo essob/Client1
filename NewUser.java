@@ -31,7 +31,8 @@ public class NewUser extends JFrame implements ActionListener{
 	
 
 	public NewUser(){
-		frame.setSize(400, 200 );
+
+		frame.setSize(400, 150 );
 		frame.setLocation(500, 200);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +57,7 @@ public class NewUser extends JFrame implements ActionListener{
 		frame.add(t3);
 
 		b3.setSize(b3.getPreferredSize());
-		b3.setLocation(150, 100);
+		b3.setLocation(150, 70);
 		frame.add(b3);
 		b3.addActionListener(this);
 
