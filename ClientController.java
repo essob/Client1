@@ -101,8 +101,7 @@ public class ClientController {
 			e.getStackTrace();
 		}
 	}
-
-
+	
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
@@ -224,6 +223,7 @@ public class ClientController {
 			}
 
 		}
+		
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			request = "playCard";
