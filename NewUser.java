@@ -23,46 +23,36 @@ public class NewUser extends JFrame implements ActionListener{
 	private static JTextField t1 = new JTextField();
 	private static JTextField t2 = new JTextField();
 	private static JPasswordField t3 = new JPasswordField('*');
-	private JLabel email = new JLabel("Ange E-post");
-	private JLabel user = new JLabel("Ange Användarnamn");
-	private JLabel password = new JLabel("Ange Lösenord");
+	private JLabel newEmail = new JLabel("Ange E-post");
+	private JLabel newUser = new JLabel("Ange Användarnamn");
+	private JLabel newPassword = new JLabel("Ange Lösenord");
 	private JButton b3 = new JButton("Registrera dig");
-	private String AnvändarNamn, Lösenord, id;
-
-
-
+	private String id, userName, password;
+	
 
 	public NewUser(){
-		frame.setSize(500, 300 );
+		frame.setSize(400, 200 );
 		frame.setLocation(500, 200);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		email.setSize(email.getPreferredSize());
-		email.setLocation(10, 10);
-		frame.add(email);
 
-		t1.setColumns(15);
-		t1.setSize(t1.getPreferredSize());
-		t1.setLocation(150, 10);
-		frame.add(t1);
-
-		user.setSize(user.getPreferredSize());
-		user.setLocation(10, 40);
-		frame.add(user);
+		newUser.setSize(newUser.getPreferredSize());
+		newUser.setLocation(10, 10);
+		frame.add(newUser);
 
 		t2.setColumns(15);
-		t2.setSize(t1.getPreferredSize());
-		t2.setLocation(150, 40);
+		t2.setBounds(10, 40, 150, 25);
+		t2.setLocation(150, 10);
 		frame.add(t2);
 
-		password.setSize(password.getPreferredSize());
-		password.setLocation(10, 70);
-		frame.add(password);
+		newPassword.setSize(newPassword.getPreferredSize());
+		newPassword.setLocation(10, 40);
+		frame.add(newPassword);
 
 		t3.setColumns(15);
-		t3.setSize(t2.getPreferredSize());
-		t3.setLocation(150, 70);
+		t3.setBounds(10, 40, 150, 25);
+		t3.setLocation(150, 40);
 		frame.add(t3);
 
 		b3.setSize(b3.getPreferredSize());
@@ -76,17 +66,17 @@ public class NewUser extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==b3){
 			try {
-				DataBase.connect(t1.getText().toString(), t2.getText().toString(), t3.getText().toString());
-				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + t2.getText().toString() + ":)");
+				DataBase.connect(t2.getText().toString(), t3.getText().toString());
+				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + t2.getText() + ":)");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//knappen (request till servern)
 		}
 
 	}
 
-	public static void main(String[] args) {
-		new NewUser();
-	}
+
 }
