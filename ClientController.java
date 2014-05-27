@@ -19,8 +19,12 @@ public class ClientController {
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
-	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID, gameID = 0;
+	private ArrayList <Card> cards, gameBoardCards, giveAwayCardList;
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
+	private String request;
+	private LoginFrame loginFrame;
+
+
 
 	/**
 	 * constructs a client controller
@@ -32,6 +36,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
+//			loginFrame  = new LoginFrame(this);		
 			gui = new ClientGUI(this, clientID);
 
 		} catch (IOException e) {
@@ -67,16 +72,15 @@ public class ClientController {
 		}
 	}
 
-
-	public void newRequest(String request, int clientID) {
-		try {
-			connection.newRequest(new Request(request, clientID, gameID));
-
-		} catch (Exception e) {
-			System.out.println("Request: " + request+" är felfelfel");
-			e.getStackTrace();
-		}
-	}
+	//	public void newRequest(String request, int clientID) {
+	//		try {
+	//			connection.newRequest(new Request(request, clientID, gameID));
+	//
+	//		} catch (Exception e) {
+	//			System.out.println("Request: " + request+" är felfelfel");
+	//			e.getStackTrace();
+	//		}
+	//	}
 
 	/**
 	 * this method creates a request to server
@@ -85,7 +89,18 @@ public class ClientController {
 	 */
 	public void newRequest(String request, String cardName) {
 		try {
-			connection.newRequest(new Request(request, cardName, clientID, gameID));
+			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
+	public void newRequest(String request, String cardName, int counter) {
+		try {
+			counter = passCounter;
+			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -103,7 +118,6 @@ public class ClientController {
 		}
 	}
 
-
 	/**
 	 * this method returns Players cards
 	 * @return cards returns a players cards
@@ -120,6 +134,7 @@ public class ClientController {
 	}
 
 	public void setStartConditions(Response response) {
+		request = "playCard";
 		this.cards = response.getCards();
 		this.opponent1 = response.getOpponentCards1();
 		this.opponent2 = response.getOpponentCards2();
@@ -135,20 +150,17 @@ public class ClientController {
 		if (response.isHasHeart7()==false)
 			gui.dimAll();
 		gui.updateAllPanels();
-
 	}
 
 	/**
 	 * this method gets the needed start conditions for the for the game
 	 * @param response
 	 */
-
 	public void getStartConditions(Response response) {
 		if (response.getClientID()==clientID) {
 			setStartConditions(response);
 		}
 	}
-
 
 	public void getPlayCardAction(Response response) {
 		cards.clear();
@@ -159,7 +171,6 @@ public class ClientController {
 		gui.addCardAction(cards);
 		gui.updateAllPanels();
 		gui.dimAll();
-		newRequest("nextPlayer");
 	}
 
 	/**
@@ -186,16 +197,32 @@ public class ClientController {
 		}
 
 		else if (response.getRequest().equals("pass")) {
-//			newRequest("recieveCards");
-			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
+			gui.dimAll();
+			passCounter = 0;
+			newRequest("giveACard", null, passCounter);
+			//			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
-
-		else if (response.getRequest().equals("passainte"))
+		else if (response.getRequest().equals("giveACard")) {
+			request = "giveACard";
+			passCounter = response.getPassCounter();
+			gui.addCardAction(cards);
+			newRequest("getGameConditions");
+			gui.unDimAll();
+			if (passCounter==3) {
+				newRequest("recieveCards");
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
+				gui.dimAll();
+			}
+			else {
+			}
+		}
+		else if (response.getRequest().equals("passainte")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
-
+		}
 		else if (response.getRequest().equals("playCard")) {
 			getPlayCardAction(response);
-
+			newRequest("nextPlayer");
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -205,7 +232,9 @@ public class ClientController {
 		}
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
-				JOptionPane.showMessageDialog(null, "Du är inloggad");
+				loginFrame.close();
+ 				gui = new ClientGUI(this, clientID);
+				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
@@ -215,6 +244,8 @@ public class ClientController {
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			newRequest("getGameConditions");
+			gui.updateAllPanels();
+			request = "playCard";
 		}
 		else if ( response.getRequest().equals("updateGUI")){
 			setCardsAtGameBoard(response.getGameBoardCards());
@@ -223,7 +254,16 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.addCardAction(this.cards);
 			gui.updateAllPanels();
-
+		}
+		else if ( response.getRequest().equals("updateGUI2")){
+			gui.setPlayersCardsInGUI(response.getCards());
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.addCardAction(response.getCards());
+			gui.updateAllPanels();
+			gui.dimAll();
 		}
 	}
 
@@ -315,8 +355,22 @@ public class ClientController {
 		}
 	}
 
+	public void giveOrPlay (String cardName) {
+		if (request.equals("playCard")) {
+			newRequest("playCard", cardName);
+		}
+		else if (request.equals("giveACard")) {
+			newRequest("giveACardToAPlayer", cardName, passCounter);
+			newRequest("getAllGameConditions");
+			gui.updateAllPanels();
+			gui.dimAll();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
+		}
+
+	}
 	public void sendLogIn(){
 
 	}
 }
-

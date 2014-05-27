@@ -286,9 +286,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource()==databas){
 			controller.newRequest("database");
 		}
-		else if(e.getSource() == login) {
-			LoginFrame = new LoginFrame(this);
-		}
+//		else if(e.getSource() == login) {
+//			LoginFrame = new LoginFrame(this);
+//		}
 		else if(e.getSource() == ready) {
 			controller.newRequest("ready");
 		}
@@ -299,7 +299,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @param cardName takes in a string of a cards name
 	 */
 	public void playCard(String cardName) {
-		controller.newRequest("playCard", cardName);
+		controller.giveOrPlay(cardName);
 
 	}
 	public void dimAll() {
@@ -321,7 +321,5 @@ public class ClientGUI extends JPanel implements ActionListener{
 		play.unDimAllCards();
 	}
 	
-	public void logInDb(){
-		controller.newRequest("Login", LoginFrame.getUserName(), LoginFrame.getPassWord());
-	}
+
 }
