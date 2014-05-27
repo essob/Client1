@@ -116,6 +116,9 @@ public class LoginFrame extends JFrame implements ActionListener{
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
+	public void close() {
+		logInFrame.dispose();
+	}
 
 }
 
