@@ -286,9 +286,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource()==databas){
 			controller.newRequest("database");
 		}
-//		else if(e.getSource() == login) {
-//			LoginFrame = new LoginFrame(this);
-//		}
+		else if(e.getSource() == aboutUs) {
+			new AboutUs();
+		}
 		else if(e.getSource() == ready) {
 			controller.newRequest("ready");
 		}
