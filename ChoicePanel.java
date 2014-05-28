@@ -19,9 +19,8 @@ public class ChoicePanel extends JPanel implements ActionListener{
 
 
 	public ChoicePanel() {
-		
 	}
-	
+
 	public JPanel choiceButton() {
 		choice.setPreferredSize(new Dimension(1000, 600));
 		choice.setLayout(null);
@@ -31,37 +30,43 @@ public class ChoicePanel extends JPanel implements ActionListener{
 		onlyAI.setBounds(200, 175, 150, 25);
 		twoHuman.setBounds(350, 175, 150, 25);
 		onlyHuman.setBounds(500, 175, 150, 25);
-		
+
 		choice.add(onlyAI, BorderLayout.CENTER);
 		choice.add(twoHuman, BorderLayout.CENTER);
 		choice.add(onlyHuman, BorderLayout.CENTER);
-		
+
 		onlyAI.addActionListener(this);
 		twoHuman.addActionListener(this);
 		onlyHuman.addActionListener(this);
-		
+
 		return choice;
 
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == onlyAI) {
-			controller.newRequest("newGame", true, false, false, false);
+			controller.newRequest("newAIPlayer");
+//			controller.newRequest("newGame");
+
+			//			controller.newRequest("newGame", true, false, false, false);
 		}
 		else if(e.getSource() == twoHuman) {
-			controller.newRequest("newGame", true, true, false, false);
+			//			controller.newRequest("newGame", true, true, false, false);
 		}
 		else if(e.getSource() == onlyHuman) {
-			controller.newRequest("newGame", true, true, true, true);
 		}
-			
-		
+
+
 	}
 
-	public static void main(String[] arg) {
-		ChoicePanel chi = new ChoicePanel();
-		chi.choiceButton();
+	//	public static void main(String[] arg) {
+	//		ChoicePanel chi = new ChoicePanel();
+	//		chi.choiceButton();
+	//	}
+	public void setController(ClientController controller) {
+		this.controller = controller;
+		
 	}
 
 

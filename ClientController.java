@@ -24,8 +24,6 @@ public class ClientController {
 	private String request;
 	private LoginFrame loginFrame;
 
-
-
 	/**
 	 * constructs a client controller
 	 * @param serverIP takes in a server IPNumber
@@ -36,8 +34,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-//			loginFrame  = new LoginFrame(this);		
-			gui = new ClientGUI(this, clientID);
+			//			loginFrame  = new LoginFrame(this);		
 
 		} catch (IOException e) {
 			System.out.println(e);
@@ -51,26 +48,26 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request, clientID, gameID));
+			connection.newRequest(new Request(request, clientID, gameID, true));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
 			e.getStackTrace();
 		}
 	}
-	
+
 	/**
 	 * this method creates a request to server
 	 */
-	public void newRequest(String request, boolean type1, boolean type2, boolean type3, boolean type4) {
-		try {
-			connection.newRequest(new Request(request, clientID, gameID));
-
-		} catch (Exception e) {
-			System.out.println("Request: " + request+" är felfelfel");
-			e.getStackTrace();
-		}
-	}
+	//	public void newRequest(String request, boolean type1, boolean type2, boolean type3, boolean type4) {
+	//		try {
+	//			connection.newRequest(new Request(request, clientID, gameID, true));
+	//
+	//		} catch (Exception e) {
+	//			System.out.println("Request: " + request+" är felfelfel");
+	//			e.getStackTrace();
+	//		}
+	//	}
 
 	//	public void newRequest(String request, int clientID) {
 	//		try {
@@ -139,7 +136,7 @@ public class ClientController {
 		this.opponent1 = response.getOpponentCards1();
 		this.opponent2 = response.getOpponentCards2();
 		this.opponent3 = response.getOpponentCards3();
-		this.clientID = response.getClientID();
+		//		this.clientID = response.getClientID();
 		this.gameID = response.getGameID();
 		gui.setPlayersCardsInGUI(cards);
 		gui.setNbrOfOpponent1Cards(opponent1);
@@ -181,15 +178,18 @@ public class ClientController {
 		if (response.getRequest().equals("newGame")) {
 			if (response.getCards()!=null)
 				getStartConditions(response);
+			else {
+				newRequest("newGame");
+			}
+		}
+		else if (response.getRequest().equals("createAI")) {
+			new AIController("127.0.0.1", 7766);
 
 		}
-		//		else if (response.getRequest().equals("ready")) {
-		//			gui.dimAll();
-		//			this.gameID = response.getGameID();
-		//			newRequest("newGame");
-		//		}
+
 		else if (response.getRequest().equals("clientID")) {
 			setClientID(response.getClientID());
+			gui = new ClientGUI(this, clientID);
 		}
 
 		else if (response.getRequest().equals("clientsMissing")) {
@@ -233,7 +233,7 @@ public class ClientController {
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
 				loginFrame.close();
- 				gui = new ClientGUI(this, clientID);
+				gui = new ClientGUI(this, clientID);
 				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
@@ -252,8 +252,9 @@ public class ClientController {
 			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
-			gui.addCardAction(this.cards);
 			gui.updateAllPanels();
+			gui.addCardAction(this.cards);
+
 		}
 		else if ( response.getRequest().equals("updateGUI2")){
 			gui.setPlayersCardsInGUI(response.getCards());
@@ -261,8 +262,8 @@ public class ClientController {
 			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
-			gui.addCardAction(response.getCards());
 			gui.updateAllPanels();
+			gui.addCardAction(response.getCards());
 			gui.dimAll();
 		}
 	}
@@ -368,7 +369,6 @@ public class ClientController {
 		else {
 			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
 		}
-
 	}
 	public void sendLogIn(){
 
