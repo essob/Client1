@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import sjuan.Card;
@@ -87,18 +88,22 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			list[i].setBounds(x, y,71, 96);
 			list[i].setBounds(x, y, 71, 96);
 			panel.add(list[i]);
-			if (cards.size() <=13)
+			if (cards.isEmpty()){
+//				JOptionPane.showMessageDialog(null, "Grattis du vann!");
+				System.out.print("spelaren har vunnit, kom på ett sätt att visa honom det!!!!");
+			}
+			else if (cards.size() <=13)
 				x+=72;
 			else if (cards.size() > 13 )
 				x+=65;
 			else if (cards.size() > 16)
-				x+=60;
+				x+=58;
 			else if (cards.size() > 19)
-				x+=55;
+				x+=52;
 			else if (cards.size() > 22)
-				x+=50;
-			else
 				x+=45;
+			else
+				x+=38;
 		}
 	}
 

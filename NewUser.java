@@ -20,14 +20,11 @@ public class NewUser extends JFrame implements ActionListener{
 	public static java.sql.PreparedStatement statement1; 
 
 	private JFrame frame = new JFrame("Skapa ny användare");
-	private static JTextField t1 = new JTextField();
-	private static JTextField t2 = new JTextField();
-	private static JPasswordField t3 = new JPasswordField('*');
-	private JLabel newEmail = new JLabel("Ange E-post");
-	private JLabel newUser = new JLabel("Ange Användarnamn");
-	private JLabel newPassword = new JLabel("Ange Lösenord");
-	private JButton b3 = new JButton("Registrera dig");
-	private String id, userName, password;
+	private static JTextField tfUserName = new JTextField();
+	private static JPasswordField tfPassword = new JPasswordField('*');
+	private JLabel lblNewUser = new JLabel("Ange Användarnamn");
+	private JLabel lblNewPassword = new JLabel("Ange Lösenord");
+	private JButton btnRegister = new JButton("Registrera dig");
 	
 
 	public NewUser(){
@@ -38,37 +35,37 @@ public class NewUser extends JFrame implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-		newUser.setSize(newUser.getPreferredSize());
-		newUser.setLocation(10, 10);
-		frame.add(newUser);
+		lblNewUser.setSize(lblNewUser.getPreferredSize());
+		lblNewUser.setLocation(10, 10);
+		frame.add(lblNewUser);
 
-		t2.setColumns(15);
-		t2.setBounds(10, 40, 150, 25);
-		t2.setLocation(150, 10);
-		frame.add(t2);
+		tfUserName.setColumns(15);
+		tfUserName.setBounds(10, 40, 150, 25);
+		tfUserName.setLocation(150, 10);
+		frame.add(tfUserName);
 
-		newPassword.setSize(newPassword.getPreferredSize());
-		newPassword.setLocation(10, 40);
-		frame.add(newPassword);
+		lblNewPassword.setSize(lblNewPassword.getPreferredSize());
+		lblNewPassword.setLocation(10, 40);
+		frame.add(lblNewPassword);
 
-		t3.setColumns(15);
-		t3.setBounds(10, 40, 150, 25);
-		t3.setLocation(150, 40);
-		frame.add(t3);
+		tfPassword.setColumns(15);
+		tfPassword.setBounds(10, 40, 150, 25);
+		tfPassword.setLocation(150, 40);
+		frame.add(tfPassword);
 
-		b3.setSize(b3.getPreferredSize());
-		b3.setLocation(150, 70);
-		frame.add(b3);
-		b3.addActionListener(this);
+		btnRegister.setSize(btnRegister.getPreferredSize());
+		btnRegister.setLocation(150, 70);
+		frame.add(btnRegister);
+		btnRegister.addActionListener(this);
 
 		frame.setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==b3){
+		if(ae.getSource()==btnRegister){
 			try {
-				DataBase.connect(t2.getText().toString(), t3.getText().toString());
-				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + t2.getText() + ":)");
+				DataBase.connect(tfUserName.getText().toString(), tfPassword.getText().toString());
+				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + tfUserName.getText() + ":)");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

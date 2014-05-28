@@ -19,7 +19,6 @@ public class ChoicePanel extends JPanel implements ActionListener{
 
 
 	public ChoicePanel() {
-		
 	}
 	
 	public JPanel choiceButton() {
@@ -53,16 +52,16 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			controller.newRequest("newGame", true, true, false, false);
 		}
 		else if(e.getSource() == btnOnlyHuman) {
-			controller.newRequest("newGame", true, true, true, true);
+			controller.newRequest("newGame");
 		}
 			
 		
 	}
 
-	public static void main(String[] arg) {
-		ChoicePanel chi = new ChoicePanel();
-		chi.choiceButton();
-	}
+//	public static void main(String[] arg) {
+//		ChoicePanel chi = new ChoicePanel();
+//		chi.choiceButton();
+//	}
 
 
 
