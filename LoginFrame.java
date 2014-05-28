@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import com.mysql.jdbc.PreparedStatement;
 
+
 public class LoginFrame extends JFrame implements ActionListener{
 
 	public static Connection connection;
@@ -27,7 +28,10 @@ public class LoginFrame extends JFrame implements ActionListener{
 	private ClientController controller;
 	private String userName, passWord;
 
-
+	/**
+	 *  constructs a loginframe so the user can log in
+	 *  @param controller takes in this loginframes controller 
+	 */
 	public LoginFrame(ClientController controller){
 		this.controller = controller;
 		logInFrame.setSize(350, 200);
@@ -89,10 +93,9 @@ public class LoginFrame extends JFrame implements ActionListener{
 			setPassWord(t2.getText().toString());
 			logInDb();
 		}
-		
-		
 	}
 
+	
 	public void logInDb(){
 		controller.newRequest("Login", getUserName(), getPassWord());
 	}
@@ -116,6 +119,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
+
 	public void close() {
 		logInFrame.dispose();
 	}

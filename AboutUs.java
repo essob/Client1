@@ -3,11 +3,15 @@ package Client1;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+/**
+ * This class creates a textarea with info about sjuan.
+ * @author Anna
+ *
+ */
 public class AboutUs extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame("About us");
 	private String content = "This software and related documentation are provided under a license" + 

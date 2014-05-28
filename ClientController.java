@@ -36,7 +36,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-//			loginFrame  = new LoginFrame(this);		
+			loginFrame  = new LoginFrame(this);		
 			gui = new ClientGUI(this, clientID);
 
 		} catch (IOException e) {
@@ -108,6 +108,7 @@ public class ClientController {
 		}
 	}
 
+	
 	public void newRequest(String request, String userName, String passWord) {
 		try {
 			connection.newRequest(new Request(request, userName, passWord));
