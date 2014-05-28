@@ -30,7 +30,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JButton pass = new JButton("Pass");
 	private JButton end = new JButton("Avsluta spel");
 	private StartButton start = new StartButton("Börja spelomgång");
-	private JButton login = new JButton("Inloggning"); 
+	private JButton aboutUs = new JButton("About us"); 
 	private JButton databas = new JButton("Databas");
 	private ClientController controller;
 	private PlayLabel pLabel = new PlayLabel(this);
@@ -73,7 +73,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		end.addActionListener(this);
 		pass.addActionListener(this);
 		databas.addActionListener(this);
-		login.addActionListener(this);
+		aboutUs.addActionListener(this);
 		ready.addActionListener(this);
 		gameFrame.setVisible(true);
 
@@ -121,7 +121,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		leftOptionsPanel.setBackground(Color.MAGENTA.darker().darker());
 		leftOptionsPanel.add(pass);
 		leftOptionsPanel.add(databas);
-		leftOptionsPanel.add(login);
+		leftOptionsPanel.add(aboutUs);
 		return leftOptionsPanel;
 	}
 
@@ -281,9 +281,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource()==databas){
 			controller.newRequest("database");
 		}
-//		else if(e.getSource() == login) {
-//			LoginFrame = new LoginFrame(this);
-//		}
+		else if(e.getSource() == aboutUs) {
+			new AboutUs();
+		}
 		else if(e.getSource() == ready) {
 			controller.newRequest("ready");
 		}
@@ -302,7 +302,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pass.setEnabled(false);
 		databas.setEnabled(false);
 		ready.setEnabled(false);
-		login.setEnabled(false);
+		aboutUs.setEnabled(false);
 		play.removeCardListener();
 		play.dimAllCards();
 

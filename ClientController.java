@@ -241,6 +241,7 @@ public class ClientController {
 			}
 
 		}
+		
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			newRequest("getGameConditions");
