@@ -176,8 +176,9 @@ public class ClientController {
 	 */
 	public void newResponse(Response response) {
 		if (response.getRequest().equals("newGame")) {
-			if (response.getCards()!=null)
+			if (response.getCards()!=null) {
 				getStartConditions(response);
+			}
 			else {
 				newRequest("newGame");
 			}
@@ -188,7 +189,7 @@ public class ClientController {
 		}
 
 		else if (response.getRequest().equals("clientID")) {
-			setClientID(response.getClientID());
+			this.clientID = response.getClientID();
 			gui = new ClientGUI(this, clientID);
 		}
 
@@ -239,9 +240,8 @@ public class ClientController {
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
 			}
-
 		}
-		
+
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			newRequest("getGameConditions");

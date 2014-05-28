@@ -45,6 +45,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		GamePanel();
 		setGameFrameTitle(clientID);
 		Choice.setController(this.controller);
+		Choice.setClientGUI(this);
 	}
 
 	/**
@@ -55,9 +56,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
-		
+
 		gameFrame.add(Choice.choiceButton());
-//		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(optionsPanel, BorderLayout.NORTH);
@@ -77,7 +77,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 		ready.addActionListener(this);
 		gameFrame.setVisible(true);
 
-
+	}
+	public void replaceGameBoard() {
+		gameFrame.remove(Choice);
+		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
 	}
 
 	/**
@@ -282,7 +285,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 			controller.newRequest("database");
 		}
 		else if(e.getSource() == aboutUs) {
-			new AboutUs();
+			//			new AboutUs();
 		}
 		else if(e.getSource() == ready) {
 			controller.newRequest("ready");
@@ -315,6 +318,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		databas.setEnabled(true);
 		play.unDimAllCards();
 	}
-	
+
 
 }

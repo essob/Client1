@@ -16,6 +16,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	private JButton twoHuman 	= new JButton("Två spelare");
 	private JButton onlyHuman 	= new JButton("Fyra spelare");
 	private ClientController controller;
+	private ClientGUI gui;
 
 
 	public ChoicePanel() {
@@ -47,7 +48,8 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == onlyAI) {
 			controller.newRequest("newAIPlayer");
-//			controller.newRequest("newGame");
+			gui.replaceGameBoard();
+			//			controller.newRequest("newGame");
 
 			//			controller.newRequest("newGame", true, false, false, false);
 		}
@@ -66,9 +68,9 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	//	}
 	public void setController(ClientController controller) {
 		this.controller = controller;
-		
+
 	}
-
-
-
+	public void setClientGUI(ClientGUI gui) {
+		this.gui = gui;
+	}
 }
