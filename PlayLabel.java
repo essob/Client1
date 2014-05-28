@@ -3,7 +3,12 @@ package Client1;
 import javax.swing.*;
 
 import sjuan.Card;
-
+/**
+ * Class for put the card on right places on gameBoard 
+ * 
+ * @author Emily Elmseld 21 maj 2014
+ *
+ */
 public class PlayLabel extends JLabel{
 	/**
 	 * 
