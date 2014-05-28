@@ -154,7 +154,7 @@ public class ClientController {
 	 * @param response
 	 */
 	public void getStartConditions(Response response) {
-		if (response.getClientID()==clientID) {
+		if (response.getClientID()== clientID) {
 			setStartConditions(response);
 		}
 	}
@@ -198,9 +198,9 @@ public class ClientController {
 
 		else if (response.getRequest().equals("pass")) {
 			gui.dimAll();
+			gui.setInstructions("De andra spelarna kommer nu skicka dig var sitt kort");
 			passCounter = 0;
 			newRequest("giveACard", null, passCounter);
-			//			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
 		}
 		else if (response.getRequest().equals("giveACard")) {
 			request = "giveACard";
@@ -208,6 +208,15 @@ public class ClientController {
 			gui.addCardAction(cards);
 			newRequest("getGameConditions");
 			gui.unDimAll();
+				if(passCounter == 0) {
+					gui.setInstructions("Skicka ett kort till spelaren till höger");
+				}
+				else if(passCounter == 1) {
+					gui.setInstructions("Skicka ett kort till spelaren rakt över");
+				}
+				else {
+					gui.setInstructions("Skicka ett kort till spelaren till vänster");
+				}
 			if (passCounter==3) {
 				newRequest("recieveCards");
 				newRequest("getAllGameConditions");

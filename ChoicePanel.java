@@ -11,10 +11,10 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel choice 		= new JPanel();
-	private JButton onlyAI 		= new JButton("Spela mot datorn");
-	private JButton twoHuman 	= new JButton("Två spelare");
-	private JButton onlyHuman 	= new JButton("Fyra spelare");
+	private JPanel pnlChoice 		= new JPanel();
+	private JButton btnOnlyAI 		= new JButton("Spela mot datorn");
+	private JButton btnTwoHuman 	= new JButton("Två spelare");
+	private JButton btnOnlyHuman 	= new JButton("Fyra spelare");
 	private ClientController controller;
 
 
@@ -22,39 +22,39 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	}
 
 	public JPanel choiceButton() {
-		choice.setPreferredSize(new Dimension(1000, 600));
-		choice.setLayout(null);
-		choice.setFont(new Font("Arial", Font.BOLD, 24));
-		choice.setBackground(Color.GREEN.darker().darker());
+		pnlChoice.setPreferredSize(new Dimension(1000, 600));
+		pnlChoice.setLayout(null);
+		pnlChoice.setFont(new Font("Arial", Font.BOLD, 24));
+		pnlChoice.setBackground(Color.GREEN.darker().darker());
 
-		onlyAI.setBounds(200, 175, 150, 25);
-		twoHuman.setBounds(350, 175, 150, 25);
-		onlyHuman.setBounds(500, 175, 150, 25);
-
-		choice.add(onlyAI, BorderLayout.CENTER);
-		choice.add(twoHuman, BorderLayout.CENTER);
-		choice.add(onlyHuman, BorderLayout.CENTER);
-
-		onlyAI.addActionListener(this);
-		twoHuman.addActionListener(this);
-		onlyHuman.addActionListener(this);
-
-		return choice;
+		btnOnlyAI.setBounds(200, 175, 150, 25);
+		btnTwoHuman.setBounds(350, 175, 150, 25);
+		btnOnlyHuman.setBounds(500, 175, 150, 25);
+		
+		pnlChoice.add(btnOnlyAI, BorderLayout.CENTER);
+		pnlChoice.add(btnTwoHuman, BorderLayout.CENTER);
+		pnlChoice.add(btnOnlyHuman, BorderLayout.CENTER);
+		
+		btnOnlyAI.addActionListener(this);
+		btnTwoHuman.addActionListener(this);
+		btnOnlyHuman.addActionListener(this);
+		
+		return pnlChoice;
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == onlyAI) {
+		if(e.getSource() == btnOnlyAI) {
 			controller.newRequest("newAIPlayer");
 //			controller.newRequest("newGame");
 
 			//			controller.newRequest("newGame", true, false, false, false);
 		}
-		else if(e.getSource() == twoHuman) {
+		else if(e.getSource() == btnTwoHuman) {
 			//			controller.newRequest("newGame", true, true, false, false);
 		}
-		else if(e.getSource() == onlyHuman) {
+		else if(e.getSource() == btnOnlyHuman) {
 		}
 
 
@@ -68,7 +68,6 @@ public class ChoicePanel extends JPanel implements ActionListener{
 		this.controller = controller;
 		
 	}
-
 
 
 }
