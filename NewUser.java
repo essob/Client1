@@ -76,7 +76,6 @@ public class NewUser extends JFrame implements ActionListener{
 			
 			//knappen (request till servern)
 		}
-
 	}
 
 

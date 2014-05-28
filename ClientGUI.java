@@ -16,7 +16,6 @@ import sjuan.Card;
  */
 public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel gameBoardPanel = new JPanel();
-	private JPanel choice = new JPanel();
 	private JFrame gameFrame = new JFrame("Sjuan");
 	private JPanel playerPanel = new JPanel();
 	private JPanel opponent1Panel = new JPanel();
@@ -38,9 +37,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private PlayersPanel play = new PlayersPanel(this);
 	private ChoicePanel Choice = new ChoicePanel();
 
-	
-
-
 	/**
 	 * Constructs the Gui
 	 */
@@ -48,6 +44,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		this.controller = controller;
 		GamePanel();
 		setGameFrameTitle(clientID);
+		Choice.setController(this.controller);
 	}
 
 	/**
@@ -243,8 +240,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		opponent2Panel.updateUI();
 		opponent3Panel.updateUI();
 		gameBoardPanel.updateUI();
-
-
 
 	}
 	/**
