@@ -76,7 +76,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	{
 		if(ae.getSource()==btnNewUser)
 		{
-			new NewUser();
+			new NewUser(controller);
 		}
 
 		else if(ae.getSource()==btnClose)
@@ -116,6 +116,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
+	
 	public void close() {
 		logInFrame.dispose();
 	}
