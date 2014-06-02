@@ -8,6 +8,7 @@ import javax.swing.JTable;
 
 import sjuan.*;
 
+
 /**
  * this class handles control over a client
  * @author Sjuan
@@ -146,11 +147,12 @@ public class ClientController {
 		gui.setNbrOfOpponent1Cards(opponent1);
 		gui.setNbrOfOpponent2Cards(opponent2);
 		gui.setNbrOfOpponent3Cards(opponent3);
-		gui.addCardAction(cards);
 		gui.startButtonDimmed();
+		gui.unDimAll();
 		if (response.isHasHeart7()==false)
 			gui.dimAll();
 		gui.updateAllPanels();
+		gui.addCardAction(cards);
 	}
 
 	/**
@@ -169,8 +171,8 @@ public class ClientController {
 		gameBoardCards = response.getGameBoardCards();
 		setCardsAtGameBoard(gameBoardCards);
 		gui.setPlayersCardsInGUI(cards);
-		gui.addCardAction(cards);
 		gui.updateAllPanels();
+		gui.addCardAction(cards);
 		gui.dimAll();
 	}
 
@@ -182,13 +184,6 @@ public class ClientController {
 		if (response.getRequest().equals("newGame")) {
 			if (response.getCards()!=null)
 				getStartConditions(response);
-			else {
-				newRequest("newGame");
-			}
-		}
-		else if (response.getRequest().equals("createAI")) {
-			new AIController("127.0.0.1", 7766);
-
 		}
 
 		else if (response.getRequest().equals("clientID")) {
@@ -209,22 +204,24 @@ public class ClientController {
 		else if (response.getRequest().equals("giveACard")) {
 			request = "giveACard";
 			passCounter = response.getPassCounter();
-			gui.addCardAction(cards);
 			newRequest("getGameConditions");
 			gui.unDimAll();
-				if(passCounter == 0) {
-					gui.setInstructions("Skicka ett kort till spelaren till höger");
-				}
-				else if(passCounter == 1) {
-					gui.setInstructions("Skicka ett kort till spelaren rakt över");
-				}
-				else {
-					gui.setInstructions("Skicka ett kort till spelaren till vänster");
-				}
+			gui.addCardAction(cards);
+			if(passCounter == 0) {
+				gui.setInstructions("Skicka ett kort till spelaren till höger");
+			}
+			else if(passCounter == 1) {
+				gui.setInstructions("Skicka ett kort till spelaren rakt över");
+			}
+			else {
+				gui.setInstructions("Skicka ett kort till spelaren till vänster");
+			}
 			if (passCounter==3) {
 				newRequest("recieveCards");
 				newRequest("getAllGameConditions");
 				gui.updateAllPanels();
+				cards = response.getCards();
+				gui.addCardAction(this.cards);
 				gui.dimAll();
 			}
 			else {
@@ -247,6 +244,8 @@ public class ClientController {
 			if(response.getLogOk()== true){
 				loginFrame.close();
 				gui = new ClientGUI(this, clientID);
+				gui.dimAllExceptStart();
+
 				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
 			else{
@@ -254,7 +253,7 @@ public class ClientController {
 			}
 
 		}
-		
+
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			newRequest("getGameConditions");
@@ -383,8 +382,6 @@ public class ClientController {
 		else {
 			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
 		}
-	}
-	public void sendLogIn(){
 
 	}
 }

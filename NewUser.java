@@ -11,8 +11,6 @@ import java.awt.event.*;
 
 import javax.swing.JPasswordField.*;
 
-import sjuan.DataBase;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class NewUser extends JFrame implements ActionListener{	
@@ -25,10 +23,11 @@ public class NewUser extends JFrame implements ActionListener{
 	private JLabel lblNewUser = new JLabel("Ange Användarnamn");
 	private JLabel lblNewPassword = new JLabel("Ange Lösenord");
 	private JButton btnRegister = new JButton("Registrera dig");
-	
+	private ClientController controller;
+
 
 	public NewUser(ClientController controller){
-
+		this.controller = controller;
 		frame.setSize(400, 150 );
 		frame.setLocation(500, 200);
 		frame.setLayout(null);
@@ -63,17 +62,17 @@ public class NewUser extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==btnRegister){
-			try {
-				DataBase.connect(tfUserName.getText().toString(), tfPassword.getText().toString());
-				JOptionPane.showMessageDialog(null, "Välkommen till sjuan " + tfUserName.getText() + ":)");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+//			if ((tfUserName.getText() !=null) && (tfPassword.getText().toString() != null ))
+				controller.newRequest("createUser", tfUserName.getText(), tfPassword.getText().toString());
+//			else
+//				JOptionPane.showMessageDialog(null, "skriv in användarnamn och lösenord!");
 			//knappen (request till servern)
 		}
 	}
+	//	public void createUser(String userName, String passWord) {
+	//		controller.newRequest("createUser", userName, passWord);
+	//
+	//	}
 
 
 }
