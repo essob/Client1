@@ -2,7 +2,6 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -19,7 +18,7 @@ public class ClientController {
 	private JTable table;
 	private ClientConnection connection;
 	private Object tabell;
-	private ArrayList <Card> cards, gameBoardCards, giveAwayCardList;
+	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
 	private LoginFrame loginFrame;
@@ -84,15 +83,15 @@ public class ClientController {
 	 * @param request takes in a request as a string
 	 * @param card takes in a card as a string
 	 */
-	public void newRequest(String request, String cardName) {
-		try {
-			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
-
-		} catch (Exception e) {
-			System.out.println("Request: " + request+" är felfelfel");
-			e.getStackTrace();
-		}
-	}
+//	public void newRequest(String request, String cardName) {
+//		try {
+//			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
+//
+//		} catch (Exception e) {
+//			System.out.println("Request: " + request+" är felfelfel");
+//			e.getStackTrace();
+//		}
+//	}
 
 	public void newRequest(String request, String cardName, int counter) {
 		try {
@@ -136,7 +135,6 @@ public class ClientController {
 		this.opponent1 = response.getOpponentCards1();
 		this.opponent2 = response.getOpponentCards2();
 		this.opponent3 = response.getOpponentCards3();
-		//		this.clientID = response.getClientID();
 		this.gameID = response.getGameID();
 		gui.setPlayersCardsInGUI(cards);
 		gui.setNbrOfOpponent1Cards(opponent1);
@@ -180,6 +178,7 @@ public class ClientController {
 				getStartConditions(response);
 			}
 			else {
+				gameID = response.getGameID();
 				newRequest("newGame");
 			}
 		}
@@ -223,7 +222,7 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			getPlayCardAction(response);
-			newRequest("nextPlayer");
+			newRequest("update"); //playCard
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -248,7 +247,7 @@ public class ClientController {
 			gui.updateAllPanels();
 			request = "playCard";
 		}
-		else if ( response.getRequest().equals("updateGUI")){
+		else if ( response.getRequest().equals("update")){
 			setCardsAtGameBoard(response.getGameBoardCards());
 			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
@@ -257,7 +256,19 @@ public class ClientController {
 			gui.addCardAction(this.cards);
 
 		}
-		else if ( response.getRequest().equals("updateGUI2")){
+		else if ( response.getRequest().equals("updatePlayerWithAI")){
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setPlayersCardsInGUI(response.getCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.updateAllPanels();
+//			gui.addCardAction(this.cards);
+			gui.dimAll();
+			newRequest("nextPlayer");
+		}
+
+		else if ( response.getRequest().equals("updateAll")){
 			gui.setPlayersCardsInGUI(response.getCards());
 			setCardsAtGameBoard(response.getGameBoardCards());
 			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
@@ -359,7 +370,7 @@ public class ClientController {
 
 	public void giveOrPlay (String cardName) {
 		if (request.equals("playCard")) {
-			newRequest("playCard", cardName);
+			newRequest("playCard", cardName, 0);
 		}
 		else if (request.equals("giveACard")) {
 			newRequest("giveACardToAPlayer", cardName, passCounter);

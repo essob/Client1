@@ -7,13 +7,15 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import sjuan.Card;
+import sjuan.Player;
 import sjuan.Request;
 import sjuan.Response;
 
 public class AIController {
 	private AIConnection connection;
 	private int clientID, gameID, passCounter;
-	private ArrayList <Card> cards;
+	private ArrayList <Card> cards = new ArrayList <Card>(); 
+	private ArrayList <Card> gameBoardCards = new ArrayList <Card>();
 	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
 	private HashMap <Integer, AIConnection> connectionList = new HashMap <Integer, AIConnection>();
 	private String request = "playCard";
@@ -55,8 +57,18 @@ public class AIController {
 		}
 	}
 
-	public void newRequest(String request, String cardName) {
+	//	public void newRequest(String request, String cardName) {
+	//		try {
+	//			connection.newRequest(new Request(request, cardName, clientID, gameID));
+	//		} catch (Exception e) {
+	//			System.out.println("Request: " + request+" är felfelfel");
+	//			e.getStackTrace();
+	//		}
+	//	}
+
+	public void newRequest(String request, String cardName, int counter) {
 		try {
+			counter = passCounter;
 			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
 
 		} catch (Exception e) {
@@ -68,7 +80,6 @@ public class AIController {
 	public void newResponse(Response response) {
 		if (response.getRequest().equals("newGame")) {
 			this.clientID = response.getClientID();
-
 			this.cards = response.getCards();
 			this.gameID = response.getGameID();
 			AICardsList.put(clientID, cards);
@@ -78,9 +89,11 @@ public class AIController {
 			System.out.println("");
 			if (response.isHasHeart7()) {
 				for (Card card : cards) {
-					if (card.toString().equals("h7"));
-					String cardName = card.toString();
-					newRequest("playCard", cardName);
+					if (card.toString().equals("h7")) {
+						String cardName = card.toString();
+						newRequest("playCard", cardName, 0);
+						break;
+					}
 				}
 			}
 		}
@@ -100,8 +113,25 @@ public class AIController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			this.clientID = response.getClientID();
-			newRequest("nextPlayer", clientID);
+			this.gameBoardCards = response.getGameBoardCards();
+			for (Card card : cards) {
+				if (checkIfAICanPlayCard(card)) {
+					newRequest("playCard", card.toString(), 0);
+					break;
+				}
+			}
 		}
+		
+		else if (response.getRequest().equals("updatePlayerWithAI")) {
+			this.clientID = response.getClientID();
+			this.cards = response.getCards();
+			this.gameBoardCards.clear();
+			this.gameBoardCards = response.getGameBoardCards();
+			System.out.println(clientID + ": har spelat: " );
+			newRequest("nextPlayer");
+
+		}
+
 		else if (response.getRequest().equals("giveACard")) {
 			this.clientID = response.getClientID();
 			request = "giveACard";
@@ -113,23 +143,112 @@ public class AIController {
 			}
 		}
 		else if (response.getRequest().equals("wakePlayer")) {
+			this.clientID = response.getClientID();
 			request = "playCard";
-		}
-	}
+			newRequest("getAllGameConditions", clientID);
+			System.out.println(clientID + ": har vaknat");
 
+
+		}
+		else if (response.getRequest().equals("updateAll")) {
+			this.clientID = response.getClientID();
+			this.cards = response.getCards();
+			this.gameBoardCards.clear();
+			this.gameBoardCards = response.getGameBoardCards();
+			for (Card card : cards) {
+				if (checkIfAICanPlayCard(card)) {
+					newRequest("playCard", card.toString(), 0);
+					System.out.println(clientID + ": har spelat: " + card.toString());
+					break;
+				}
+				//				else {
+				//					newRequest("pass");
+				//					System.out.println(clientID + ": har spelat: pass" );
+				//
+				//				}
+			}
+//			newRequest("pass");
+//								System.out.println(clientID + ": har spelat: pass" );
+
+		}
+		else if (response.getRequest().equals("pass")) {
+			this.clientID = response.getClientID();
+			passCounter = 0;
+			newRequest("giveACard", null, passCounter);
+		}
+
+	}
 	//	private void setClientID(int clientID) {
 	//		this.clientID = clientID;		
 	//	}
 
 	public void giveOrPlay (String cardName) {
 		if (request.equals("playCard")) {
-			newRequest("playCard", cardName);
+			newRequest("playCard", cardName, 0);
 		}
 		else if (request.equals("giveACard")) {
-			newRequest("giveACardToAPlayer", cardName);
+			newRequest("giveACardToAPlayer", cardName,0);
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
 		}
+	}
+	public boolean checkIfAICanPlayCard(Card card) {
+
+		// if hjärter7
+		if (card.getType() == 0) {
+			if (card.getValue() == 6) {
+				return true;
+			} else {
+				for (int i = 0; i < gameBoardCards.size(); i++) {
+					Card right = gameBoardCards.get(i);
+					if (right.getType() == 0 && right.getValue() == (card.getValue() + 1) 
+							|| (right.getType() == 0 && right.getValue() == (card.getValue() -1))) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		// // if någon annan sjua och hjärter7 utlagd
+		else if ((card.getValue() == 6)) {
+			for (int i = 0; i < gameBoardCards.size(); i++) {
+				Card right = gameBoardCards.get(i);
+				if (right.getType() == 0) {
+					return true;
+				}
+			}
+		}
+		//
+		else if (card.getType() == 1) {
+			for (int i = 0; i < gameBoardCards.size(); i++) {
+				Card right = gameBoardCards.get(i);
+				if (right.getType() == 1 && right.getValue() == (card.getValue() + 1) 
+						|| (right.getType() == 1 && right.getValue() == (card.getValue() -1))) {
+					return true;
+				}
+			}
+		}
+
+		else if (card.getType() == 2) {
+			for (int i = 0; i < gameBoardCards.size(); i++) {
+				Card right = gameBoardCards.get(i);
+				if (right.getType() == 2 && right.getValue() == (card.getValue() + 1) 
+						|| (right.getType() == 2 && right.getValue() == (card.getValue() -1))) {
+					return true;
+				}
+			}
+		}
+
+		else if (card.getType() == 3) {
+			for (int i = 0; i < gameBoardCards.size(); i++) {
+				Card right = gameBoardCards.get(i);
+				if (right.getType() == 3 && right.getValue() == (card.getValue() + 1) 
+						|| (right.getType() == 3 && right.getValue() == (card.getValue() -1))) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

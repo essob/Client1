@@ -9,7 +9,6 @@ import java.net.*;
 
 public class ClientConnection {
 	private ClientController controller;
-	private AIController AIcontroller;
 	private Socket socket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
