@@ -7,15 +7,14 @@ import sjuan.Response;
 
 import java.net.*;
 
-public class ClientConnection {
-	private ClientController controller;
-	private AIController AIcontroller;
+public class AIConnection {
+	private AIController controller;
 	private Socket socket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 
 
-	public ClientConnection(ClientController controller, String serverIP, int serverPort) throws IOException {
+	public AIConnection(AIController controller, String serverIP, int serverPort) throws IOException {
 		this.controller = controller;
 		socket = new Socket(InetAddress.getByName(serverIP), serverPort);
 		output = new ObjectOutputStream(socket.getOutputStream());
@@ -51,12 +50,11 @@ public class ClientConnection {
 				while (true) {
 					response = (Response)input.readObject();
 					controller.newResponse(response);
-
 				}
 			} catch (Exception e1) {
 				System.out.println(e1);
+
 			}
 		}
 	}
 }
-
