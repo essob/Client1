@@ -17,9 +17,8 @@ public class AIController {
 	private ArrayList <Card> cards = new ArrayList <Card>(); 
 	private ArrayList <Card> gameBoardCards = new ArrayList <Card>();
 	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
-	private HashMap <Integer, AIConnection> connectionList = new HashMap <Integer, AIConnection>();
+//	private HashMap <Integer, AIConnection> connectionList = new HashMap <Integer, AIConnection>();
 	private String request = "playCard";
-	//	private boolean humanPlayer = false;
 
 	public AIController(String serverIP, int serverPort) {
 		try {
@@ -99,7 +98,7 @@ public class AIController {
 		}
 		else if (response.getRequest().equals("clientID")) {
 			this.clientID = response.getClientID();
-			connectionList.put(clientID, connection);
+//			connectionList.put(clientID, connection);
 			newRequest("newAIPlayer", clientID);
 		}
 		//		else if (response.getRequest().equals("newAIPlayer")) {
