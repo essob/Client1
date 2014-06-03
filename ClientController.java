@@ -2,6 +2,7 @@ package Client1;
 
 import java.io.*; 
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -83,15 +84,15 @@ public class ClientController {
 	 * @param request takes in a request as a string
 	 * @param card takes in a card as a string
 	 */
-//	public void newRequest(String request, String cardName) {
-//		try {
-//			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
-//
-//		} catch (Exception e) {
-//			System.out.println("Request: " + request+" är felfelfel");
-//			e.getStackTrace();
-//		}
-//	}
+	//	public void newRequest(String request, String cardName) {
+	//		try {
+	//			connection.newRequest(new Request(request, cardName, clientID, gameID, passCounter));
+	//
+	//		} catch (Exception e) {
+	//			System.out.println("Request: " + request+" är felfelfel");
+	//			e.getStackTrace();
+	//		}
+	//	}
 
 	public void newRequest(String request, String cardName, int counter) {
 		try {
@@ -200,14 +201,16 @@ public class ClientController {
 			gui.dimAll();
 			passCounter = 0;
 			newRequest("giveACard", null, passCounter);
-			//			JOptionPane.showMessageDialog(null, "Du skulle ha passat nu om metoden var färdigskriven");
+			System.out.println(clientID + ": har spelat: pass" );
+
 		}
-		else if (response.getRequest().equals("giveACard")) {
+		else if (response.getRequest().equals("updateAndGiveCard")) {
 			request = "giveACard";
 			passCounter = response.getPassCounter();
 			gui.addCardAction(cards);
 			newRequest("getGameConditions");
 			gui.unDimAll();
+			System.out.println(clientID + ": ska ge ett kort" );
 			if (passCounter==3) {
 				newRequest("recieveCards");
 				newRequest("getAllGameConditions");
@@ -222,7 +225,7 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			getPlayCardAction(response);
-			newRequest("update"); //playCard
+//			newRequest("update"); //playCard
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -243,7 +246,7 @@ public class ClientController {
 
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
-			newRequest("getGameConditions");
+			newRequest("getHumanGameConditions");
 			gui.updateAllPanels();
 			request = "playCard";
 		}
@@ -263,7 +266,7 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
-//			gui.addCardAction(this.cards);
+			//			gui.addCardAction(this.cards);
 			gui.dimAll();
 			newRequest("nextPlayer");
 		}
@@ -374,7 +377,9 @@ public class ClientController {
 		}
 		else if (request.equals("giveACard")) {
 			newRequest("giveACardToAPlayer", cardName, passCounter);
-			newRequest("getAllGameConditions");
+			System.out.println(clientID + ": har gett bort: "  + cardName);
+
+			newRequest("getHumanGameConditions");
 			gui.updateAllPanels();
 			gui.dimAll();
 		}
