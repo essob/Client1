@@ -212,7 +212,8 @@ public class ClientController {
 			gui.unDimAll();
 			System.out.println(clientID + ": ska ge ett kort" );
 			if (passCounter==3) {
-				newRequest("recieveCards");
+				passCounter = 0;
+				newRequest("recieveCards", null, passCounter);
 				newRequest("getAllGameConditions");
 				gui.updateAllPanels();
 				gui.dimAll();
@@ -225,7 +226,7 @@ public class ClientController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			getPlayCardAction(response);
-//			newRequest("update"); //playCard
+			//			newRequest("update"); //playCard
 		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
@@ -246,9 +247,27 @@ public class ClientController {
 
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
-			newRequest("getHumanGameConditions");
-			gui.updateAllPanels();
-			request = "playCard";
+			passCounter = response.getPassCounter();
+			if (passCounter==3) {
+				passCounter = 0;
+				request = "playCard";
+				newRequest("recieveCards", null, passCounter);
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
+				gui.dimAll();
+			}
+			else if (passCounter < 3 && passCounter > 0) {
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
+				System.out.println(response.getClientID() + " ska ge bort ett kort");
+				request = "giveACard";
+
+			}
+			else {
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
+				System.out.println(clientID + ": har vaknat" );
+			}
 		}
 		else if ( response.getRequest().equals("update")){
 			setCardsAtGameBoard(response.getGameBoardCards());
@@ -279,13 +298,13 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
-			gui.dimAll();
+			//			gui.dimAll();
 		}
 	}
 
-	private void setClientID(int clientID) {
-		this.clientID = clientID;		
-	}
+	//	private void setClientID(int clientID) {
+	//		this.clientID = clientID;		
+	//	}
 
 	/**
 	 * this method returns this opponents cards
@@ -378,8 +397,7 @@ public class ClientController {
 		else if (request.equals("giveACard")) {
 			newRequest("giveACardToAPlayer", cardName, passCounter);
 			System.out.println(clientID + ": har gett bort: "  + cardName);
-
-			newRequest("getHumanGameConditions");
+			newRequest("getAllGameConditions");
 			gui.updateAllPanels();
 			gui.dimAll();
 		}
