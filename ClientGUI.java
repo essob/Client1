@@ -279,7 +279,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 			System.exit(0);
 		}
 		else if(e.getSource() == pass){
-			controller.newRequest("pass");
+			controller.newRequest("pass", null, 0);
 		}
 		else if(e.getSource()==databas){
 			controller.newRequest("database");

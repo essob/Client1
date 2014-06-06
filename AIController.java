@@ -103,6 +103,7 @@ public class AIController {
 		}
 		else if (response.getRequest().equals("playCard")) {
 			this.clientID = response.getClientID();
+			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
 			for (Card card : cards) {
 				if (checkIfAICanPlayCard(card)) {
@@ -124,28 +125,35 @@ public class AIController {
 		else if (response.getRequest().equals("UpdateAndgiveACard")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
-			request = "giveACard";
-			passCounter = response.getPassCounter();
-			if (passCounter==3) {
-				newRequest("recieveCards", clientID);
-			}
-			else {
-				giveOrPlay(cards.get(0).toString());
-			}
+			this.passCounter = response.getPassCounter();
+			passCounter++;
+			newRequest("giveACardToAPlayer", cards.get(0).toString(), passCounter);
+
+
 		}
 		else if (response.getRequest().equals("wakePlayer")) {
 			this.clientID = response.getClientID();
 			this.passCounter = response.getPassCounter();
-			if (passCounter==3) {
-				newRequest("recieveCards");
-				passCounter=0;
+
+			if (passCounter==4) {
+				passCounter = 0;
+				System.out.println(clientID + ": har vaknat och tar emot kort");
+				newRequest("recieveCards", null, passCounter);
 			}
-			else if (passCounter < 3 && passCounter > 0){
-				newRequest("giveACard");
+//			else if (passCounter == 5) {
+//				passCounter=0;
+//				newRequest("", null, passCounter);
+//			}
+			else if (passCounter < 4 && passCounter > 0){
+				this.cards = response.getCards();
+				passCounter++;
+				System.out.println(clientID + ": har vaknat och ger bort ett kort");
+				newRequest("giveACardToAPlayer", cards.get(0).toString(), passCounter);
 			}
+
 			else if (passCounter == 0){
-				newRequest("getGameConditions", clientID);
 				System.out.println(clientID + ": har vaknat");
+				newRequest("getGameConditions", clientID);
 			}
 		}
 		else if (response.getRequest().equals("updateAndPlayCard")) {
@@ -154,32 +162,33 @@ public class AIController {
 			this.gameBoardCards = response.getGameBoardCards();
 			boolean canPlay = false;
 			Card card = null;
-			if (request.equals("playCard")) {
-				for (Card temp : cards) {
-					canPlay = checkIfAICanPlayCard(temp);
-					if (canPlay==true) {
-						card = temp;
-						break;
-					}
-				}
+			//			if (request.equals("playCard")) {
+			for (Card temp : cards) {
+				canPlay = checkIfAICanPlayCard(temp);
 				if (canPlay==true) {
-					newRequest("playCard", card.toString());
-					System.out.println(clientID + ": har spelat: " + card.toString());
+					card = temp;
+					break;
 				}
-				else {
-					newRequest("pass");
-					System.out.println(clientID + ": har spelat: pass" );
-				}
+			}
+			if (canPlay==true) {
+				newRequest("playCard", card.toString());
+				System.out.println(clientID + ": har spelat: " + card.toString());
 			}
 			else {
 				newRequest("pass");
 				System.out.println(clientID + ": har spelat: pass" );
-
 			}
 		}
+		//			else {
+		//				newRequest("pass");
+		//				System.out.println(clientID + ": har spelat: pass" );
+
+
+
 		else if (response.getRequest().equals("pass")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
+			passCounter = 1;
 			newRequest("giveACard", null, passCounter);
 			System.out.println(clientID + ": passar");
 		}
@@ -187,22 +196,33 @@ public class AIController {
 		else if (response.getRequest().equals("updateAndGiveCard")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
+			this.passCounter = response.getPassCounter();
+			passCounter++;
 			newRequest("giveACardToAPlayer", cards.get(0).toString(), passCounter);	
-			System.out.println(clientID + ": uppdaterar och vill ge ett kort: " + cards.get(0).toString());
+			System.out.println(clientID + ": uppdaterar och vill ge ett kort: " + cards.get(0).toString() + " passcount = " + passCounter);
+		}
+		else if (response.getRequest().equals("recieveCardsUpdate")) {
+			this.clientID = response.getClientID();
+			this.cards = response.getCards();
+			this.gameBoardCards = response.getGameBoardCards();
+			passCounter = 0;
+			System.out.println(clientID + ": har spelat: " );
+			//			newRequest("nextPlayer");
+
 		}
 	}
 
-	public void giveOrPlay (String cardName) {
-		if (request.equals("playCard")) {
-			newRequest("playCard", cardName, 0);
-		}
-		else if (request.equals("giveACard")) {
-			newRequest("giveACardToAPlayer", cardName, passCounter);
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
-		}
-	}
+	//	public void giveOrPlay (String cardName) {
+	//		if (request.equals("playCard")) {
+	//			newRequest("playCard", cardName, 0);
+	//		}
+	//		else if (request.equals("giveACard")) {
+	//			newRequest("giveACardToAPlayer", cardName, passCounter);
+	//		}
+	//		else {
+	//			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
+	//		}
+	//	}
 	public boolean checkIfAICanPlayCard(Card card) {
 
 		// if hjärter7

@@ -199,28 +199,28 @@ public class ClientController {
 
 		else if (response.getRequest().equals("pass")) {
 			gui.dimAll();
-			passCounter = 0;
+			passCounter = 1;
 			newRequest("giveACard", null, passCounter);
 			System.out.println(clientID + ": har spelat: pass" );
 
 		}
-		else if (response.getRequest().equals("updateAndGiveCard")) {
-			request = "giveACard";
-			passCounter = response.getPassCounter();
-			gui.addCardAction(cards);
-			newRequest("getGameConditions");
-			gui.unDimAll();
-			System.out.println(clientID + ": ska ge ett kort" );
-			if (passCounter==3) {
-				passCounter = 0;
-				newRequest("recieveCards", null, passCounter);
-				newRequest("getAllGameConditions");
-				gui.updateAllPanels();
-				gui.dimAll();
-			}
-			else {
-			}
-		}
+		//		else if (response.getRequest().equals("updateAndGiveCard")) {
+		//			request = "giveACard";
+		//			passCounter = response.getPassCounter();
+		//			gui.addCardAction(cards);
+		//			newRequest("getGameConditions");
+		//			gui.unDimAll();
+		//			System.out.println(clientID + ": ska ge ett kort" );
+		//			if (passCounter==3) {
+		//				passCounter = 0;
+		//				newRequest("recieveCards", null, passCounter);
+		//				newRequest("getAllGameConditions");
+		//				gui.updateAllPanels();
+		//				gui.dimAll();
+		//			}
+		//			else {
+		//			}
+		//		}
 		else if (response.getRequest().equals("passainte")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 		}
@@ -248,22 +248,36 @@ public class ClientController {
 		else if (response.getRequest().equals("wakePlayer")) {
 			gui.unDimAll();
 			passCounter = response.getPassCounter();
-			if (passCounter==3) {
-				passCounter = 0;
+			//			if (passCounter==4) {
+			//				System.out.println(clientID + ": har vaknat" + " counter= " + passCounter);
+			//				passCounter = 0;
+			//				newRequest("nextPlayer", null, passCounter);
+			//			}
+//			if (passCounter==5) {
+//				passCounter = 0;
+//				request = "playCard";
+//				newRequest("nextPlayer", null, passCounter);
+//				newRequest("getAllGameConditions");
+//				gui.updateAllPanels();
+//				gui.dimAll();
+//			}
+			if (passCounter <= 3 && passCounter > 0) {
+				newRequest("getAllGameConditions");
+				gui.updateAllPanels();
+				System.out.println(response.getClientID() + " har vaknat och ska ge bort ett kort");
+				request = "giveACard";
+
+			}
+			else if (passCounter==4) {
 				request = "playCard";
+				passCounter = 0;
+				System.out.println(response.getClientID() + " har vaknat och ska ta mot tre kort");
 				newRequest("recieveCards", null, passCounter);
 				newRequest("getAllGameConditions");
 				gui.updateAllPanels();
 				gui.dimAll();
 			}
-			else if (passCounter < 3 && passCounter > 0) {
-				newRequest("getAllGameConditions");
-				gui.updateAllPanels();
-				System.out.println(response.getClientID() + " ska ge bort ett kort");
-				request = "giveACard";
-
-			}
-			else {
+			else if (passCounter == 0){
 				newRequest("getAllGameConditions");
 				gui.updateAllPanels();
 				System.out.println(clientID + ": har vaknat" );
@@ -299,6 +313,30 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			//			gui.dimAll();
+		}
+		else if ( response.getRequest().equals("recieveCardsUpdate")){
+			passCounter = 0;
+			gui.setPlayersCardsInGUI(response.getCards());
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.updateAllPanels();
+			gui.addCardAction(response.getCards());
+			gui.dimAll();
+			//			newRequest("nextPlayer");
+		}
+		else if ( response.getRequest().equals("updateAndGiveCard")){
+			request = "giveACard";
+			passCounter = response.getPassCounter();
+			gui.setPlayersCardsInGUI(response.getCards());
+			setCardsAtGameBoard(response.getGameBoardCards());
+			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
+			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
+			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
+			gui.updateAllPanels();
+			gui.addCardAction(response.getCards());
+			gui.unDimAll();
 		}
 	}
 
@@ -395,6 +433,8 @@ public class ClientController {
 			newRequest("playCard", cardName, 0);
 		}
 		else if (request.equals("giveACard")) {
+			request="playCard";
+			passCounter++;
 			newRequest("giveACardToAPlayer", cardName, passCounter);
 			System.out.println(clientID + ": har gett bort: "  + cardName);
 			newRequest("getAllGameConditions");
