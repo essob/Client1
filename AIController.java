@@ -17,7 +17,6 @@ public class AIController {
 	private ArrayList <Card> cards = new ArrayList <Card>(); 
 	private ArrayList <Card> gameBoardCards = new ArrayList <Card>();
 	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
-	private String request = "playCard";
 
 	public AIController(String serverIP, int serverPort) {
 		try {
@@ -92,6 +91,7 @@ public class AIController {
 				}
 			}
 		}
+
 		else if (response.getRequest().equals("clientID")) {
 			this.clientID = response.getClientID();
 			newRequest("newAIPlayer", clientID);
@@ -101,6 +101,7 @@ public class AIController {
 			new AIController("127.0.0.1", 7766);
 
 		}
+
 		else if (response.getRequest().equals("playCard")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
@@ -140,10 +141,6 @@ public class AIController {
 				System.out.println(clientID + ": har vaknat och tar emot kort");
 				newRequest("recieveCards", null, passCounter);
 			}
-//			else if (passCounter == 5) {
-//				passCounter=0;
-//				newRequest("", null, passCounter);
-//			}
 			else if (passCounter < 4 && passCounter > 0){
 				this.cards = response.getCards();
 				passCounter++;
@@ -156,13 +153,13 @@ public class AIController {
 				newRequest("getGameConditions", clientID);
 			}
 		}
+
 		else if (response.getRequest().equals("updateAndPlayCard")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
 			boolean canPlay = false;
 			Card card = null;
-			//			if (request.equals("playCard")) {
 			for (Card temp : cards) {
 				canPlay = checkIfAICanPlayCard(temp);
 				if (canPlay==true) {
@@ -179,11 +176,6 @@ public class AIController {
 				System.out.println(clientID + ": har spelat: pass" );
 			}
 		}
-		//			else {
-		//				newRequest("pass");
-		//				System.out.println(clientID + ": har spelat: pass" );
-
-
 
 		else if (response.getRequest().equals("pass")) {
 			this.clientID = response.getClientID();
@@ -201,28 +193,16 @@ public class AIController {
 			newRequest("giveACardToAPlayer", cards.get(0).toString(), passCounter);	
 			System.out.println(clientID + ": uppdaterar och vill ge ett kort: " + cards.get(0).toString() + " passcount = " + passCounter);
 		}
+
 		else if (response.getRequest().equals("recieveCardsUpdate")) {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
 			passCounter = 0;
 			System.out.println(clientID + ": har spelat: " );
-			//			newRequest("nextPlayer");
-
 		}
 	}
 
-	//	public void giveOrPlay (String cardName) {
-	//		if (request.equals("playCard")) {
-	//			newRequest("playCard", cardName, 0);
-	//		}
-	//		else if (request.equals("giveACard")) {
-	//			newRequest("giveACardToAPlayer", cardName, passCounter);
-	//		}
-	//		else {
-	//			JOptionPane.showMessageDialog(null, "Något är fel i giveOrPlay- metoden");
-	//		}
-	//	}
 	public boolean checkIfAICanPlayCard(Card card) {
 
 		// if hjärter7

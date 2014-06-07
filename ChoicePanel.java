@@ -48,10 +48,11 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == onlyAI) {
 			controller.newRequest("newAIPlayer");
+			onlyAI.setVisible(false);
+			twoHuman.setVisible(false);
+			onlyHuman.setVisible(false);
 			gui.replaceGameBoard();
-			//			controller.newRequest("newGame");
 
-			//			controller.newRequest("newGame", true, false, false, false);
 		}
 		else if(e.getSource() == twoHuman) {
 			//			controller.newRequest("newGame", true, true, false, false);
