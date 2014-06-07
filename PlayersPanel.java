@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import sjuan.Card;
@@ -86,18 +87,22 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			list[i].setName(card.toString());
 			list[i].setBounds(x, y,71, 96);
 			panel.add(list[i]);
-			if (cards.size() <=13)
+			if (cards.isEmpty()){
+//				JOptionPane.showMessageDialog(null, "Grattis du vann!");
+				System.out.print("spelaren har vunnit, kom på ett sätt att visa honom det!!!!");
+			}
+			else if (cards.size() <=13)
 				x+=72;
-			else if (cards.size() > 13 )
+			else if (cards.size() > 13 && cards.size() <= 16)
 				x+=65;
-			else if (cards.size() > 16)
-				x+=60;
-			else if (cards.size() > 19)
-				x+=55;
-			else if (cards.size() > 22)
-				x+=50;
+			else if (cards.size() > 16 && cards.size() <= 19)
+				x+=52;
+			else if (cards.size() > 19 && cards.size() <= 22)
+				x+=40;
+			else if (cards.size() > 22 && cards.size() <= 25)
+				x+=30;
 			else
-				x+=45;
+				x+=15;
 		}
 	}
 
@@ -121,7 +126,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	
 	public void removeCardListener() {
 		if (list!=null) {
-			for (int i = list.length-1; i>=0; i--) {
+			for (int i = list.length-1; i >= 0; i--) {
 				list[i].removeMouseListener(this);
 			}
 		}

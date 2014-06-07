@@ -3,6 +3,7 @@ package Client1;
 import javax.swing.*;
 
 import sjuan.Card;
+
 /**
  * Class for put the card on right places on gameBoard 
  * 
