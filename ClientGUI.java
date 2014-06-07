@@ -69,8 +69,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setLayout(new BorderLayout());
 
 
-		//		gameFrame.add(cPnlChoice.choiceButton());
-		gameFrame.add(gameBoardPanel());
+		gameFrame.add(cPnlChoice.choiceButton());
+//		gameFrame.add(gameBoardPanel());
 
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
