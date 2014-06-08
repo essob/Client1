@@ -21,7 +21,7 @@ public class ClientController {
 	private ClientConnection connection;
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0, nbrOfAI;
 	private String request;
 	private LoginFrame loginFrame;
 
@@ -50,7 +50,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request, clientID, gameID, true));
+			connection.newRequest(new Request(request, clientID, gameID, true, 0));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -153,8 +153,36 @@ public class ClientController {
 				newRequest("newGame");
 			}
 		}
+		else if (response.getRequest().equals("newGame2")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame2");
+			}
+		}
+		else if (response.getRequest().equals("newGame3")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame3");
+			}
+		}
+		else if (response.getRequest().equals("newGame4")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame4");
+			}
+		}
 		else if (response.getRequest().equals("createAI")) {
-			new AIController("127.0.0.1", 7766);
+			this.nbrOfAI = response.getNbrOfAI();
+			new AIController("127.0.0.1", 7766, response.getNbrOfAI());
 
 		}
 
@@ -227,18 +255,16 @@ public class ClientController {
 				gui.updateAllPanels();
 				System.out.println(response.getClientID() + " har vaknat och ska ge bort ett kort");
 				request = "giveACard";
-				if(passCounter == 1) {
-					gui.setInstructions("Skicka ett kort till spelaren till höger");
-				}
+
 				if(passCounter == 2) {
 					gui.setInstructions("Skicka ett kort till spelaren rakt över");
 				}
 				else if (passCounter == 3){
 					gui.setInstructions("Skicka ett kort till spelaren till vänster");
 				}
-				else {
-					gui.setInstructions("Skicka ett kort till spelaren till höger");
-				}
+				//				else {
+				//					gui.setInstructions("Skicka ett kort till spelaren till höger");
+				//				}
 			}
 			else if (passCounter==4) {
 				request = "playCard";
@@ -264,7 +290,6 @@ public class ClientController {
 			gui.addCardAction(this.cards);
 			System.out.println(response.getIfPlayerWin());
 			if (response.getIfPlayerWin()!=null)
-				//				System.out.println(response.getIfPlayerWin());
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 		}
@@ -280,8 +305,6 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
 			if (response.getIfPlayerWin()!=null)
-				//				System.out.println(response.getIfPlayerWin());
-
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 
@@ -296,8 +319,6 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			if (response.getIfPlayerWin()!=null)
-				//				System.out.println(response.getIfPlayerWin());
-
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 		}
@@ -313,8 +334,6 @@ public class ClientController {
 			gui.addCardAction(response.getCards());
 			gui.dimAll();
 			if (response.getIfPlayerWin()!=null)
-				//				System.out.println(response.getIfPlayerWin());
-
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 		}
@@ -330,9 +349,10 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			gui.unDimAll();
+			if(passCounter == 1) {
+				gui.setInstructions("Skicka ett kort till spelaren till höger");
+			}
 			if (response.getIfPlayerWin()!=null)
-				//				System.out.println(response.getIfPlayerWin());
-
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 
