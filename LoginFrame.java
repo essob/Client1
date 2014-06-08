@@ -76,7 +76,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	{
 		if(ae.getSource()==btnNewUser)
 		{
-			new NewUser();
+			new NewUser(controller);
 		}
 
 		else if(ae.getSource()==btnClose)

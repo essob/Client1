@@ -3,10 +3,16 @@ package Client1;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+
+
+/**
+ * This class creates a textarea with a String containing info about sjuan.
+ * @author Anna
+ *
+ */
 
 public class AboutUs extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame("About us");
@@ -37,7 +43,6 @@ public class AboutUs extends JFrame implements ActionListener{
 		textarea.setBackground(Color.white);	
 		frame.add(textarea);
 
-
 		exitButton.setSize(50, 50);
 		//		exit.setLocation(50, 30);
 		exitButton.setBounds(170, 200, 150, 25);
@@ -45,9 +50,8 @@ public class AboutUs extends JFrame implements ActionListener{
 		exitButton.addActionListener(this);
 		exitButton.setVisible(true);
 		frame.setVisible(true);
-
 	}
-	
+
 	public void close() {
 		frame.dispose();
 	}

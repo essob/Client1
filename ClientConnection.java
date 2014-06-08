@@ -1,15 +1,13 @@
 package Client1;
 
 import java.io.*;
+import java.net.*;
 
 import sjuan.Request;
 import sjuan.Response;
 
-import java.net.*;
-
 public class ClientConnection {
 	private ClientController controller;
-	private AIController AIcontroller;
 	private Socket socket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
