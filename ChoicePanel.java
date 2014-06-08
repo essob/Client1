@@ -16,11 +16,12 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	private JButton btnTwoHuman 	= new JButton("Två spelare");
 	private JButton btnOnlyHuman 	= new JButton("Fyra spelare");
 	private ClientController controller;
+	private ClientGUI gui;
 
 
 	public ChoicePanel() {
 	}
-	
+
 	public JPanel choiceButton() {
 		pnlChoice.setPreferredSize(new Dimension(1000, 600));
 		pnlChoice.setLayout(null);
@@ -30,39 +31,49 @@ public class ChoicePanel extends JPanel implements ActionListener{
 		btnOnlyAI.setBounds(200, 175, 150, 25);
 		btnTwoHuman.setBounds(350, 175, 150, 25);
 		btnOnlyHuman.setBounds(500, 175, 150, 25);
-		
+
 		pnlChoice.add(btnOnlyAI, BorderLayout.CENTER);
 		pnlChoice.add(btnTwoHuman, BorderLayout.CENTER);
 		pnlChoice.add(btnOnlyHuman, BorderLayout.CENTER);
-		
+
 		btnOnlyAI.addActionListener(this);
 		btnTwoHuman.addActionListener(this);
 		btnOnlyHuman.addActionListener(this);
-		
+
 		return pnlChoice;
 
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+
 		if(e.getSource() == btnOnlyAI) {
-			controller.newRequest("newGame", true, false, false, false);
+			controller.newRequest("newAIPlayer");
+			btnOnlyAI.setVisible(false);
+			btnTwoHuman.setVisible(false);
+			btnOnlyHuman.setVisible(false);
+			gui.replaceGameBoard();
+
 		}
 		else if(e.getSource() == btnTwoHuman) {
-			controller.newRequest("newGame", true, true, false, false);
+			//			controller.newRequest("newGame", true, true, false, false);
 		}
 		else if(e.getSource() == btnOnlyHuman) {
-			controller.newRequest("newGame");
+
 		}
-			
-		
+
 	}
 
-//	public static void main(String[] arg) {
-//		ChoicePanel chi = new ChoicePanel();
-//		chi.choiceButton();
-//	}
+	//	public static void main(String[] arg) {
+	//		ChoicePanel chi = new ChoicePanel();
+	//		chi.choiceButton();
+	//	}
+	public void setController(ClientController controller) {
+		this.controller = controller;
 
-
-
+	}
+	public void setClientGUI(ClientGUI gui) {
+		this.gui = gui;
+	}
 }
