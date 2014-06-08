@@ -261,6 +261,9 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
+			System.out.println(response.getIfPlayerWin());
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin().toString());
 
 		}
 		else if ( response.getRequest().equals("updatePlayerWithAI")){
