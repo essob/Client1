@@ -85,10 +85,9 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
-			list[i].setBounds(x, y,71, 96);
 			list[i].setBounds(x, y, 71, 96);
 			panel.add(list[i]);
-			if (cards.isEmpty()){
+			if (cards.equals(0)){
 //				JOptionPane.showMessageDialog(null, "Grattis du vann!");
 				System.out.print("spelaren har vunnit, kom på ett sätt att visa honom det!!!!");
 			}
