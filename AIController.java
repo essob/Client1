@@ -158,6 +158,7 @@ public class AIController {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
+			this.passCounter = response.getPassCounter();
 			boolean canPlay = false;
 			Card card = null;
 			for (Card temp : cards) {
@@ -172,7 +173,7 @@ public class AIController {
 				System.out.println(clientID + ": har spelat: " + card.toString());
 			}
 			else {
-				newRequest("pass");
+				newRequest("pass", null , passCounter);
 				System.out.println(clientID + ": har spelat: pass" );
 			}
 		}
