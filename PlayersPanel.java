@@ -88,7 +88,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			list[i].setBounds(x, y,71, 96);
 			panel.add(list[i]);
 			if (cards.isEmpty()){
-//				JOptionPane.showMessageDialog(null, "Grattis du vann!");
+				//				JOptionPane.showMessageDialog(null, "Grattis du vann!");
 				System.out.print("spelaren har vunnit, kom på ett sätt att visa honom det!!!!");
 			}
 			else if (cards.size() <=13)
@@ -123,7 +123,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			}
 		}
 	}
-	
+
 	public void removeCardListener() {
 		if (list!=null) {
 			for (int i = list.length-1; i >= 0; i--) {

@@ -182,15 +182,7 @@ public class ClientController {
 			newRequest("getGameConditions");
 			gui.unDimAll();
 			gui.addCardAction(cards);
-			if(passCounter == 1) {
-				gui.setInstructions("Skicka ett kort till spelaren till höger");
-			}
-			else if(passCounter == 2) {
-				gui.setInstructions("Skicka ett kort till spelaren rakt över");
-			}
-			else {
-				gui.setInstructions("Skicka ett kort till spelaren till vänster");
-			}
+
 			if (passCounter==3) {
 				newRequest("recieveCards");
 				newRequest("getAllGameConditions");
@@ -236,6 +228,15 @@ public class ClientController {
 				gui.updateAllPanels();
 				System.out.println(response.getClientID() + " har vaknat och ska ge bort ett kort");
 				request = "giveACard";
+				if(passCounter == 1) {
+					gui.setInstructions("Skicka ett kort till spelaren till höger");
+				}
+				else if(passCounter == 2) {
+					gui.setInstructions("Skicka ett kort till spelaren rakt över");
+				}
+				else {
+					gui.setInstructions("Skicka ett kort till spelaren till vänster");
+				}
 
 			}
 			else if (passCounter==4) {
@@ -258,7 +259,6 @@ public class ClientController {
 			gui.setNbrOfOpponent1Cards(response.getOpponentCards1());
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
-
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
 
@@ -270,7 +270,6 @@ public class ClientController {
 			gui.setNbrOfOpponent2Cards(response.getOpponentCards2());
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
-			//			gui.addCardAction(this.cards);
 			gui.dimAll();
 			newRequest("nextPlayer");
 			gui.updateAllPanels();
@@ -285,7 +284,6 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
-			//			gui.dimAll();
 		}
 		else if ( response.getRequest().equals("recieveCardsUpdate")){
 			passCounter = 0;
@@ -297,8 +295,8 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			gui.dimAll();
-			//			newRequest("nextPlayer");
 		}
+
 		else if ( response.getRequest().equals("updateAndGiveCard")){
 			request = "giveACard";
 			passCounter = response.getPassCounter();
@@ -312,10 +310,6 @@ public class ClientController {
 			gui.unDimAll();
 		}
 	}
-
-	//	private void setClientID(int clientID) {
-	//		this.clientID = clientID;		
-	//	}
 
 	/**
 	 * this method returns this opponents cards

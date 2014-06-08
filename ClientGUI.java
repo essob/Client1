@@ -34,7 +34,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel pnlLeftOptions = new JPanel();
 	private JPanel pnlRightOptions = new JPanel();
 
-	private JButton start = new JButton("Börja spelomgång");
+//	private JButton start = new JButton("Börja spelomgång");
 	private JButton btnReady = new JButton("Inställningar");
 	private JButton btnPass = new JButton("Pass");
 	private JButton btnEnd = new JButton("Avsluta spel");
@@ -70,7 +70,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 
 		gameFrame.add(cPnlChoice.choiceButton());
-//		gameFrame.add(gameBoardPanel());
+		//		gameFrame.add(gameBoardPanel());
 
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
@@ -83,7 +83,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		pnlOptions.add(rightOptionsPanel(), BorderLayout.EAST);
 
-		start.addActionListener(this);
+//		start.addActionListener(this);
 		btnEnd.addActionListener(this);
 		btnPass.addActionListener(this);
 		btnDatabas.addActionListener(this);
@@ -150,7 +150,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public JPanel rightOptionsPanel() {
 		pnlRightOptions.setPreferredSize(new Dimension(150, 100));
 		pnlRightOptions.setBackground(Color.MAGENTA.darker().darker());
-		pnlRightOptions.add(start);
+//		pnlRightOptions.add(start);
 		pnlRightOptions.add(btnReady);
 		pnlRightOptions.add(btnEnd);
 		return pnlRightOptions;
@@ -210,7 +210,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent2.removeAll();
 		lblOp2Number.setText(nbr + "");
 		pnlOpponent2.add(lblOp2Number);
-		JLabel opponent2Cards;
+		JLabel opponent2Cards = null;
 
 		if (nbr != 0)
 			for (int i = 0; i < nbr; i++) {
@@ -243,7 +243,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent3.removeAll();
 		lblOp3Number.setText(nbr + "");
 		pnlOpponent3.add(lblOp3Number);
-		JLabel opponent3Cards;
+		JLabel opponent3Cards = null;
 
 		if (nbr != 0)
 			for (int i = 0; i < nbr-1; i++) {
@@ -251,9 +251,11 @@ public class ClientGUI extends JPanel implements ActionListener{
 				opponent3Cards.setIcon(readFiles("b1pt"));
 				pnlOpponent3.add(opponent3Cards);
 			}
-		opponent3Cards = new JLabel();
-		opponent3Cards.setIcon(readFiles("b1fh"));
-		pnlOpponent3.add(opponent3Cards);
+		if (nbr != 0) {
+			opponent3Cards = new JLabel();
+			opponent3Cards.setIcon(readFiles("b1fh"));
+			pnlOpponent3.add(opponent3Cards);
+		}
 
 	}
 
@@ -280,14 +282,14 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * this method makes start button disabled
 	 */
 	public void startButtonDimmed() {
-		start.setEnabled(false);
+//		start.setEnabled(false);
 
 	}
 	/**
 	 * this method sets start button enabled
 	 */
 	public void startButtonUnDimmed() {
-		start.setEnabled(true);
+//		start.setEnabled(true);
 	}
 
 	public void setGameFrameTitle(int clientID) {
@@ -303,15 +305,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == start) {
-			controller.newRequest("newGame");
-		}
-		else if(e.getSource() == btnEnd) {
+//		if(e.getSource() == start) {
+//			controller.newRequest("newGame");
+//		}
+		if(e.getSource() == btnEnd) {
 			System.exit(0);
 		}
-
-
-
 		else if(e.getSource() == btnPass){
 			controller.newRequest("pass", null, 0);
 		}
@@ -335,7 +334,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	}
 	public void dimAll() {
-		start.setEnabled(false);
+//		start.setEnabled(false);
 		btnPass.setEnabled(false);
 		btnDatabas.setEnabled(false);
 		btnReady.setEnabled(false);
@@ -346,7 +345,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	}
 	public void dimAllExceptStart() {
-		start.setEnabled(true);
+//		start.setEnabled(true);
 		btnPass.setEnabled(false);
 		btnDatabas.setEnabled(false);
 		btnReady.setEnabled(false);
@@ -357,7 +356,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void unDimAll() {
-		start.setEnabled(true);
+//		start.setEnabled(true);
 		btnEnd.setEnabled(true);
 		btnPass.setEnabled(true);
 		btnDatabas.setEnabled(true);
