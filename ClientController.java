@@ -277,6 +277,7 @@ public class ClientController {
 			newRequest("nextPlayer");
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
+
 		}
 
 		else if ( response.getRequest().equals("updateAll")){
@@ -287,7 +288,9 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
+
 		}
+		
 		else if ( response.getRequest().equals("recieveCardsUpdate")){
 			passCounter = 0;
 			gui.setPlayersCardsInGUI(response.getCards());

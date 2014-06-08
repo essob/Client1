@@ -47,6 +47,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+
 		if(e.getSource() == btnOnlyAI) {
 			controller.newRequest("newAIPlayer");
 			btnOnlyAI.setVisible(false);
@@ -59,8 +60,13 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			//			controller.newRequest("newGame", true, true, false, false);
 		}
 		else if(e.getSource() == btnOnlyHuman) {
-
+			controller.newRequest("newPlayer");
+			btnOnlyAI.setVisible(false);
+			btnTwoHuman.setVisible(false);
+			btnOnlyHuman.setVisible(false);
+			gui.replaceGameBoard();
 		}
+
 	}
 
 	//	public static void main(String[] arg) {

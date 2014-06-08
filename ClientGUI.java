@@ -20,6 +20,7 @@ import java.util.ArrayList;
  */
 public class ClientGUI extends JPanel implements ActionListener{
 
+
 	private JPanel gameBoardPanel = new JPanel();
 	private ClientController controller;
 	private JFrame gameFrame = new JFrame("Sjuan");
@@ -134,6 +135,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		pPnlPlay.setPlayersCardsInGUI(cards);
+		pPnlPlay.addCardListener(cards);
 		updateAllPanels();
 	}
 
@@ -317,7 +319,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource()==btnDatabas){
 			controller.newRequest("database");
 		}
-
 		else if(e.getSource() == btnReady) {
 			JOptionPane.showMessageDialog(null, "Under konstruktion...");
 		}

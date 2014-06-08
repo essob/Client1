@@ -81,7 +81,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 		clearList();
 		int x = 20;
 		int y = 0;
-		for (int i = 0; i < cards.size(); i++) {
+		for (int i = cards.size()-1; i >= 0; i--) {
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
@@ -102,7 +102,7 @@ public class PlayersPanel extends JLabel implements MouseListener{
 			else if (cards.size() > 22 && cards.size() <= 25)
 				x+=30;
 			else
-				x+=15;
+				x+=20;
 		}
 	}
 
