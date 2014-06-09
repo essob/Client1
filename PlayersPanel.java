@@ -79,9 +79,9 @@ public class PlayersPanel extends JLabel implements MouseListener{
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		clearList();
-		int x = 20;
+		int x = 945;
 		int y = 0;
-		for (int i = cards.size()-1; i >= 0; i--) {
+		for (int i = 0; i < cards.size(); i++) {
 			Card card = cards.get(i);
 			list[i].setIcon(gui.readFiles(card.toString()));
 			list[i].setName(card.toString());
@@ -91,18 +91,18 @@ public class PlayersPanel extends JLabel implements MouseListener{
 				//				JOptionPane.showMessageDialog(null, "Grattis du vann!");
 				System.out.print("spelaren har vunnit, kom på ett sätt att visa honom det!!!!");
 			}
-			else if (cards.size() <=13)
-				x+=72;
+			else if (cards.size() <=13) 
+				x-=72;
 			else if (cards.size() > 13 && cards.size() <= 16)
-				x+=65;
+				x-=62;
 			else if (cards.size() > 16 && cards.size() <= 19)
-				x+=52;
+				x-=52;
 			else if (cards.size() > 19 && cards.size() <= 22)
-				x+=40;
+				x-=40;
 			else if (cards.size() > 22 && cards.size() <= 25)
-				x+=30;
+				x-=30;
 			else
-				x+=20;
+				x-=20;
 		}
 	}
 

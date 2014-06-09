@@ -60,7 +60,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			//			controller.newRequest("newGame", true, true, false, false);
 		}
 		else if(e.getSource() == btnOnlyHuman) {
-			controller.newRequest("newPlayer");
+			controller.newRequest("newGame");
 			btnOnlyAI.setVisible(false);
 			btnTwoHuman.setVisible(false);
 			btnOnlyHuman.setVisible(false);
