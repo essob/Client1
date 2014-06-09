@@ -13,15 +13,15 @@ import sjuan.Response;
 
 public class AIController {
 	private AIConnection connection;
-	private int clientID, gameID, passCounter = 0;
+	private int clientID, gameID, passCounter = 0, nbrOfAI;
 	private ArrayList <Card> cards = new ArrayList <Card>(); 
 	private ArrayList <Card> gameBoardCards = new ArrayList <Card>();
 	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
 
-	public AIController(String serverIP, int serverPort) {
+	public AIController(String serverIP, int serverPort, int nbrOfAI) {
 		try {
 			connection = new AIConnection(this, serverIP, serverPort);
-			newRequest("clientID");
+			newRequest("clientID", clientID, nbrOfAI);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -33,7 +33,7 @@ public class AIController {
 
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request, clientID, gameID, false));
+			connection.newRequest(new Request(request, clientID, gameID, false, nbrOfAI));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -44,13 +44,24 @@ public class AIController {
 
 	public void newRequest(String request, int clientID) {
 		try {
-			connection.newRequest(new Request(request, clientID, gameID, false));
+			connection.newRequest(new Request(request, clientID, gameID, false, nbrOfAI));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
 			e.getStackTrace();
 		}
 	}
+
+	public void newRequest(String request, int clientID, int nbrOfAI) {
+		try {
+			connection.newRequest(new Request(request, clientID, gameID, false, nbrOfAI));
+
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
+		}
+	}
+
 
 	public void newRequest(String request, String cardName) {
 		try {
@@ -60,6 +71,15 @@ public class AIController {
 			e.getStackTrace();
 		}
 	}
+
+		public void newRequest(String request, String nbrOfAI, int clientID, int gameID) {
+			try {
+				connection.newRequest(new Request(request, nbrOfAI, clientID, gameID));
+			} catch (Exception e) {
+				System.out.println("Request: " + request+" är felfelfel");
+				e.getStackTrace();
+			}
+		}
 
 	public void newRequest(String request, String cardName, int counter) {
 		try {
@@ -91,14 +111,60 @@ public class AIController {
 				}
 			}
 		}
+		else if (response.getRequest().equals("newGame2")) {
+			this.clientID = response.getClientID();
+			this.cards = response.getCards();
+			this.gameID = response.getGameID();
+			AICardsList.put(clientID, cards);
+			System.out.println("Client: " + clientID);
+			for (Card card : AICardsList.get(clientID))
+				System.out.print(card + ", ");
+			System.out.println("");
+			if (response.isHasHeart7()) {
+				for (Card card : cards) {
+					if (card.toString().equals("h7")) {
+						String cardName = card.toString();
+						newRequest("playCard", cardName, 0);
+						break;
+					}
+				}
+			}
+		}
+		else if (response.getRequest().equals("newGame3")) {
+			this.clientID = response.getClientID();
+			this.cards = response.getCards();
+			this.gameID = response.getGameID();
+			AICardsList.put(clientID, cards);
+			System.out.println("Client: " + clientID);
+			for (Card card : AICardsList.get(clientID))
+				System.out.print(card + ", ");
+			System.out.println("");
+			if (response.isHasHeart7()) {
+				for (Card card : cards) {
+					if (card.toString().equals("h7")) {
+						String cardName = card.toString();
+						newRequest("playCard", cardName, 0);
+						break;
+					}
+				}
+			}
+		}
 
 		else if (response.getRequest().equals("clientID")) {
 			this.clientID = response.getClientID();
-			newRequest("newAIPlayer", clientID);
+			this.nbrOfAI = response.getNbrOfAI();
+			if (nbrOfAI==3)
+				newRequest("newAIPlayer", clientID);
+			else if (nbrOfAI==2)
+				newRequest("twoPlayerGame", clientID);
+			else if (nbrOfAI==1)
+				newRequest("threePlayerGame", clientID);
+
 		}
 
 		else if (response.getRequest().equals("createAI")) {
-			new AIController("127.0.0.1", 7766);
+			new AIController("127.0.0.1", 7766, response.getNbrOfAI());
+
 
 		}
 
@@ -158,6 +224,7 @@ public class AIController {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
+			this.passCounter = response.getPassCounter();
 			boolean canPlay = false;
 			Card card = null;
 			for (Card temp : cards) {
@@ -172,7 +239,7 @@ public class AIController {
 				System.out.println(clientID + ": har spelat: " + card.toString());
 			}
 			else {
-				newRequest("pass");
+				newRequest("pass", null , passCounter);
 				System.out.println(clientID + ": har spelat: pass" );
 			}
 		}

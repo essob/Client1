@@ -21,7 +21,7 @@ public class ClientController {
 	private ClientConnection connection;
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0, nbrOfAI;
 	private String request;
 	private LoginFrame loginFrame;
 
@@ -50,7 +50,7 @@ public class ClientController {
 	 */
 	public void newRequest(String request) {
 		try {
-			connection.newRequest(new Request(request, clientID, gameID, true));
+			connection.newRequest(new Request(request, clientID, gameID, true, 0));
 
 		} catch (Exception e) {
 			System.out.println("Request: " + request+" är felfelfel");
@@ -128,17 +128,6 @@ public class ClientController {
 		}
 	}
 
-	public void getPlayCardAction(Response response) {
-		cards.clear();
-		this.cards = response.getCards();
-		gameBoardCards = response.getGameBoardCards();
-		setCardsAtGameBoard(gameBoardCards);
-		gui.setPlayersCardsInGUI(cards);
-		gui.updateAllPanels();
-		gui.addCardAction(cards);
-		gui.dimAll();
-	}
-
 	/**
 	 * this method handle the response from the server
 	 * @param response takes in a response from server
@@ -153,8 +142,36 @@ public class ClientController {
 				newRequest("newGame");
 			}
 		}
+		else if (response.getRequest().equals("newGame2")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame2");
+			}
+		}
+		else if (response.getRequest().equals("newGame3")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame3");
+			}
+		}
+		else if (response.getRequest().equals("newGame4")) {
+			if (response.getCards()!=null) {
+				getStartConditions(response);
+			}
+			else {
+				gameID = response.getGameID();
+				newRequest("newGame4");
+			}
+		}
 		else if (response.getRequest().equals("createAI")) {
-			new AIController("127.0.0.1", 7766);
+			this.nbrOfAI = response.getNbrOfAI();
+			new AIController("127.0.0.1", 7766, response.getNbrOfAI());
 
 		}
 
@@ -176,32 +193,13 @@ public class ClientController {
 			gui.setInstructions("De andra spelarna kommer nu skicka dig var sitt kort");
 
 		}
-		else if (response.getRequest().equals("giveACard")) {
-			request = "giveACard";
-			passCounter = response.getPassCounter();
-			newRequest("getGameConditions");
-			gui.unDimAll();
-			gui.addCardAction(cards);
-
-			if (passCounter==3) {
-				newRequest("recieveCards");
-				newRequest("getAllGameConditions");
-				gui.updateAllPanels();
-				cards = response.getCards();
-				gui.addCardAction(this.cards);
-				gui.dimAll();
-			}
-			else {
-			}
-		}
 
 		else if (response.getRequest().equals("passainte")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 		}
-		else if (response.getRequest().equals("playCard")) {
-			getPlayCardAction(response);
-			//			newRequest("update"); //playCard
-		}
+		//		else if (response.getRequest().equals("playCard")) {
+		//			getPlayCardAction(response);
+		//		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
@@ -228,16 +226,13 @@ public class ClientController {
 				gui.updateAllPanels();
 				System.out.println(response.getClientID() + " har vaknat och ska ge bort ett kort");
 				request = "giveACard";
-				if(passCounter == 1) {
-					gui.setInstructions("Skicka ett kort till spelaren till höger");
-				}
-				else if(passCounter == 2) {
+
+				if(passCounter == 2) {
 					gui.setInstructions("Skicka ett kort till spelaren rakt över");
 				}
-				else {
+				else if (passCounter == 3){
 					gui.setInstructions("Skicka ett kort till spelaren till vänster");
 				}
-
 			}
 			else if (passCounter==4) {
 				request = "playCard";
@@ -261,6 +256,9 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
+			System.out.println(response.getIfPlayerWin());
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 		}
 		else if ( response.getRequest().equals("updatePlayerWithAI")){
@@ -274,6 +272,9 @@ public class ClientController {
 			newRequest("nextPlayer");
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+
 
 		}
 
@@ -285,9 +286,11 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
 
 		}
-		
+
 		else if ( response.getRequest().equals("recieveCardsUpdate")){
 			passCounter = 0;
 			gui.setPlayersCardsInGUI(response.getCards());
@@ -298,6 +301,9 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			gui.dimAll();
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+
 		}
 
 		else if ( response.getRequest().equals("updateAndGiveCard")){
@@ -311,6 +317,13 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			gui.unDimAll();
+			if(passCounter == 1) {
+				gui.setInstructions("Skicka ett kort till spelaren till höger");
+			}
+			if (response.getIfPlayerWin()!=null)
+				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+
+
 		}
 	}
 
@@ -406,7 +419,7 @@ public class ClientController {
 			request="playCard";
 			passCounter++;
 			newRequest("giveACardToAPlayer", cardName, passCounter);
-			System.out.println(clientID + ": har gett bort: "  + cardName);
+			System.out.println(clientID + ": har gett bort: " + cardName);
 			newRequest("getAllGameConditions");
 			gui.updateAllPanels();
 			gui.dimAll();
