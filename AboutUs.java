@@ -59,7 +59,7 @@ public class AboutUs extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==exitButton){
-			frame.dispose();
+			frame.setVisible(false);
 		}
 
 	}

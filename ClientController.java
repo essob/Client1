@@ -21,7 +21,7 @@ public class ClientController {
 	private ClientConnection connection;
 	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
-	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0, nbrOfAI;
+	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
 	private LoginFrame loginFrame;
 
@@ -170,7 +170,6 @@ public class ClientController {
 			}
 		}
 		else if (response.getRequest().equals("createAI")) {
-			this.nbrOfAI = response.getNbrOfAI();
 			new AIController("127.0.0.1", 7766, response.getNbrOfAI());
 
 		}
@@ -257,8 +256,11 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
 			System.out.println(response.getIfPlayerWin());
-			if (response.getIfPlayerWin()!=null)
+			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+//				gui.clearAllPanels();
+				gui.dimAll();
+			}
 
 		}
 		else if ( response.getRequest().equals("updatePlayerWithAI")){
@@ -269,11 +271,15 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.dimAll();
-			newRequest("nextPlayer");
+			if (response.getIfPlayerWin()==null)
+				newRequest("nextPlayer");
 			gui.updateAllPanels();
 			gui.addCardAction(this.cards);
-			if (response.getIfPlayerWin()!=null)
+			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+//				gui.clearAllPanels();
+				//				gui.dimAll();
+			}
 
 
 		}
@@ -286,8 +292,12 @@ public class ClientController {
 			gui.setNbrOfOpponent3Cards(response.getOpponentCards3());
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
-			if (response.getIfPlayerWin()!=null)
+			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+//				gui.clearAllPanels();
+//				gui.updateAllPanels();
+//				gui.dimAll();
+			}
 
 		}
 
@@ -301,8 +311,11 @@ public class ClientController {
 			gui.updateAllPanels();
 			gui.addCardAction(response.getCards());
 			gui.dimAll();
-			if (response.getIfPlayerWin()!=null)
+			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+//				gui.clearAllPanels();
+				//				gui.dimAll();
+			}
 
 		}
 
@@ -320,8 +333,11 @@ public class ClientController {
 			if(passCounter == 1) {
 				gui.setInstructions("Skicka ett kort till spelaren till höger");
 			}
-			if (response.getIfPlayerWin()!=null)
+			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
+//				gui.clearAllPanels();
+				//				gui.dimAll();
+			}
 
 
 		}

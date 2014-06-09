@@ -102,4 +102,14 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	public void setClientGUI(ClientGUI gui) {
 		this.gui = gui;
 	}
+	public void showButtons() {
+		btnOnlyAI.setVisible(true);
+		btnTwoHuman.setVisible(true);
+		btnThreeHuman.setVisible(true);
+		btnOnlyHuman.setVisible(true);
+	}
+	public void showPanel() {
+		pnlChoice.setVisible(true);
+		showButtons();
+	}
 }

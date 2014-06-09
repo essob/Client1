@@ -3,11 +3,7 @@ package Client1;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.JOptionPane;
-
 import sjuan.Card;
-import sjuan.Player;
 import sjuan.Request;
 import sjuan.Response;
 
@@ -72,14 +68,14 @@ public class AIController {
 		}
 	}
 
-		public void newRequest(String request, String nbrOfAI, int clientID, int gameID) {
-			try {
-				connection.newRequest(new Request(request, nbrOfAI, clientID, gameID));
-			} catch (Exception e) {
-				System.out.println("Request: " + request+" är felfelfel");
-				e.getStackTrace();
-			}
+	public void newRequest(String request, String nbrOfAI, int clientID, int gameID) {
+		try {
+			connection.newRequest(new Request(request, nbrOfAI, clientID, gameID));
+		} catch (Exception e) {
+			System.out.println("Request: " + request+" är felfelfel");
+			e.getStackTrace();
 		}
+	}
 
 	public void newRequest(String request, String cardName, int counter) {
 		try {
@@ -185,7 +181,8 @@ public class AIController {
 			this.cards = response.getCards();
 			this.gameBoardCards = response.getGameBoardCards();
 			System.out.println(clientID + ": har spelat: " );
-			newRequest("nextPlayer");
+			if (response.getIfPlayerWin()==null)
+				newRequest("nextPlayer");
 
 		}
 
@@ -216,7 +213,8 @@ public class AIController {
 
 			else if (passCounter == 0){
 				System.out.println(clientID + ": har vaknat");
-				newRequest("getGameConditions", clientID);
+				if (response.getIfPlayerWin()==null)
+					newRequest("getGameConditions", clientID);
 			}
 		}
 

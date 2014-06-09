@@ -35,7 +35,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel pnlLeftOptions = new JPanel();
 	private JPanel pnlRightOptions = new JPanel();
 
-//	private JButton start = new JButton("Börja spelomgång");
+	//	private JButton start = new JButton("Börja spelomgång");
 	private JButton btnReady = new JButton("Inställningar");
 	private JButton btnPass = new JButton("Pass");
 	private JButton btnEnd = new JButton("Avsluta spel");
@@ -68,11 +68,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
-
-
 		gameFrame.add(cPnlChoice.choiceButton());
-		//		gameFrame.add(gameBoardPanel());
-
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(pnlOptions, BorderLayout.NORTH);
@@ -81,10 +77,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOptions.setBackground(Color.MAGENTA.darker().darker());
 		pnlOptions.add(leftOptionsPanel(), BorderLayout.WEST);
 		pnlOptions.add(opponent2Panel(), BorderLayout.CENTER);
-
 		pnlOptions.add(rightOptionsPanel(), BorderLayout.EAST);
 
-//		start.addActionListener(this);
 		btnEnd.addActionListener(this);
 		btnPass.addActionListener(this);
 		btnDatabas.addActionListener(this);
@@ -94,9 +88,19 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setVisible(true);
 
 	}
+
 	public void replaceGameBoard() {
 		gameFrame.remove(cPnlChoice);
 		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
+//		cPnlChoice.setVisible(false);
+//		gameBoardPanel().setVisible(true);
+	}
+
+	public void replaceChoicePanel() {
+		gameFrame.remove(pnlGameBoard);
+		gameFrame.add(choicePanel(), BorderLayout.CENTER);
+//		pnlGameBoard.setVisible(false);
+//		choicePanel().setVisible(true);
 	}
 
 	/**
@@ -104,14 +108,24 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel gameBoardPanel() {
+		pnlGameBoard.removeAll();
 		pnlGameBoard.setLayout(null);
 		pnlGameBoard.setFont(new Font("Arial", Font.BOLD, 24));
 		pnlGameBoard.setBackground(Color.GREEN.darker().darker());
-
 		lblInstructions.setBounds(10, 340, 700, 20);
 		pnlGameBoard.add(lblInstructions);
 
 		return pnlGameBoard;	
+	}
+
+	public JPanel choicePanel() {
+		cPnlChoice = new ChoicePanel();
+		cPnlChoice.setLayout(null);
+		cPnlChoice.setFont(new Font("Arial", Font.BOLD, 24));
+		cPnlChoice.setBackground(Color.GREEN.darker().darker());
+//		cPnlChoice.showPanel();
+
+		return cPnlChoice;	
 	}
 
 
@@ -127,7 +141,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlPlayer = pPnlPlay.getPanel();
 		return pnlPlayer;
 	}
-
 
 	/**
 	 * this method sets the players cards in gui
@@ -152,7 +165,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public JPanel rightOptionsPanel() {
 		pnlRightOptions.setPreferredSize(new Dimension(150, 100));
 		pnlRightOptions.setBackground(Color.MAGENTA.darker().darker());
-//		pnlRightOptions.add(start);
 		pnlRightOptions.add(btnReady);
 		pnlRightOptions.add(btnEnd);
 		return pnlRightOptions;
@@ -278,20 +290,22 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent2.updateUI();
 		pnlOpponent3.updateUI();
 		pnlGameBoard.updateUI();
+		choicePanel().updateUI();
+		cPnlChoice.updateUI();
 
 	}
 	/**
 	 * this method makes start button disabled
 	 */
 	public void startButtonDimmed() {
-//		start.setEnabled(false);
+		//		start.setEnabled(false);
 
 	}
 	/**
 	 * this method sets start button enabled
 	 */
 	public void startButtonUnDimmed() {
-//		start.setEnabled(true);
+		//		start.setEnabled(true);
 	}
 
 	public void setGameFrameTitle(int clientID) {
@@ -307,9 +321,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource() == start) {
-//			controller.newRequest("newGame");
-//		}
+		//		if(e.getSource() == start) {
+		//			controller.newRequest("newGame");
+		//		}
 		if(e.getSource() == btnEnd) {
 			System.exit(0);
 		}
@@ -335,7 +349,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	}
 	public void dimAll() {
-//		start.setEnabled(false);
+		//		start.setEnabled(false);
 		btnPass.setEnabled(false);
 		btnDatabas.setEnabled(false);
 		btnReady.setEnabled(false);
@@ -346,7 +360,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	}
 	public void dimAllExceptStart() {
-//		start.setEnabled(true);
 		btnPass.setEnabled(false);
 		btnDatabas.setEnabled(false);
 		btnReady.setEnabled(false);
@@ -357,7 +370,6 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void unDimAll() {
-//		start.setEnabled(true);
 		btnEnd.setEnabled(true);
 		btnPass.setEnabled(true);
 		btnDatabas.setEnabled(true);
@@ -374,4 +386,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 		lblOp2Number.setText(number);
 		lblOp3Number.setText(number);
 	}	
+//	public void clearAllPanels() {
+//		pnlPlayer.removeAll();
+//		pnlOpponent1.removeAll();
+//		pnlOpponent2.removeAll();
+//		pnlOpponent3.removeAll();
+//		pnlGameBoard.removeAll();
+//		replaceChoicePanel();
+//	}
 }
