@@ -128,17 +128,6 @@ public class ClientController {
 		}
 	}
 
-	//	public void getPlayCardAction(Response response) {
-	//		cards.clear();
-	//		this.cards = response.getCards();
-	//		gameBoardCards = response.getGameBoardCards();
-	//		setCardsAtGameBoard(gameBoardCards);
-	//		gui.setPlayersCardsInGUI(cards);
-	//		gui.updateAllPanels();
-	//		gui.addCardAction(cards);
-	//		gui.dimAll();
-	//	}
-
 	/**
 	 * this method handle the response from the server
 	 * @param response takes in a response from server
@@ -204,24 +193,6 @@ public class ClientController {
 			gui.setInstructions("De andra spelarna kommer nu skicka dig var sitt kort");
 
 		}
-		//		else if (response.getRequest().equals("giveACard")) {
-		//			request = "giveACard";
-		//			passCounter = response.getPassCounter();
-		//			newRequest("getGameConditions");
-		//			gui.unDimAll();
-		//			gui.addCardAction(cards);
-		//
-		//			if (passCounter==3) {
-		//				newRequest("recieveCards");
-		//				newRequest("getAllGameConditions");
-		//				gui.updateAllPanels();
-		//				cards = response.getCards();
-		//				gui.addCardAction(this.cards);
-		//				gui.dimAll();
-		//			}
-		//			else {
-		//			}
-		//		}
 
 		else if (response.getRequest().equals("passainte")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
@@ -262,9 +233,6 @@ public class ClientController {
 				else if (passCounter == 3){
 					gui.setInstructions("Skicka ett kort till spelaren till vänster");
 				}
-				//				else {
-				//					gui.setInstructions("Skicka ett kort till spelaren till höger");
-				//				}
 			}
 			else if (passCounter==4) {
 				request = "playCard";
