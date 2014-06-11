@@ -35,7 +35,7 @@ public class ClientController {
 		try {
 			connection = new ClientConnection(this, serverIP, serverPort);
 			newRequest("clientID");
-			//			loginFrame  = new LoginFrame(this);		
+			loginFrame  = new LoginFrame(this);		
 
 
 		} catch (IOException e) {
@@ -177,7 +177,6 @@ public class ClientController {
 
 		else if (response.getRequest().equals("clientID")) {
 			this.clientID = response.getClientID();
-			gui = new ClientGUI(this, clientID);
 		}
 
 		else if (response.getRequest().equals("clientsMissing")) {
@@ -196,9 +195,6 @@ public class ClientController {
 		else if (response.getRequest().equals("passainte")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte passa just nu!");
 		}
-		//		else if (response.getRequest().equals("playCard")) {
-		//			getPlayCardAction(response);
-		//		}
 		else if (response.getRequest().equals("dontPlayCard")) {
 			JOptionPane.showMessageDialog(null, "Du kan inte lägga ut detta kortet.");
 		}
@@ -258,7 +254,7 @@ public class ClientController {
 			System.out.println(response.getIfPlayerWin());
 			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
-//				gui.clearAllPanels();
+				//				gui.clearAllPanels();
 				gui.dimAll();
 			}
 
@@ -277,7 +273,7 @@ public class ClientController {
 			gui.addCardAction(this.cards);
 			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
-//				gui.clearAllPanels();
+				//				gui.clearAllPanels();
 				//				gui.dimAll();
 			}
 
@@ -294,9 +290,9 @@ public class ClientController {
 			gui.addCardAction(response.getCards());
 			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
-//				gui.clearAllPanels();
-//				gui.updateAllPanels();
-//				gui.dimAll();
+				//				gui.clearAllPanels();
+				//				gui.updateAllPanels();
+				//				gui.dimAll();
 			}
 
 		}
@@ -313,7 +309,7 @@ public class ClientController {
 			gui.dimAll();
 			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
-//				gui.clearAllPanels();
+				//				gui.clearAllPanels();
 				//				gui.dimAll();
 			}
 
@@ -335,7 +331,7 @@ public class ClientController {
 			}
 			if (response.getIfPlayerWin()!=null) {
 				JOptionPane.showMessageDialog(null, response.getIfPlayerWin());
-//				gui.clearAllPanels();
+				//				gui.clearAllPanels();
 				//				gui.dimAll();
 			}
 

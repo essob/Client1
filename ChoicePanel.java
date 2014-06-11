@@ -16,13 +16,8 @@ public class ChoicePanel extends JPanel implements ActionListener{
 	private JButton btnTwoHuman 	= new JButton("Två spelare");
 	private JButton btnThreeHuman 	= new JButton("Tre spelare");
 	private JButton btnOnlyHuman 	= new JButton("Fyra spelare");
-
 	private ClientController controller;
 	private ClientGUI gui;
-
-
-	public ChoicePanel() {
-	}
 
 	public JPanel choiceButton() {
 		pnlChoice.setPreferredSize(new Dimension(1000, 600));
@@ -62,6 +57,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			gui.replaceGameBoard();
 
 		}
+
 		else if(e.getSource() == btnTwoHuman) {
 			controller.newRequest("twoPlayerGame");
 			btnOnlyAI.setVisible(false);
@@ -82,6 +78,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			gui.setInstructions("Inväta fler clienter till att ansluta till spelet");
 
 		}
+
 		else if(e.getSource() == btnOnlyHuman) {
 			controller.newRequest("fourPlayerGame");
 			btnOnlyAI.setVisible(false);
@@ -92,7 +89,6 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			gui.setInstructions("Inväta fler clienter till att ansluta till spelet");
 
 		}
-
 	}
 
 	public void setController(ClientController controller) {
@@ -108,6 +104,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 		btnThreeHuman.setVisible(true);
 		btnOnlyHuman.setVisible(true);
 	}
+
 	public void showPanel() {
 		pnlChoice.setVisible(true);
 		showButtons();
