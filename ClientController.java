@@ -39,7 +39,7 @@ public class ClientController {
 			System.out.println(e);
 			e.getStackTrace();
 		}
-		System.out.println("connection: " + connection);
+//		System.out.println("connection: " + connection);
 	}
 
 	/**
@@ -419,7 +419,7 @@ public class ClientController {
 			request="playCard";
 			passCounter++;
 			newRequest("giveACardToAPlayer", cardName, passCounter);
-			System.out.println(clientID + ": har gett bort: " + cardName);
+//			System.out.println(clientID + ": har gett bort: " + cardName);
 			newRequest("getAllGameConditions");
 			gui.updateAllPanels();
 			gui.dimAll();
