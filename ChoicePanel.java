@@ -65,7 +65,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			btnThreeHuman.setVisible(false);
 			btnOnlyHuman.setVisible(false);
 			gui.replaceGameBoard();
-			gui.setInstructions("Inväta fler clienter till att ansluta till spelet");
+			gui.setInstructions("Invänta fler klienter till att ansluta till spelet");
 		}
 
 		else if(e.getSource() == btnThreeHuman) {
@@ -75,7 +75,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			btnThreeHuman.setVisible(false);
 			btnOnlyHuman.setVisible(false);
 			gui.replaceGameBoard();
-			gui.setInstructions("Inväta fler clienter till att ansluta till spelet");
+			gui.setInstructions("Invänta fler klienter till att ansluta till spelet");
 
 		}
 
@@ -86,7 +86,7 @@ public class ChoicePanel extends JPanel implements ActionListener{
 			btnThreeHuman.setVisible(false);
 			btnOnlyHuman.setVisible(false);
 			gui.replaceGameBoard();
-			gui.setInstructions("Inväta fler clienter till att ansluta till spelet");
+			gui.setInstructions("Invänta fler klienter till att ansluta till spelet");
 
 		}
 	}
