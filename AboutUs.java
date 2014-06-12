@@ -29,7 +29,7 @@ public class AboutUs extends JFrame implements ActionListener{
 
 
 	public AboutUs(){
-		frame.setSize(510, 300);
+		frame.setSize(550, 300);
 		frame.setLocation(500, 200);
 		frame.getContentPane().setBackground(Color.white);
 		frame.setLayout(null);

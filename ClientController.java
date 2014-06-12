@@ -202,7 +202,7 @@ public class ClientController {
 				loginFrame.close();
 				gui = new ClientGUI(this, response.getUserName());
 				gui.dimAllExceptStart();
-				JOptionPane.showMessageDialog(null, "du är inloggad");
+				JOptionPane.showMessageDialog(null, "Du är inloggad");
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Fel användarnamn/ lösenord");
