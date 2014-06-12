@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import javax.swing.*;
 
 import sjuan.Card;
+import sjuan.DataBase;
 
 import com.mysql.jdbc.ResultSetMetaData;
 
