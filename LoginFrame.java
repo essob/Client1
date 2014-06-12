@@ -14,8 +14,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class LoginFrame extends JFrame implements ActionListener{
 
-//	public static Connection connection;
-//	public static Statement statement;
 	private JFrame logInFrame = new JFrame("Logga in");
 	private JTextField tfuserName = new JTextField();
 	private JPasswordField tfPassword = new JPasswordField('*');
@@ -116,5 +114,3 @@ public class LoginFrame extends JFrame implements ActionListener{
 	}
 
 }
-
-
