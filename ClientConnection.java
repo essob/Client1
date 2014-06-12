@@ -8,7 +8,6 @@ import sjuan.Response;
 
 public class ClientConnection {
 	private ClientController controller;
-	private AIController AIcontroller;
 	private Socket socket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
