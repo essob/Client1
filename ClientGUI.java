@@ -20,7 +20,6 @@ import java.util.ArrayList;
  */
 public class ClientGUI extends JPanel implements ActionListener{
 
-
 	private JPanel gameBoardPanel = new JPanel();
 	private ClientController controller;
 	private JFrame gameFrame = new JFrame("Sjuan");
@@ -34,12 +33,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel pnlOptions = new JPanel();
 	private JPanel pnlLeftOptions = new JPanel();
 	private JPanel pnlRightOptions = new JPanel();
-
-	//	private JButton start = new JButton("Börja spelomgång");
-	private JButton btnReady = new JButton("Inställningar");
+	//	private JButton btnReady = new JButton("Inställningar");
 	private JButton btnPass = new JButton("Pass");
 	private JButton btnEnd = new JButton("Avsluta spel");
-	private JButton btnDatabas = new JButton("Statistik");
+	//	private JButton btnDatabas = new JButton("Statistik");
 	private JButton aboutUs = new JButton("About us"); 
 
 
@@ -81,9 +78,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 		btnEnd.addActionListener(this);
 		btnPass.addActionListener(this);
-		btnDatabas.addActionListener(this);
+		//		btnDatabas.addActionListener(this);
 		aboutUs.addActionListener(this);
-		btnReady.addActionListener(this);
+		//		btnReady.addActionListener(this);
 
 		gameFrame.setVisible(true);
 
@@ -92,15 +89,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void replaceGameBoard() {
 		gameFrame.remove(cPnlChoice);
 		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
-		//		cPnlChoice.setVisible(false);
-		//		gameBoardPanel().setVisible(true);
+
 	}
 
 	public void replaceChoicePanel() {
 		gameFrame.remove(pnlGameBoard);
 		gameFrame.add(choicePanel(), BorderLayout.CENTER);
-		//		pnlGameBoard.setVisible(false);
-		//		choicePanel().setVisible(true);
+
 	}
 
 	/**
@@ -155,9 +150,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public JPanel leftOptionsPanel() {
 		pnlLeftOptions.setPreferredSize(new Dimension(150, 100));
 		pnlLeftOptions.setBackground(Color.MAGENTA.darker().darker());
-		pnlLeftOptions.add(btnPass);
-		pnlLeftOptions.add(btnDatabas);
-		pnlLeftOptions.add(aboutUs);
+		//		pnlLeftOptions.add(btnDatabas);
+		//		pnlLeftOptions.add(btnReady);
 		return pnlLeftOptions;
 
 	}
@@ -165,7 +159,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public JPanel rightOptionsPanel() {
 		pnlRightOptions.setPreferredSize(new Dimension(150, 100));
 		pnlRightOptions.setBackground(Color.MAGENTA.darker().darker());
-		pnlRightOptions.add(btnReady);
+		pnlRightOptions.add(btnPass);
+		pnlRightOptions.add(aboutUs);
 		pnlRightOptions.add(btnEnd);
 		return pnlRightOptions;
 	}
@@ -315,12 +310,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 		else if(e.getSource() == btnPass){
 			controller.newRequest("pass", null, 0);
 		}
-		else if(e.getSource()==btnDatabas){
-			controller.newRequest("database", gameFrame.getTitle(), null);
-		}
-		else if(e.getSource() == btnReady) {
-			JOptionPane.showMessageDialog(null, "Under konstruktion...");
-		}
+		//		else if(e.getSource()==btnDatabas){
+		//			controller.newRequest("database", gameFrame.getTitle(), null);
+		//		}
+		//		else if(e.getSource() == btnReady) {
+		//			JOptionPane.showMessageDialog(null, "Under konstruktion...");
+		//		}
 		else if(e.getSource() == aboutUs) {
 			new AboutUs();
 		}
@@ -336,8 +331,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void dimAll() {
 		//		start.setEnabled(false);
 		btnPass.setEnabled(false);
-		btnDatabas.setEnabled(false);
-		btnReady.setEnabled(false);
+		//		btnDatabas.setEnabled(false);
+		//		btnReady.setEnabled(false);
 		aboutUs.setEnabled(true);
 		pPnlPlay.removeCardListener();
 		pPnlPlay.dimAllCards();
@@ -346,8 +341,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 	public void dimAllExceptStart() {
 		btnPass.setEnabled(false);
-		btnDatabas.setEnabled(false);
-		btnReady.setEnabled(false);
+		//		btnDatabas.setEnabled(false);
+		//		btnReady.setEnabled(false);
 		aboutUs.setEnabled(true);
 		pPnlPlay.removeCardListener();
 		pPnlPlay.dimAllCards();
@@ -357,7 +352,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void unDimAll() {
 		btnEnd.setEnabled(true);
 		btnPass.setEnabled(true);
-		btnDatabas.setEnabled(true);
+		//		btnDatabas.setEnabled(true);
 		pPnlPlay.unDimAllCards();
 		lblInstructions.setText("Det är din tur");
 	}
@@ -371,12 +366,4 @@ public class ClientGUI extends JPanel implements ActionListener{
 		lblOp2Number.setText(number);
 		lblOp3Number.setText(number);
 	}	
-	//	public void clearAllPanels() {
-	//		pnlPlayer.removeAll();
-	//		pnlOpponent1.removeAll();
-	//		pnlOpponent2.removeAll();
-	//		pnlOpponent3.removeAll();
-	//		pnlGameBoard.removeAll();
-	//		replaceChoicePanel();
-	//	}
 }

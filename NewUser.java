@@ -14,8 +14,6 @@ import javax.swing.JPasswordField.*;
 import com.mysql.jdbc.PreparedStatement;
 
 public class NewUser extends JFrame implements ActionListener{	
-	public static Connection connection;
-	public static java.sql.PreparedStatement statement1; 
 
 	private JFrame frame = new JFrame("Skapa ny användare");
 	private static JTextField tfUserName = new JTextField();
@@ -61,17 +59,7 @@ public class NewUser extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==btnRegister){
-//			if ((tfUserName.getText() !=null) && (tfPassword.getText().toString() != null ))
-				controller.newRequest("createUser", tfUserName.getText(), tfPassword.getText().toString());
-//			else
-//				JOptionPane.showMessageDialog(null, "skriv in användarnamn och lösenord!");
-			//knappen (request till servern)
+			controller.newRequest("createUser", tfUserName.getText(), tfPassword.getText().toString());
 		}
 	}
-	//	public void createUser(String userName, String passWord) {
-	//		controller.newRequest("createUser", userName, passWord);
-	//
-	//	}
-
-
 }
