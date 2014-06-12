@@ -16,10 +16,7 @@ import sjuan.*;
  */
 public class ClientController {
 	private ClientGUI gui;
-	private LoginFrame login;
-	private JTable table;
 	private ClientConnection connection;
-	private Object tabell;
 	private ArrayList <Card> cards, gameBoardCards;
 	private int opponent1, opponent2, opponent3, clientID, gameID = 0, passCounter = 0;
 	private String request;
@@ -110,7 +107,6 @@ public class ClientController {
 		gui.setNbrOfOpponent1Cards(opponent1);
 		gui.setNbrOfOpponent2Cards(opponent2);
 		gui.setNbrOfOpponent3Cards(opponent3);
-		gui.startButtonDimmed();
 		gui.unDimAll();
 		if (response.isHasHeart7()==false)
 			gui.dimAll();
@@ -204,7 +200,7 @@ public class ClientController {
 		else if(response.getRequest().equals("Login")){
 			if(response.getLogOk()== true){
 				loginFrame.close();
-				gui = new ClientGUI(this, clientID);
+				gui = new ClientGUI(this, response.getUserName());
 				gui.dimAllExceptStart();
 				JOptionPane.showMessageDialog(null, "du är inloggad");
 			}
@@ -337,6 +333,11 @@ public class ClientController {
 
 
 		}
+		else if ( response.getRequest().equals("database")){
+			JOptionPane.showMessageDialog( null, "Förluster: " + response.getSql());
+
+		}
+
 	}
 
 	/**

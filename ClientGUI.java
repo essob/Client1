@@ -52,10 +52,10 @@ public class ClientGUI extends JPanel implements ActionListener{
 	/**
 	 * Constructs the Gui
 	 */
-	public ClientGUI(ClientController controller, int clientID) {
+	public ClientGUI(ClientController controller, String userName) {
 		this.controller = controller;
 		GamePanel();
-		setGameFrameTitle(clientID);
+		setGameFrameTitle(userName);
 		cPnlChoice.setController(this.controller);
 		cPnlChoice.setClientGUI(this);
 	}
@@ -92,15 +92,15 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public void replaceGameBoard() {
 		gameFrame.remove(cPnlChoice);
 		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
-//		cPnlChoice.setVisible(false);
-//		gameBoardPanel().setVisible(true);
+		//		cPnlChoice.setVisible(false);
+		//		gameBoardPanel().setVisible(true);
 	}
 
 	public void replaceChoicePanel() {
 		gameFrame.remove(pnlGameBoard);
 		gameFrame.add(choicePanel(), BorderLayout.CENTER);
-//		pnlGameBoard.setVisible(false);
-//		choicePanel().setVisible(true);
+		//		pnlGameBoard.setVisible(false);
+		//		choicePanel().setVisible(true);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		cPnlChoice.setLayout(null);
 		cPnlChoice.setFont(new Font("Arial", Font.BOLD, 24));
 		cPnlChoice.setBackground(Color.GREEN.darker().darker());
-//		cPnlChoice.showPanel();
+		//		cPnlChoice.showPanel();
 
 		return cPnlChoice;	
 	}
@@ -294,22 +294,9 @@ public class ClientGUI extends JPanel implements ActionListener{
 		cPnlChoice.updateUI();
 
 	}
-	/**
-	 * this method makes start button disabled
-	 */
-	public void startButtonDimmed() {
-		//		start.setEnabled(false);
 
-	}
-	/**
-	 * this method sets start button enabled
-	 */
-	public void startButtonUnDimmed() {
-		//		start.setEnabled(true);
-	}
-
-	public void setGameFrameTitle(int clientID) {
-		gameFrame.setTitle("Sjuan Client: " + clientID);
+	public void setGameFrameTitle(String userName) {
+		gameFrame.setTitle(userName);
 	}
 
 	/**
@@ -321,9 +308,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//		if(e.getSource() == start) {
-		//			controller.newRequest("newGame");
-		//		}
+
 		if(e.getSource() == btnEnd) {
 			System.exit(0);
 		}
@@ -331,7 +316,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 			controller.newRequest("pass", null, 0);
 		}
 		else if(e.getSource()==btnDatabas){
-			controller.newRequest("database");
+			controller.newRequest("database", gameFrame.getTitle(), null);
 		}
 		else if(e.getSource() == btnReady) {
 			JOptionPane.showMessageDialog(null, "Under konstruktion...");
@@ -386,12 +371,12 @@ public class ClientGUI extends JPanel implements ActionListener{
 		lblOp2Number.setText(number);
 		lblOp3Number.setText(number);
 	}	
-//	public void clearAllPanels() {
-//		pnlPlayer.removeAll();
-//		pnlOpponent1.removeAll();
-//		pnlOpponent2.removeAll();
-//		pnlOpponent3.removeAll();
-//		pnlGameBoard.removeAll();
-//		replaceChoicePanel();
-//	}
+	//	public void clearAllPanels() {
+	//		pnlPlayer.removeAll();
+	//		pnlOpponent1.removeAll();
+	//		pnlOpponent2.removeAll();
+	//		pnlOpponent3.removeAll();
+	//		pnlGameBoard.removeAll();
+	//		replaceChoicePanel();
+	//	}
 }
