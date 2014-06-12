@@ -14,8 +14,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class LoginFrame extends JFrame implements ActionListener{
 
-	public static Connection connection;
-	public static Statement statement;
 	private JFrame logInFrame = new JFrame("Logga in");
 	private JTextField tfuserName = new JTextField();
 	private JPasswordField tfPassword = new JPasswordField('*');
@@ -76,7 +74,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	{
 		if(ae.getSource()==btnNewUser)
 		{
-			new NewUser();
+			new NewUser(controller);
 		}
 
 		else if(ae.getSource()==btnClose)
@@ -89,8 +87,6 @@ public class LoginFrame extends JFrame implements ActionListener{
 			setPassWord(tfPassword.getText().toString());
 			logInDb();
 		}
-		
-		
 	}
 
 	public void logInDb(){
@@ -101,25 +97,20 @@ public class LoginFrame extends JFrame implements ActionListener{
 		return userName;
 	}
 
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-
 
 	public String getPassWord() {
 		return passWord;
 	}
 
-
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
+	
 	public void close() {
 		logInFrame.dispose();
 	}
 
 }
-
-

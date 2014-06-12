@@ -1,102 +1,66 @@
 package Client1;
 
-import java.awt.Font;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.Statement;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-public class AboutUs extends JPanel implements ActionListener {
-	
-
-	public static Statement statement;
-	private JFrame aboutUs = new JFrame("Logga in");
-	private JTextField t1 = new JTextField();
-	private JPasswordField t2 = new JPasswordField('*');
-	private JLabel user = new JLabel("Ange Användarnamn");
-	private JLabel password = new JLabel("Ange Lösenord");
-	private JButton logInButton = new JButton("Logga in");
-	private JButton b4 = new JButton("Avsluta");
-	private JButton newUserButton = new JButton("Skapa ny användare");
-	private String userName, passWord;
+/**
+ * This class creates a textarea with a String containing info about sjuan.
+ * @author Anna
+ *
+ */
+public class AboutUs extends JFrame implements ActionListener{
+	private JFrame frame = new JFrame("About us");
+	private String content = "This software and related documentation are provided under a license" + 
+			"\n" + "agreement containing restrictions on use and disclosure and are protected"  + 
+			"\n" + "by intellectual property laws.  Except as expressly permitted in your license" + 
+			"\n" + "agreement or allowed by law, you may not use, copy, reproduce, translate," + 
+			"\n" + "broadcast, modify, license, transmit, distribute, exhibit, perform, publish," + 
+			"\n" + "or display any part, in any form, or by any means. Reverse engineering," + 
+			"\n" + "disassembly, or decompilation of this software, unless required by law for" + 
+			"\n" + "interoperability, is prohibited." + 
+			"\n" + 
+			"\n" + "Copyright © 2014, Sjuan";
+	private JTextArea textarea = new JTextArea(content);
+	private JButton exitButton = new JButton("Avsluta");
 
 
 	public AboutUs(){
-		aboutUs.setSize(350, 200);
-		aboutUs.setLocation(500, 200);
-		aboutUs.setLayout(null);
-		aboutUs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(510, 300);
+		frame.setLocation(500, 200);
+		frame.getContentPane().setBackground(Color.white);
+		frame.setLayout(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		user.setSize(user.getPreferredSize());
-		user.setLocation(10, 10);
-		aboutUs.add(user);
+		textarea.setSize(300, 150);
+		textarea.setBounds(40, 20, 550, 180);
+		textarea.setEditable(false);
+		textarea.setBackground(Color.white);	
+		frame.add(textarea);
 
-		t1.setColumns(15);
-		t1.setSize(t1.getPreferredSize());
-		t1.setLocation(150, 10);
-		aboutUs.add(t1);
 
-		password.setSize(password.getPreferredSize());
-		password.setLocation(10, 40);
-		aboutUs.add(password);
+		exitButton.setSize(50, 50);
+		//		exit.setLocation(50, 30);
+		exitButton.setBounds(170, 200, 150, 25);
+		frame.add(exitButton);
+		exitButton.addActionListener(this);
+		exitButton.setVisible(true);
+		frame.setVisible(true);
 
-		t2.setColumns(15);
-		t2.setSize(t2.getPreferredSize());
-		t2.setLocation(150, 40);
-		aboutUs.add(t2);
-
-		logInButton.setSize(logInButton.getPreferredSize());
-		logInButton.setLocation(150, 70);
-		aboutUs.add(logInButton);
-		logInButton.addActionListener(this);
-
-		b4.setSize(b4.getPreferredSize());
-		b4.setLocation(150, 100);
-		aboutUs.add(b4);
-		b4.addActionListener(this);
-
-		newUserButton.setSize(newUserButton.getPreferredSize());
-		newUserButton.setLocation(150, 130);
-		aboutUs.add(newUserButton);
-		newUserButton.addActionListener(this);
-		newUserButton.setVisible(true);
-		aboutUs.setVisible(true);
 	}
-
+	
+	public void close() {
+		frame.dispose();
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==exitButton){
+			frame.setVisible(false);
+		}
+
 	}
 }
-//	private JFrame aboutUsFrame = new JFrame("Logga in");
-//	private JTextArea textArea = new JTextArea(
-//		    "This is an editable JTextArea. " +
-//		    "A text area is a \"plain\" text component, " +
-//		    "which means that although it can display text " +
-//		    "in any font, all of the text is in the same font."
-//		);
-//	
-//	public AboutUs(){
-//	aboutUsFrame.setSize(350, 200);
-//	aboutUsFrame.setLocation(500, 200);
-//	aboutUsFrame.setLayout(null);
-//	aboutUsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	
-//	textArea.setFont(new Font("Serif", Font.ITALIC, 16));
-//	textArea.setLineWrap(true);
-//	textArea.setWrapStyleWord(true);
-//	
-//	aboutUsFrame.setVisible(true);
-//	textArea.setVisible(true);
-//	}
-//}

@@ -5,20 +5,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+
 import javax.swing.*;
-import com.mysql.jdbc.ResultSetMetaData;
-import java.util.ArrayList;
+
 import sjuan.Card;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
+import java.util.ArrayList;
 
 
 /**
  * This class generates a Grafical User Interface to play the game
  */
 public class ClientGUI extends JPanel implements ActionListener{
-	
+
+	private JPanel gameBoardPanel = new JPanel();
 	private ClientController controller;
 	private JFrame gameFrame = new JFrame("Sjuan");
-	
 	private PlayersPanel pPnlPlay = new PlayersPanel(this);
 	private ChoicePanel cPnlChoice = new ChoicePanel();
 	private JPanel pnlGameBoard = new JPanel();
@@ -29,29 +33,28 @@ public class ClientGUI extends JPanel implements ActionListener{
 	private JPanel pnlOptions = new JPanel();
 	private JPanel pnlLeftOptions = new JPanel();
 	private JPanel pnlRightOptions = new JPanel();
-	
-	private JButton start = new JButton("Börja spelomgång");
-	private JButton btnReady = new JButton("Inställningar");
+	//	private JButton btnReady = new JButton("Inställningar");
 	private JButton btnPass = new JButton("Pass");
 	private JButton btnEnd = new JButton("Avsluta spel");
-	private JButton btnDatabas = new JButton("Statistik");
+	//	private JButton btnDatabas = new JButton("Statistik");
 	private JButton aboutUs = new JButton("About us"); 
-	
+
+
 	private PlayLabel pLbl = new PlayLabel(this);
 	private JLabel lblInstructions = new JLabel("Det är din tur");
 	private JLabel lblOp1Number = new JLabel("13");
 	private JLabel lblOp2Number = new JLabel("13");
 	private JLabel lblOp3Number = new JLabel("13");
-	
-
 
 	/**
 	 * Constructs the Gui
 	 */
-	public ClientGUI(ClientController controller, int clientID) {
+	public ClientGUI(ClientController controller, String userName) {
 		this.controller = controller;
 		GamePanel();
-		setGameFrameTitle(clientID);
+		setGameFrameTitle(userName);
+		cPnlChoice.setController(this.controller);
+		cPnlChoice.setClientGUI(this);
 	}
 
 	/**
@@ -62,9 +65,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		gameFrame.setResizable(false);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setLayout(new BorderLayout());
-		
-//		gameFrame.add(cPnlChoice.choiceButton());
-		gameFrame.add(gameBoardPanel());
+		gameFrame.add(cPnlChoice.choiceButton());
 		gameFrame.add(playerPanel(), BorderLayout.SOUTH);
 		gameFrame.add(opponent1Panel(), BorderLayout.WEST);
 		gameFrame.add(pnlOptions, BorderLayout.NORTH);
@@ -73,18 +74,27 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOptions.setBackground(Color.MAGENTA.darker().darker());
 		pnlOptions.add(leftOptionsPanel(), BorderLayout.WEST);
 		pnlOptions.add(opponent2Panel(), BorderLayout.CENTER);
-
 		pnlOptions.add(rightOptionsPanel(), BorderLayout.EAST);
 
-		start.addActionListener(this);
 		btnEnd.addActionListener(this);
 		btnPass.addActionListener(this);
-		btnDatabas.addActionListener(this);
+		//		btnDatabas.addActionListener(this);
 		aboutUs.addActionListener(this);
-		btnReady.addActionListener(this);
+		//		btnReady.addActionListener(this);
 
 		gameFrame.setVisible(true);
 
+	}
+
+	public void replaceGameBoard() {
+		gameFrame.remove(cPnlChoice);
+		gameFrame.add(gameBoardPanel(), BorderLayout.CENTER);
+
+	}
+
+	public void replaceChoicePanel() {
+		gameFrame.remove(pnlGameBoard);
+		gameFrame.add(choicePanel(), BorderLayout.CENTER);
 
 	}
 
@@ -93,14 +103,24 @@ public class ClientGUI extends JPanel implements ActionListener{
 	 * @return panel returns a panel
 	 */
 	public JPanel gameBoardPanel() {
+		pnlGameBoard.removeAll();
 		pnlGameBoard.setLayout(null);
 		pnlGameBoard.setFont(new Font("Arial", Font.BOLD, 24));
 		pnlGameBoard.setBackground(Color.GREEN.darker().darker());
-		
-		lblInstructions.setBounds(10, 340, 400, 20);
+		lblInstructions.setBounds(10, 340, 700, 20);
 		pnlGameBoard.add(lblInstructions);
 
 		return pnlGameBoard;	
+	}
+
+	public JPanel choicePanel() {
+		cPnlChoice = new ChoicePanel();
+		cPnlChoice.setLayout(null);
+		cPnlChoice.setFont(new Font("Arial", Font.BOLD, 24));
+		cPnlChoice.setBackground(Color.GREEN.darker().darker());
+		//		cPnlChoice.showPanel();
+
+		return cPnlChoice;	
 	}
 
 
@@ -117,22 +137,21 @@ public class ClientGUI extends JPanel implements ActionListener{
 		return pnlPlayer;
 	}
 
-
 	/**
 	 * this method sets the players cards in gui
 	 * @param cards takes in the players cards
 	 */
 	public void setPlayersCardsInGUI(ArrayList<Card> cards) {
 		pPnlPlay.setPlayersCardsInGUI(cards);
+		pPnlPlay.addCardListener(cards);
 		updateAllPanels();
 	}
 
 	public JPanel leftOptionsPanel() {
 		pnlLeftOptions.setPreferredSize(new Dimension(150, 100));
 		pnlLeftOptions.setBackground(Color.MAGENTA.darker().darker());
-		pnlLeftOptions.add(btnPass);
-		pnlLeftOptions.add(btnDatabas);
-		pnlLeftOptions.add(aboutUs);
+		//		pnlLeftOptions.add(btnDatabas);
+		//		pnlLeftOptions.add(btnReady);
 		return pnlLeftOptions;
 
 	}
@@ -140,8 +159,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 	public JPanel rightOptionsPanel() {
 		pnlRightOptions.setPreferredSize(new Dimension(150, 100));
 		pnlRightOptions.setBackground(Color.MAGENTA.darker().darker());
-		pnlRightOptions.add(start);
-		pnlRightOptions.add(btnReady);
+		pnlRightOptions.add(btnPass);
+		pnlRightOptions.add(aboutUs);
 		pnlRightOptions.add(btnEnd);
 		return pnlRightOptions;
 	}
@@ -154,7 +173,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent1.setPreferredSize(new Dimension(100, 200));
 		pnlOpponent1.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		pnlOpponent1.setBackground(Color.BLUE.darker());
-		
+
 		return pnlOpponent1;
 	}
 
@@ -167,7 +186,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		lblOp1Number.setText(nbr + "");
 		pnlOpponent1.add(lblOp1Number);
 		JLabel opponent1Cards = null;
-		
+
 		if (nbr != 0) {
 			for (int i = 0; i < nbr; i++) {
 				opponent1Cards = new JLabel();
@@ -200,8 +219,8 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent2.removeAll();
 		lblOp2Number.setText(nbr + "");
 		pnlOpponent2.add(lblOp2Number);
-		JLabel opponent2Cards;
-		
+		JLabel opponent2Cards = null;
+
 		if (nbr != 0)
 			for (int i = 0; i < nbr; i++) {
 				opponent2Cards = new JLabel();
@@ -221,7 +240,7 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent3.setPreferredSize(new Dimension(100, 200));
 		pnlOpponent3.setBorder(BorderFactory.createEmptyBorder(0,10,10,10)); 
 		pnlOpponent3.setBackground(Color.ORANGE);
-		
+
 
 		return pnlOpponent3;
 	}
@@ -233,17 +252,19 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent3.removeAll();
 		lblOp3Number.setText(nbr + "");
 		pnlOpponent3.add(lblOp3Number);
-		JLabel opponent3Cards;
-		
+		JLabel opponent3Cards = null;
+
 		if (nbr != 0)
 			for (int i = 0; i < nbr-1; i++) {
 				opponent3Cards = new JLabel();
 				opponent3Cards.setIcon(readFiles("b1pt"));
 				pnlOpponent3.add(opponent3Cards);
 			}
-		opponent3Cards = new JLabel();
-		opponent3Cards.setIcon(readFiles("b1fh"));
-		pnlOpponent3.add(opponent3Cards);
+		if (nbr != 0) {
+			opponent3Cards = new JLabel();
+			opponent3Cards.setIcon(readFiles("b1fh"));
+			pnlOpponent3.add(opponent3Cards);
+		}
 
 	}
 
@@ -264,26 +285,13 @@ public class ClientGUI extends JPanel implements ActionListener{
 		pnlOpponent2.updateUI();
 		pnlOpponent3.updateUI();
 		pnlGameBoard.updateUI();
-
-
-
-	}
-	/**
-	 * this method makes start button disabled
-	 */
-	public void startButtonDimmed() {
-		start.setEnabled(false);
+		choicePanel().updateUI();
+		cPnlChoice.updateUI();
 
 	}
-	/**
-	 * this method sets start button enabled
-	 */
-	public void startButtonUnDimmed() {
-		start.setEnabled(true);
-	}
 
-	public void setGameFrameTitle(int clientID) {
-		gameFrame.setTitle("Sjuan Client: " + clientID);
+	public void setGameFrameTitle(String userName) {
+		gameFrame.setTitle(userName);
 	}
 
 	/**
@@ -295,23 +303,23 @@ public class ClientGUI extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == start) {
-			controller.newRequest("newGame");
-		}
-		else if(e.getSource() == btnEnd) {
+
+		if(e.getSource() == btnEnd) {
 			System.exit(0);
 		}
 		else if(e.getSource() == btnPass){
-			controller.newRequest("pass");
+			controller.newRequest("pass", null, 0);
 		}
-		else if(e.getSource()==btnDatabas){
-			controller.newRequest("database");
-		}
-		else if(e.getSource() == btnReady) {
-			JOptionPane.showMessageDialog(null, "Under konstruktion...");
+		//		else if(e.getSource()==btnDatabas){
+		//			controller.newRequest("database", gameFrame.getTitle(), null);
+		//		}
+		//		else if(e.getSource() == btnReady) {
+		//			JOptionPane.showMessageDialog(null, "Under konstruktion...");
+		//		}
+		else if(e.getSource() == aboutUs) {
+			new AboutUs();
 		}
 	}
-
 	/**
 	 * this method play a card from a hand to the gameboard
 	 * @param cardName takes in a string of a cards name
@@ -321,33 +329,41 @@ public class ClientGUI extends JPanel implements ActionListener{
 
 	}
 	public void dimAll() {
-		start.setEnabled(false);
+		//		start.setEnabled(false);
 		btnPass.setEnabled(false);
-		btnDatabas.setEnabled(false);
-		btnReady.setEnabled(false);
-		aboutUs.setEnabled(false);
+		//		btnDatabas.setEnabled(false);
+		//		btnReady.setEnabled(false);
+		aboutUs.setEnabled(true);
 		pPnlPlay.removeCardListener();
 		pPnlPlay.dimAllCards();
 		lblInstructions.setText("Vänta på att de andra spelarna gör sitt drag");
 
 	}
+	public void dimAllExceptStart() {
+		btnPass.setEnabled(false);
+		//		btnDatabas.setEnabled(false);
+		//		btnReady.setEnabled(false);
+		aboutUs.setEnabled(true);
+		pPnlPlay.removeCardListener();
+		pPnlPlay.dimAllCards();
+		lblInstructions.setText("Klicka på Börja Spelomgång och invänta andra spelare att logga in!");
+	}
 
 	public void unDimAll() {
-		start.setEnabled(true);
 		btnEnd.setEnabled(true);
 		btnPass.setEnabled(true);
-		btnDatabas.setEnabled(true);
+		//		btnDatabas.setEnabled(true);
 		pPnlPlay.unDimAllCards();
 		lblInstructions.setText("Det är din tur");
 	}
-	
+
 	public void setInstructions(String instuctions) {
 		lblInstructions.setText(instuctions);
 	}
+
 	public void setOpNumber(String number) {
 		lblOp1Number.setText(number);
 		lblOp2Number.setText(number);
 		lblOp3Number.setText(number);
 	}	
-
 }
