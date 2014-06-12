@@ -12,7 +12,7 @@ public class AIController {
 	private int clientID, gameID, passCounter = 0, nbrOfAI;
 	private ArrayList <Card> cards = new ArrayList <Card>(); 
 	private ArrayList <Card> gameBoardCards = new ArrayList <Card>();
-	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
+//	private HashMap <Integer, ArrayList<Card>> AICardsList = new HashMap <Integer, ArrayList<Card>>();
 
 	public AIController(String serverIP, int serverPort, int nbrOfAI) {
 		try {
@@ -92,10 +92,10 @@ public class AIController {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameID = response.getGameID();
-			AICardsList.put(clientID, cards);
+//			AICardsList.put(clientID, cards);
 			System.out.println("Client: " + clientID);
-			for (Card card : AICardsList.get(clientID))
-				System.out.print(card + ", ");
+//			for (Card card : AICardsList.get(clientID))
+//				System.out.print(card + ", ");
 			System.out.println("");
 			if (response.isHasHeart7()) {
 				for (Card card : cards) {
@@ -111,10 +111,7 @@ public class AIController {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameID = response.getGameID();
-			AICardsList.put(clientID, cards);
 			System.out.println("Client: " + clientID);
-			for (Card card : AICardsList.get(clientID))
-				System.out.print(card + ", ");
 			System.out.println("");
 			if (response.isHasHeart7()) {
 				for (Card card : cards) {
@@ -130,10 +127,10 @@ public class AIController {
 			this.clientID = response.getClientID();
 			this.cards = response.getCards();
 			this.gameID = response.getGameID();
-			AICardsList.put(clientID, cards);
+//			AICardsList.put(clientID, cards);
 			System.out.println("Client: " + clientID);
-			for (Card card : AICardsList.get(clientID))
-				System.out.print(card + ", ");
+//			for (Card card : cards)
+//				System.out.print(card + ", ");
 			System.out.println("");
 			if (response.isHasHeart7()) {
 				for (Card card : cards) {
